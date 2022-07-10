@@ -1,10 +1,19 @@
 
-const PLAYER_UNIT = "A"
-const ENEMY_UNIT = "E"
+export const PLAYER_UNIT = "A"
+export const ENEMY_UNIT = "E"
 
 export const deduceState = (board) => {
     if(countUnits(board, PLAYER_UNIT) == 0 && countUnits(board, ENEMY_UNIT) == 0){
         return "empty";
+    }
+    if(countUnits(board, PLAYER_UNIT) > 0 && countUnits(board, ENEMY_UNIT) == 0){
+        return "player_victory";
+    }
+    if(countUnits(board, PLAYER_UNIT) == 0 && countUnits(board, ENEMY_UNIT) > 0){
+        return "enemy_victory";
+    }
+    if(countUnits(board, PLAYER_UNIT) > 0 && countUnits(board, ENEMY_UNIT) > 0){
+        return "disputing";
     }
     return "?";
 }
