@@ -32,6 +32,6 @@ describe('recognizes gamestate', () => {
     expect(deduceState(only_player_board)).toEqual("disputing")
 
     const only_player_board_1 = [[E,P], [0,0]]
-    expect(deduceState(only_player_board)).toEqual("disputing")
+    expect(deduceState(only_player_board_1)).toEqual("disputing")
   })
 })
