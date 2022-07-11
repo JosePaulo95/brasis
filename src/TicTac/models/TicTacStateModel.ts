@@ -11,7 +11,7 @@ export class TicTacStateModel implements IBaseState{
         this.next_player = mark
     }
 
-    afterMove(move) {
+    afterMove (move: IBaseMove){
         const board_after_move = JSON.parse(JSON.stringify(this.board))
         board_after_move[move.x][move.y] = move.mark
         const new_state = new TicTacStateModel(board_after_move, this.opposite(move.mark))

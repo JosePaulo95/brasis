@@ -1,4 +1,4 @@
-import { IBaseState } from "@/models/IBaseState";
+import { IBaseState } from "../models/IBaseState";
 
 export interface IBaseController {
     findNeighbors(state: IBaseState): IBaseState[];

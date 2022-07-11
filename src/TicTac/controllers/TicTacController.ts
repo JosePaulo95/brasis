@@ -1,7 +1,7 @@
-import { IBaseState } from "@/models/IBaseState";
+import { IBaseController } from "@/interfaces/controllers/IBaseController";
+import { IBaseState } from "@/interfaces/models/IBaseState";
 import { TicTacMove } from "../models/TicTacMove";
 import {X, O, _} from "../models/TicTacPieceModel"
-import { IBaseController } from "./IBaseController";
 
 export default class TicTacController implements IBaseController {
     findNeighbors(state: IBaseState): IBaseState[] {

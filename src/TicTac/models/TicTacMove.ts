@@ -1,4 +1,4 @@
-import { IBaseMove } from "./IBaseMove"
+import { IBaseMove } from "../../interfaces/models/IBaseMove"
 
 export class TicTacMove implements IBaseMove{
     x: number
