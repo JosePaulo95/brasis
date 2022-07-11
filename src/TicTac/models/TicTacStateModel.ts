@@ -1,6 +1,6 @@
-import { IBaseMove } from "./IBaseMove";
-import { IBaseState } from "./IBaseState";
-import { _, X, O } from "./TicTacPieceModel";
+import { IBaseMove } from "../../interfaces/models/IBaseMove";
+import { IBaseState } from "../../interfaces/models/IBaseState";
+import { X, O, _ } from "./TicTacPieceModel";
 
 export class TicTacStateModel implements IBaseState{
     board: string[][];

@@ -1,6 +1,7 @@
+
+import { TicTacStateModel } from '../TicTac/models/TicTacStateModel'
 import { assert, describe, expect, it } from 'vitest'
-import TicTacController from "../controllers/TicTacController"
-import { TicTacStateModel } from "../models/TicTacStateModel"
+import TicTacController from "../TicTac/controllers/TicTacController"
 
 describe('it finds the neighbors states', () => {
   it('tictactoe - initial states', () => {
