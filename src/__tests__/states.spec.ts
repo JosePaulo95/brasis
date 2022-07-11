@@ -1,10 +1,9 @@
 import { assert, describe, expect, it } from 'vitest'
 //import { PLAYER_UNIT as P, ENEMY_UNIT as E } from '../models/brasisModel'
-import { TicTacController } from '../controllers/TicTacController'
+import TicTacController from '../controllers/TicTacController'
 import { _, X, O } from '../models/TicTacPieceModel'
 //import { BrasisController, TicTacController } from '../controllers'
-import { readState } from '../common/GameState'
-import { states } from '../common/States'
+import { phases } from '../common/Phases'
 
 describe('recognizes gamestate', () => {
   // it('brasis - empty board', () => {
@@ -17,7 +16,8 @@ describe('recognizes gamestate', () => {
 
   it('tictactoe - empty board', () => {
     const empty_board = [[_,_,_], [_,_,_], [_,_,_]]
-    expect(readState(TicTacController, empty_board)).toEqual(states.EMPTY)
+    const controller = new TicTacController()
+    expect(controller.readPhase(empty_board)).toEqual(phases.EMPTY)
   })
 
   // it('player victory', () => {

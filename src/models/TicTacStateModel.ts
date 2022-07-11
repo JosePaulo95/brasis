@@ -1,6 +1,11 @@
+import { IBaseMove } from "./IBaseMove";
+import { IBaseState } from "./IBaseState";
 import { _, X, O } from "./TicTacPieceModel";
 
-export class TicTacStateModel {
+export class TicTacStateModel implements IBaseState{
+    board: string[][];
+    next_player: string;
+    
     constructor(board=[[_, _, _], [_, _, _], [_, _, _]], mark=X){
         this.board = board
         this.next_player = mark

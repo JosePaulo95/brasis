@@ -1,15 +1,10 @@
+import { IBaseState } from "@/models/IBaseState";
 import { TicTacMove } from "../models/TicTacMove";
 import {X, O, _} from "../models/TicTacPieceModel"
+import { IBaseController } from "./IBaseController";
 
-
-export class TicTacController {
-    deduceState (board) {
-        if(this.countUnits(board, _) == 9){
-            return "empty";
-        }
-        return "?";
-    }
-    deduceNeighbors (state) {
+export default class TicTacController implements IBaseController {
+    findNeighbors(state: IBaseState): IBaseState[] {
         const neighbors = []
         for (let i = 0; i < state.board.length; i++) {
             for (let j = 0; j < state.board[i].length; j++) {
@@ -22,8 +17,14 @@ export class TicTacController {
     
         return neighbors
     }
+    readPhase(board: string[][]): string {
+        if(TicTacController.countUnits(board, _) == 9){
+            return "empty";
+        }
+        return "?";
+    }
 
-    countUnits (board, unit_type) {
+    static countUnits (board, unit_type) {
         let count = 0
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
