@@ -5,30 +5,6 @@ import {X, O, _} from "../models/TicTacPieceModel"
 import { TicTacStateModel } from "../models/TicTacStateModel";
 
 export default class TicTacController implements IBaseController {
-    getPossibleMovesEvaluation(state: TicTacStateModel): any[] {
-        const node_evaluation = []
-        const possible_moves = this.findNeighbors(state)
-
-        for (let i = 0; i < possible_moves.length; i++) {
-            node_evaluation.push({state: possible_moves[i], eval: this.minimax(possible_moves[i])})
-        }
-        
-        return node_evaluation
-    }
-
-    minimax(state: IBaseState): number{
-        if(this.eval(state.board) != "?"){
-            return Number(this.eval(state.board))
-        }
-        const neighbors = this.findNeighbors(state)
-        const better = state.maximize?Math.max:Math.min
-        let best = state.maximize?-10:+10
-
-        for (let i = 0; i < neighbors.length; i++) {
-            best = better(best, this.minimax(neighbors[i])) 
-        }
-        return best 
-    }
     eval(board: string[][]): string {
         if(
             (board[0][0]==X && board[0][1]==X && board[0][2]==X) ||

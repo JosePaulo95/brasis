@@ -3,6 +3,7 @@ import { TicTacStateModel } from '../TicTac/models/TicTacStateModel'
 import { assert, describe, expect, it } from 'vitest'
 import TicTacController from "../TicTac/controllers/TicTacController"
 import { X,O,_ } from '../TicTac/models/TicTacPieceModel'
+import { BasicMiniMaxAgent } from '@/agents/BasicMiniMaxAgent'
 
 describe('agent', () => {
   it('deduces terminal nodes', ()=>{
@@ -33,16 +34,15 @@ describe('agent', () => {
     expect(controller.eval(going)).toEqual("?")
   })
   it('resolves tictactoe', () => {
-    //cria um state
-    //lista de moves avaliadas
-
-    const initial_state = new TicTacStateModel([
+    const state = new TicTacStateModel([
       [X, O, O],
       [O, _, X],
       [_, _, _]], O
     )
     const controller = new TicTacController()
-    const evaluated_moves = controller.getPossibleMovesEvaluation(initial_state)
+    const agent = new BasicMiniMaxAgent()
+    const move = agent.nextMove(controller, state)
+    const evaluated_moves = controller.getPossibleMovesEvaluation(state)
     console.log(evaluated_moves.map(s=>s.eval+"\n"+s.state.board.map(row => row.join(",")).join("\n")).join("\n\n"))
     expect(evaluated_moves.length).toEqual(4)
   })
