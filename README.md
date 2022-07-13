@@ -1,4 +1,4 @@
-# projeto1
+# typescript-app3
 
 ## Project setup
 ```
@@ -15,9 +15,9 @@ yarn serve
 yarn build
 ```
 
-### Lints and fixes files
+### Run your unit tests
 ```
-yarn lint
+yarn test:unit
 ```
 
 ### Customize configuration
