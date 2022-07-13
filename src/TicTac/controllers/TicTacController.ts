@@ -1,10 +1,38 @@
 import { IBaseController } from "@/interfaces/controllers/IBaseController";
+import { IBaseMove } from "@/interfaces/models/IBaseMove";
 import { IBaseState } from "@/interfaces/models/IBaseState";
 import { TicTacMove } from "../models/TicTacMove";
 import {X, O, _} from "../models/TicTacPieceModel"
 import { TicTacStateModel } from "../models/TicTacStateModel";
 
 export default class TicTacController implements IBaseController {
+    getPossibleMovesEvaluation(state: TicTacStateModel): any[] {
+        const move_evaluation = []
+        //const possible_moves = this.findNeighbors(state)
+        const possible_moves = this.getPossibleMoves(state)
+
+        for (let i = 0; i < possible_moves.length; i++) {
+            move_evaluation.push({move: possible_moves[i], eval: this.minimax(state.afterMove(possible_moves[i]))})
+        }
+        
+        return move_evaluation
+        //list possible moves from controller
+        //apply rule to sort them
+        //returns the first
+    }
+    minimax(state: IBaseState): number{
+        if(this.eval(state.board) != "?"){
+            return Number(this.eval(state.board))
+        }
+        const possible_moves = this.getPossibleMoves(state)
+        const better = state.maximize?Math.max:Math.min
+        let best = state.maximize?-10:+10
+
+        for (let i = 0; i < possible_moves.length; i++) {
+            best = better(best, this.minimax(state.afterMove(possible_moves[i]))) 
+        }
+        return best 
+    }
     eval(board: string[][]): string {
         if(
             (board[0][0]==X && board[0][1]==X && board[0][2]==X) ||
@@ -35,18 +63,18 @@ export default class TicTacController implements IBaseController {
         }
         return "?";
     }
-    findNeighbors(state: IBaseState): IBaseState[] {
-        const neighbors = []
+    getPossibleMoves(state: IBaseState): IBaseMove[] {
+        const moves = []
         for (let i = 0; i < state.board.length; i++) {
             for (let j = 0; j < state.board[i].length; j++) {
                 if(state.board[i][j] == _){
                     let move = new TicTacMove(i,j, state.next_player)
-                    neighbors.push(state.afterMove(move))
+                    moves.push(move)
                 }
             }
         }
     
-        return neighbors
+        return moves
     }
     readPhase(board: string[][]): string {
         if(TicTacController.countUnits(board, _) == 9){
