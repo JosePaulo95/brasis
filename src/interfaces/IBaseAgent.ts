@@ -3,5 +3,6 @@ import { IBaseMove } from "./models/IBaseMove";
 import { IBaseState } from "./models/IBaseState";
 
 export interface IBaseAgent {
-    nextMove: (controller: IBaseController, state: IBaseState) => IBaseMove
+    getNextMove: (controller: IBaseController, state: IBaseState) => IBaseMove;
+    getPossibleMovesEvaluation: (controller: IBaseController, state: IBaseState) => IBaseMove[];
 }

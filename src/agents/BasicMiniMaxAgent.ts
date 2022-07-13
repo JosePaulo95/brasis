@@ -2,33 +2,36 @@ import { IBaseController } from "@/interfaces/controllers/IBaseController";
 import { IBaseAgent } from "@/interfaces/IBaseAgent"
 import { IBaseMove } from "@/interfaces/models/IBaseMove";
 import { IBaseState } from "@/interfaces/models/IBaseState";
+import { TicTacStateModel } from "@/TicTac/models/TicTacStateModel";
 
 export class BasicMiniMaxAgent implements IBaseAgent{
-  nextMove(controller: IBaseController, state: IBaseState): IBaseMove{
-    const node_evaluation = []
-    const possible_moves = controller.findNeighbors(state)
+  getNextMove (controller: IBaseController, state: IBaseState): IBaseMove {
+    const moves = this.getPossibleMovesEvaluation(controller, state);
+    const asc_sorted = moves.sort((a,b) => b.eval-a.eval)
+    const best = state.maximize?asc_sorted[0]:asc_sorted[asc_sorted.length-1]
+    return best.move
+  }
+  getPossibleMovesEvaluation(controller: IBaseController, state: IBaseState) {
+    const move_evaluation = []
+    const possible_moves = controller.getPossibleMoves(state)
 
     for (let i = 0; i < possible_moves.length; i++) {
-        node_evaluation.push({state: possible_moves[i], eval: this.minimax(possible_moves[i])})
+        move_evaluation.push({move: possible_moves[i], eval: this.minimax(controller, state.afterMove(possible_moves[i]))})
     }
     
-    return node_evaluation
-    //list possible moves from controller
-    //apply rule to sort them
-    //returns the first
+    return move_evaluation
   }
-  minimax(state: IBaseState): number{
-    if(this.eval(state.board) != "?"){
-        return Number(this.eval(state.board))
+  minimax(controller: IBaseController, state: IBaseState): number{
+    if(controller.eval(state.board) != "?"){
+        return Number(controller.eval(state.board))
     }
-    const neighbors = this.findNeighbors(state)
+    const possible_moves = controller.getPossibleMoves(state)
     const better = state.maximize?Math.max:Math.min
     let best = state.maximize?-10:+10
 
-    for (let i = 0; i < neighbors.length; i++) {
-        best = better(best, this.minimax(neighbors[i])) 
+    for (let i = 0; i < possible_moves.length; i++) {
+        best = better(best, this.minimax(controller, state.afterMove(possible_moves[i]))) 
     }
     return best 
   }
-
 }
