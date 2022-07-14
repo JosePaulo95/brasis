@@ -4,7 +4,7 @@
         <tbody>
           <tr v-for="(row, x) in board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
-              <img class="cell-content" v-bind:src="getBackgroundSprite(cell)" alt="">
+              <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
             </td>
           </tr>
         </tbody>
@@ -19,7 +19,7 @@
   export default defineComponent({
     name: 'Board',
     props: {
-      board: Array
+      board: Array,
     },
     methods: {
       getBackgroundSprite: getBackgroundSprite
