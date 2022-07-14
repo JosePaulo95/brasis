@@ -56,7 +56,7 @@ export default class TicTacController implements IBaseController {
         return "?";
     }
 
-    static countUnits (board, unit_type) {
+    static countUnits (board: string[][], unit_type: string) {
         let count = 0
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {

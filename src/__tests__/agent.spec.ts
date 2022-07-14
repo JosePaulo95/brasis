@@ -1,6 +1,5 @@
 
 import { TicTacStateModel } from '../TicTac/models/TicTacStateModel'
-import { assert, describe, expect, it } from 'vitest'
 import TicTacController from "../TicTac/controllers/TicTacController"
 import { X,O,_ } from '../TicTac/models/TicTacPieceModel'
 import { BasicMiniMaxAgent } from '../agents/BasicMiniMaxAgent'

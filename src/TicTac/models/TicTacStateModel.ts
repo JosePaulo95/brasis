@@ -21,7 +21,7 @@ export class TicTacStateModel implements IBaseState{
 
         return new_state
     }
-    opposite (mark){
+    opposite (mark: string){
         return mark==O?X:O
     }
 }

@@ -1,9 +1,8 @@
-import { assert, describe, expect, it } from 'vitest'
 //import { PLAYER_UNIT as P, ENEMY_UNIT as E } from '../models/brasisModel'
-import TicTacController from '../TicTac/controllers/TicTacController'
-import { _ } from '../TicTac/models/TicTacPieceModel'
+import TicTacController from '@/TicTac/controllers/TicTacController'
+import { _ } from '@/TicTac/models/TicTacPieceModel'
 //import { BrasisController, TicTacController } from '../controllers'
-import { phases } from '../common/Phases'
+import { phases } from '@/common/Phases'
 
 describe('recognizes gamestate', () => {
   // it('brasis - empty board', () => {
