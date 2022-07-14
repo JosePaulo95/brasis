@@ -42,15 +42,17 @@
       margin: auto;
     }
     .board th {
-      padding: .5vw;
+      padding: 0vw;
     }
     .board td {
       background-color: white;
-      border: 1px solid;
+      border: 1px solid rgba(0,0,0,0.3);
+      padding: unset;
       width: 13vw;
       height: 13vw;
     }
     .cell-content {
+      vertical-align: top;
       width: inherit;
     }
     .board .light { background: #eee; }
