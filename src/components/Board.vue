@@ -48,8 +48,8 @@
       background-color: white;
       border: 1px solid rgba(0,0,0,0.3);
       padding: unset;
-      width: 13vw;
-      height: 13vw;
+      width: min(50px, 13vw);
+      height: min(50px, 13vw);
     }
     .cell-content {
       vertical-align: top;
