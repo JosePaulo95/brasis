@@ -2,8 +2,8 @@
     <div class="board-container">
       <table class="board">
         <tbody>
-          <tr class="row" v-for="(row, x) in board">
-            <td class="cell" v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
+          <tr v-for="(row, x) in board">
+            <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <img class="cell-content" v-bind:src="getBackgroundSprite(cell)" alt="">
             </td>
           </tr>
@@ -34,15 +34,18 @@
       background-color: #000;
       height: 100vh;
       width: auto;
+      display: flex;
     }
     .board {
       border-spacing: 0;
       border-collapse: collapse;
+      margin: auto;
     }
     .board th {
       padding: .5vw;
     }
     .board td {
+      background-color: white;
       border: 1px solid;
       width: 13vw;
       height: 13vw;
