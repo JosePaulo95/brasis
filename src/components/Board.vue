@@ -2,7 +2,7 @@
     <div class="board-container">
       <table class="board">
         <tbody>
-          <tr v-for="(row, x) in board">
+          <tr v-for="(row, x) in bg_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
             </td>
@@ -19,7 +19,7 @@
   export default defineComponent({
     name: 'Board',
     props: {
-      board: Array,
+      bg_board: Array,
     },
     methods: {
       getBackgroundSprite: getBackgroundSprite
