@@ -1,13 +1,15 @@
   <template>
-    <table class="board">
-      <tbody>
-        <tr class="row" v-for="(row, x) in board">
-          <td class="cell" v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
-            <img v-bind:src="getBackgroundSprite(cell)" alt="">
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="board-container">
+      <table class="board">
+        <tbody>
+          <tr class="row" v-for="(row, x) in board">
+            <td class="cell" v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
+              <img class="cell-content" v-bind:src="getBackgroundSprite(cell)" alt="">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </template>
 
   <script lang="ts">
@@ -27,9 +29,27 @@
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
-    .board { border-spacing: 0; border-collapse: collapse; }
-    .board th { padding: .5em; }
-    .board td { border: 1px solid; width: 2em; height: 2em; }
+    .board-container {
+      overflow: scroll;
+      background-color: #000;
+      height: 100vh;
+      width: auto;
+    }
+    .board {
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+    .board th {
+      padding: .5vw;
+    }
+    .board td {
+      border: 1px solid;
+      width: 13vw;
+      height: 13vw;
+    }
+    .cell-content {
+      width: inherit;
+    }
     .board .light { background: #eee; }
     .board .dark { background: #000; }
   </style>
