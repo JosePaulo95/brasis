@@ -2,13 +2,13 @@
     <div class="board-container">
       <table class="board">
         <tbody>
-          <tr v-for="(row, x) in bg_board">
+          <tr v-for="(row, x) in state.default_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
-              <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt=""> -->
               <div @click="clicked(x, y)" class="cell-container">
-                <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
+                <LayerBackground :cell="state.bg_board[x][y]" />
+                <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
                 <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
-                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt="">
+                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt=""> -->
               </div>
             </td>
           </tr>
@@ -18,33 +18,38 @@
   </template>
 
   <script lang="ts">
+  import BoardModel from '@/Brasis/models/board';
   import { defineComponent, PropType } from 'vue';
-  import { getBackgroundSprite } from '@/Brasis/views';
+  import LayerBackground from "./BoardLayers/LayerBackground.vue"
 
   export default defineComponent({
     name: 'Board',
+    components: {
+      LayerBackground
+    },
     data(){
       return {
-        ui_board: [
-          [0,0,1,0,0],
-          [0,0,0,0,0],
-          [0,0,0,0,0],
-          [0,0,1,1,0],
-          [0,0,0,0,0]
-        ], 
+        controller: {}
       }
     },
     props: {
-      bg_board: Array as PropType<Array<Array<number>>>,
-      actors_board: Array as PropType<Array<Array<number>>>,
+      state: {
+        type: Object as PropType<BoardModel>,
+        required: true
+      }
+    },
+    mounted(){
+      //this.controller = new BoardController(this.state)
     },
     methods: {
-      getBackgroundSprite: getBackgroundSprite,
       clicked(x: number, y: number){
-        if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
-          console.log('clicou num ator');
-        }
-      }
+        //const new_state = this.controller.select(x, y)
+        //this.state = new_state
+        // if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
+          
+        //   this.ui_board[x+1][y] = 1
+        // }
+      },
     }
   });
   </script>
@@ -53,7 +58,7 @@
   <style scoped>
     .board-container {
       overflow: scroll;
-      background-color: #000;
+      /* background-color: #000; */
       height: 100vh;
       width: auto;
       display: flex;
@@ -79,7 +84,7 @@
       width: inherit;
       height: inherit;
     }
-    .cell-content {
+    .cell-container * {
       position: absolute;
       width: inherit;
       height: inherit;

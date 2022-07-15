@@ -1,26 +1,26 @@
 <template>
   <Board
-    :bg_board="[
-      [55,55,55],
-      [55,55,55],
-      [55,55,55],
-    ]"
-    :actors_board="[
-      [0,0,2],
-      [0,0,0],
-      [0,1,0],
-    ]"
+    :state="this.state"
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Board from './components/Board.vue';
+import BoardModel from '@/Brasis/models/board'
 
 export default defineComponent({
   name: 'App',
   components: {
     Board
+  },
+  data(){
+    return {
+      state: {}
+    }
+  },
+  beforeMount(){
+    this.state = new BoardModel()
   }
 });
 </script>
