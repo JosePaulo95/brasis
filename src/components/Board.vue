@@ -5,7 +5,7 @@
           <tr v-for="(row, x) in bg_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt=""> -->
-              <div class="cell-container">
+              <div @click="clicked(x, y)" class="cell-container">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
                 <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt="">
@@ -18,7 +18,7 @@
   </template>
 
   <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
   import { getBackgroundSprite } from '@/Brasis/views';
 
   export default defineComponent({
@@ -35,13 +35,15 @@
       }
     },
     props: {
-      bg_board: Array,
-      actors_board: Array,
+      bg_board: Array as PropType<Array<Array<number>>>,
+      actors_board: Array as PropType<Array<Array<number>>>,
     },
     methods: {
       getBackgroundSprite: getBackgroundSprite,
-      hello(x: number, y: number){
-        alert("clicou no "+x+", "+y)
+      clicked(x: number, y: number){
+        if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
+          console.log('clicou num ator');
+        }
       }
     }
   });
