@@ -65,7 +65,7 @@
   <style scoped>
     .board-container {
       overflow: scroll;
-      /* background-color: #000; */
+      background-color: #000;
       height: 100vh;
       width: auto;
       display: flex;
