@@ -91,6 +91,7 @@
       position: absolute;
       width: inherit;
       height: inherit;
+      image-rendering: pixelated;
     }
     .transparent {
       opacity: 0.5;
