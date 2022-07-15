@@ -1,6 +1,6 @@
 <template>
   <Board
-    :state="this.state"
+    :model="this.board_model"
   />
 </template>
 
@@ -16,11 +16,11 @@ export default defineComponent({
   },
   data(){
     return {
-      state: {}
+      board_model: {}
     }
   },
   beforeMount(){
-    this.state = new BoardModel()
+    this.board_model = new BoardModel()
   }
 });
 </script>
