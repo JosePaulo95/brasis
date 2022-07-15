@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import { getBackgroundSprite } from '@/Brasis/views';
-import { defineComponent } from 'vue';
+  import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'LayerBackground',

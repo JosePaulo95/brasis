@@ -20,6 +20,7 @@
 
   <script lang="ts">
   import BoardModel from '@/Brasis/models/board';
+  import BoardController from '@/Brasis/controllers/board'
   import { defineComponent, PropType } from 'vue';
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
@@ -32,22 +33,25 @@
     },
     data(){
       return {
-        controller: {}
+        controller: {} as BoardController,
+        state: {} as BoardModel
       }
     },
     props: {
-      state: {
+      model: {
         type: Object as PropType<BoardModel>,
         required: true
       }
     },
-    mounted(){
-      //this.controller = new BoardController(this.state)
+    beforeMount(){
+      this.state = this.model
+      this.controller = new BoardController(this.state)
     },
     methods: {
       clicked(x: number, y: number){
         //const new_state = this.controller.select(x, y)
-        //this.state = new_state
+        this.state = this.controller.select(x, y)
+        //{}//new_state
         // if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
           
         //   this.ui_board[x+1][y] = 1
