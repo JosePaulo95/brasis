@@ -4,7 +4,11 @@
         <tbody>
           <tr v-for="(row, x) in bg_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
-              <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
+              <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt=""> -->
+              <div class="cell-container">
+                <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
+                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', cell)" alt="">
+              </div>
             </td>
           </tr>
         </tbody>
@@ -20,9 +24,13 @@
     name: 'Board',
     props: {
       bg_board: Array,
+      actors_board: Array,
     },
     methods: {
-      getBackgroundSprite: getBackgroundSprite
+      getBackgroundSprite: getBackgroundSprite,
+      hello(x: number, y: number){
+        alert("clicou no "+x+", "+y)
+      }
     }
   });
   </script>
@@ -37,6 +45,7 @@
       display: flex;
     }
     .board {
+      table-layout: fixed;
       border-spacing: 0;
       border-collapse: collapse;
       margin: auto;
@@ -45,15 +54,21 @@
       padding: 0vw;
     }
     .board td {
-      background-color: white;
+      background-color: #eee;
       border: 1px solid rgba(0,0,0,0.3);
       padding: unset;
       width: min(50px, 13vw);
       height: min(50px, 13vw);
     }
-    .cell-content {
+    .cell-container {
       vertical-align: top;
       width: inherit;
+      height: inherit;
+    }
+    .cell-content {
+      position: absolute;
+      width: inherit;
+      height: inherit;
     }
     .board .light { background: #eee; }
     .board .dark { background: #000; }
