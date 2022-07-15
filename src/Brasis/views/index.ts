@@ -6,9 +6,10 @@ export function getBackgroundSprite (type: String, sprite_code: number) {
         case "bg":
             return require('@/assets/Tilesets/terrain arido/tile'+code+'.png')
         case "actors":
-            return require('@/assets/Actors/tile000.png')
+            if(sprite_code)
+                return require('@/assets/Actors/tile000.png')
         default:
-            return require('@/assets/logo.png')
+            return require('@/assets/Tilesets/terrain arido/tile010.png')
     }
     
 }
