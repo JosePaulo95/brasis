@@ -6,6 +6,7 @@
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <div @click="clicked(x, y)" class="cell-container">
                 <LayerBackground :cell="state.bg_board[x][y]" />
+                <LayerActors :cell="state.actors_board[x][y]" />
                 <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
                 <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt=""> -->
@@ -21,11 +22,13 @@
   import BoardModel from '@/Brasis/models/board';
   import { defineComponent, PropType } from 'vue';
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
+  import LayerActors from "./BoardLayers/LayerActors.vue"
 
   export default defineComponent({
     name: 'Board',
     components: {
-      LayerBackground
+      LayerBackground,
+      LayerActors
     },
     data(){
       return {
