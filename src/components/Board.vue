@@ -7,6 +7,7 @@
               <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt=""> -->
               <div class="cell-container">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
+                <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt="">
               </div>
             </td>
@@ -22,6 +23,17 @@
 
   export default defineComponent({
     name: 'Board',
+    data(){
+      return {
+        ui_board: [
+          [0,0,1,0,0],
+          [0,0,0,0,0],
+          [0,0,0,0,0],
+          [0,0,1,1,0],
+          [0,0,0,0,0]
+        ], 
+      }
+    },
     props: {
       bg_board: Array,
       actors_board: Array,
@@ -69,6 +81,9 @@
       position: absolute;
       width: inherit;
       height: inherit;
+    }
+    .transparent {
+      opacity: 0.5;
     }
     .board .light { background: #eee; }
     .board .dark { background: #000; }
