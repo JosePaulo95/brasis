@@ -7,7 +7,7 @@
               <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt=""> -->
               <div class="cell-container">
                 <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
-                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', cell)" alt="">
+                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt="">
               </div>
             </td>
           </tr>
