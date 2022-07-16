@@ -8,7 +8,7 @@ export function getBackgroundSprite (type: String, sprite_code: number) {
         case "actors":
             if(sprite_code)
                 return require('@/assets/Actors/tile000.png')
-        case "board-ui":
+        case "board-hud":
             if(sprite_code)
                 return require('@/assets/Tilesets/hud/tile001.png')
         default:
