@@ -7,14 +7,14 @@ describe('board component', () => {
     const model = new BoardModel()
     const controller = new BoardController(model);
 
-    expect(model.hud_board[0][0]).toEqual(0)
+    expect(model.hud_board[0][0].value).toEqual(0)
 
     controller.select(0,0)
-    expect(model.hud_board[0][0]).toEqual(1)
+    expect(model.hud_board[0][0].value).toEqual(1)
     
     controller.select(1,0)
-    expect(model.hud_board[0][0]).toEqual(0)
-    expect(model.hud_board[1][0]).toEqual(1)
+    expect(model.hud_board[0][0].value).toEqual(0)
+    expect(model.hud_board[1][0].value).toEqual(1)
   })
 
   it('moves actor', async () => {
