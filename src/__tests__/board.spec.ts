@@ -6,15 +6,32 @@ describe('board component', () => {
   it('selects cells', async () => {
     const model = new BoardModel()
     const controller = new BoardController(model);
-    let state = {}
 
     expect(model.hud_board[0][0]).toEqual(0)
 
-    state = controller.select(0,0)
+    controller.select(0,0)
     expect(model.hud_board[0][0]).toEqual(1)
     
-    state = controller.select(1,0)
+    controller.select(1,0)
     expect(model.hud_board[0][0]).toEqual(0)
     expect(model.hud_board[1][0]).toEqual(1)
+  })
+
+  it('moves actor', async () => {
+    const model = new BoardModel()
+    const controller = new BoardController(model);
+
+    expect(model.actors_board[1][1]).toEqual(1)
+
+    controller.select(1,1)
+    controller.select(1,2)
+    expect(model.actors_board[1][1]).toEqual(0)
+    expect(model.actors_board[1][2]).toEqual(1)
+    expect(model.hud_board[1][2]).toEqual(0)
+
+    controller.select(1,1)//nao deve mover sem selecionar novamente
+    expect(model.actors_board[1][1]).toEqual(0)
+    expect(model.actors_board[1][2]).toEqual(1)
+    expect(model.hud_board[1][1]).toEqual(1)
   })
 })
