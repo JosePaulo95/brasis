@@ -2,6 +2,10 @@
 export default class BaseLayerModel{
     protected _value!: number;
 
+    constructor(value = 0){
+        this._value = value;
+    }
+
     public get value(): number {
         return this._value;
     }
