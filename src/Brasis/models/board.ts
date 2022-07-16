@@ -43,8 +43,8 @@ export default class BoardModel{
         //previous bg release
         //SHOW_POSSIBLE_MOVES current actor select
 
-        const prev_selected = old_x!=undefined?this.hud_board[old_x][old_y]:null
-        const prev_actor = old_x!=undefined?this.actors_board[old_x][old_y]:null
+        const prev_selected = old_x!=undefined?this.hud_board[old_x][old_y].value:null
+        const prev_actor = old_x!=undefined?this.actors_board[old_x][old_y].value:null
         const current_empty = this.actors_board[x][y].value==0
 
         old_x!=undefined&&(this.hud_board[old_x][old_y].value = 0)
