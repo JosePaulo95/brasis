@@ -31,15 +31,25 @@ export default class BoardModel{
         ]
     }
     propagateSelection({ old_x, old_y, x, y}:{ old_x:number, old_y:number, x:number, y:number}): BoardModel {
-        //se old é um ator e current é espaço vazio
+        //se old é um ator e hud de sel ta nele e current é espaço vazio
         //mover
+        const prev_selected = old_x!=undefined?this.hud_board[old_x][old_y]:null
         const prev_actor = old_x!=undefined?this.actors_board[old_x][old_y]:null
         const current_empty = this.actors_board[x][y]==0
-        
+
+        old_x!=undefined&&(this.hud_board[old_x][old_y] = 0)
+
         if(prev_actor && current_empty){
-            this.actors_board[old_x][old_y] = 0
-            this.actors_board[x][y] = 1
+            if(prev_selected){
+                this.actors_board[old_x][old_y] = 0
+                this.actors_board[x][y] = 1
+            }else{
+                this.hud_board[x][y] = 1
+            }
+        }else{
+            this.hud_board[x][y] = 1
         }
+
         return this
     }
 }
