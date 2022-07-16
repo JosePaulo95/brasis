@@ -21,17 +21,17 @@ describe('board component', () => {
     const model = new BoardModel()
     const controller = new BoardController(model);
 
-    expect(model.actors_board[1][1]).toEqual(1)
+    expect(model.actors_board[1][1].value).toEqual(1)
 
     controller.select(1,1)
     controller.select(1,2)
-    expect(model.actors_board[1][1]).toEqual(0)
-    expect(model.actors_board[1][2]).toEqual(1)
-    expect(model.hud_board[1][2]).toEqual(0)
+    expect(model.actors_board[1][1].value).toEqual(0)
+    expect(model.actors_board[1][2].value).toEqual(1)
+    expect(model.hud_board[1][2].value).toEqual(0)
 
     controller.select(1,1)//nao deve mover sem selecionar novamente
-    expect(model.actors_board[1][1]).toEqual(0)
-    expect(model.actors_board[1][2]).toEqual(1)
-    expect(model.hud_board[1][1]).toEqual(1)
+    expect(model.actors_board[1][1].value).toEqual(0)
+    expect(model.actors_board[1][2].value).toEqual(1)
+    expect(model.hud_board[1][1].value).toEqual(1)
   })
 })
