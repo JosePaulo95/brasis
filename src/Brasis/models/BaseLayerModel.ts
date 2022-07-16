@@ -1,11 +1,11 @@
 
 export default class BaseLayerModel{
-    protected _valor!: Number;
+    protected _value!: number;
 
-    public get valor(): Number {
-        return this._valor;
+    public get value(): number {
+        return this._value;
     }
-    public set valor(value: Number) {
-        this._valor = value;
+    public set value(value: number) {
+        this._value = value;
     }
 }
