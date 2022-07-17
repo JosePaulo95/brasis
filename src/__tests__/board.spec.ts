@@ -34,4 +34,12 @@ describe('board component', () => {
     expect(model.actors_board[1][2].value).toEqual(1)
     expect(model.hud_board[1][1].value).toEqual(1)
   })
+
+  it('shows possible moves', async () => {
+    const model = new BoardModel("dev1")
+    const controller = new BoardController(model);
+    const neighbors = controller.getNeighbors(1,1,2)
+    console.log(neighbors);
+    expect(neighbors.length).toEqual(4)
+  })
 })
