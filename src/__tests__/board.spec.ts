@@ -13,11 +13,11 @@ describe('board component', () => {
   })
 
   it('neighbors level adjacents', async () => {
-    const model = new BoardModel("dev1")
+    const model = new BoardModel("5x5 w/ 2 allies")
     const controller = new BoardController(model);
-    const neighbors = controller.getNeighbors(1,1,1)
+    const neighbors = controller.getNeighbors(2,2,1)
     console.log(neighbors);
-    expect(neighbors.length).toEqual(4)
+    expect(neighbors.length).toEqual(3)
   })
 
   it('action possibleMoves', async () => {
@@ -51,7 +51,6 @@ describe('board component', () => {
     expect(model.actors_board[1][1].value).toEqual(0)
     expect(model.actors_board[1][2].value).toEqual(1)
   })
-
   it('dismiss hud', async () => {
     const model = new BoardModel("3x3 actor in center")
     const controller = new BoardController(model);

@@ -76,7 +76,7 @@ export default class BoardController{
         }
     }
     selectActor(x: number, y: number) {
-        const possible_houses_1 = this.getNeighbors(x,y,1)
+        const possible_houses_1 = this.getNeighbors(x,y,1).concat(this.getNeighbors(x,y,2))
 
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
@@ -89,18 +89,19 @@ export default class BoardController{
     getHUD(x: number, y: number) {
         return this.model.hud_board[x] && this.model.hud_board[x][y]
     }
-    getNeighbors(x: number, y: number, d=1): any {
-        if(!this.is_valid_house(x,y)){
+    getNeighbors(x: number, y: number, d=1, root=true): any {
+        if(!this.is_valid_house(x,y) || (this.hasActor(x,y) && !root)){
             return undefined
         }
+        
         if(d==0){
             return {x, y}
         }
         return [
-            this.getNeighbors(x,    y-1,    d-1),
-            this.getNeighbors(x,    y+1,    d-1),
-            this.getNeighbors(x-1,  y,      d-1),
-            this.getNeighbors(x+1,  y,      d-1)
+            this.getNeighbors(x,    y-1,    d-1, false),
+            this.getNeighbors(x,    y+1,    d-1, false),
+            this.getNeighbors(x-1,  y,      d-1, false),
+            this.getNeighbors(x+1,  y,      d-1, false)
         ].filter(Boolean).flat(d).filter((elm, index, arr) => index == arr.findIndex(i=>i.x==elm.x&&i.y==elm.y))
     }
     is_valid_house(x: number, y: number) {
