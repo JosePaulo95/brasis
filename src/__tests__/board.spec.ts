@@ -9,6 +9,7 @@ describe('board component', () => {
     expect(controller.getTopLayer(0,0)).toBe("bg")
     expect(controller.getTopLayer(1,1)).toBe("actor")
     expect(controller.getTopLayer(1,2)).toBe("hud")
+    expect(controller.getTopLayer(undefined,undefined)).toBe("")
   })
 
   it('neighbors level adjacents', async () => {

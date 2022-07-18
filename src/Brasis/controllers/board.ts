@@ -10,18 +10,18 @@ export default class BoardController{
     constructor(model: BoardModel){
         this.model = model
         this.interactions = [
-            new InteractionModel("*", this.hello)
+            new InteractionModel("*>actor", this.selectActor)
         ]
     }
     hello(x:number,y:number){
         alert("deu bom"+x+""+y)
     }
     select(x: number, y: number): BoardModel {
-        const previous_actor = Boolean(this.hasActor(this.old_x, this.old_y))
+        const previous_actor = this.getTopLayer(this.old_x, this.old_y)
         const top_current = this.getTopLayer(x,y)
-        const event_key = `${previous_actor}-${top_current}` 
+        const event_key = `${previous_actor}>${top_current}` 
 
-        this.interactions.forEach(action => {
+        this.interactions.filter(i=>i.match(event_key)).forEach(action => {
             action.method.call(this,x,y)
         }, this);
 
@@ -45,7 +45,10 @@ export default class BoardController{
     getSubscribedInteractions(event_key: string) {
         return this.interactions.filter(i => i.event_key == event_key)
     }
-    getTopLayer(x: number, y: number) {
+    getTopLayer(x: number|undefined, y: number|undefined) {
+        if(x==undefined || y==undefined){
+            return ""
+        }
         if(this.getHUD(x,y).value){
             return "hud"
         }
@@ -56,7 +59,7 @@ export default class BoardController{
     }
 
     triggersInteraction(action_code: string, x: number, y: number) {
-        this.manageActorSelection(x,y)
+        this.selectActor(x,y)
     }
 
     manageMove(x: number, y: number, old_x: number, old_y: number) {
@@ -75,7 +78,7 @@ export default class BoardController{
             }
         }
     }
-    manageActorSelection(x: number, y: number) {
+    selectActor(x: number, y: number) {
         if(this.hasActor(x,y)){
             const possible_houses_1 = this.getNeighbors(x,y,1)
 
