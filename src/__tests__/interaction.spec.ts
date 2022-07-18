@@ -10,10 +10,10 @@ describe('board component', () => {
         expect(trigger_all.match("hud")).toBe(true)
 
         expect(trigger_possible_moves.match("actor>actor")).toBe(true)
-        expect(trigger_possible_moves.match("actor")).toBe(true)
+        expect(trigger_possible_moves.match(">actor")).toBe(true)
         expect(trigger_possible_moves.match("actor>bg")).toBe(false)
 
-        expect(trigger_dismiss.match("actor")).toBe(false)
+        expect(trigger_dismiss.match(">actor")).toBe(false)
         expect(trigger_dismiss.match("hud>actor")).toBe(false)
         expect(trigger_dismiss.match("actor>bg")).toBe(true)
     })

@@ -13,8 +13,6 @@ export class InteractionModel {
             return true
         }
 
-        event_key = event_key.includes(">")?event_key:">"+event_key
-
         const t = this.event_key.split(">")
         const e = event_key.split(">")
 
