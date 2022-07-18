@@ -64,7 +64,8 @@ export default class BoardController{
         this.selectActor(x,y)
     }
 
-    moveActor(x: number, y: number, old_x: number, old_y: number) {
+    async moveActor(x: number, y: number, old_x: number, old_y: number) {
+        await delay(500)
         this.model.actors_board[old_x][old_y].value = 0
         this.model.actors_board[x][y].value = 1
     }
@@ -108,3 +109,7 @@ export default class BoardController{
         return this.model.bg_board[x] && this.model.bg_board[x][y]
     }
 }
+function delay(ms: number):any {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
