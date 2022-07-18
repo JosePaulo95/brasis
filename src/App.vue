@@ -20,7 +20,7 @@ export default defineComponent({
     }
   },
   beforeMount(){
-    this.board_model = new BoardModel()
+    this.board_model = new BoardModel("5x5 w/ 2 allies")
   }
 });
 </script>
