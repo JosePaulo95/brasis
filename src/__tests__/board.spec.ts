@@ -2,6 +2,15 @@ import BoardController from '@/Brasis/controllers/board'
 import BoardModel from '@/Brasis/models/board'
 
 describe('board component', () => {
+  it('gets ordered layer', async () => {
+    const model = new BoardModel()
+    const controller = new BoardController(model);
+    model.hud_board[1][2].value=1
+    expect(controller.getTopLayer(0,0)).toBe("bg")
+    expect(controller.getTopLayer(1,1)).toBe("actor")
+    expect(controller.getTopLayer(1,2)).toBe("hud")
+  })
+
   it('neighbors level adjacents', async () => {
     const model = new BoardModel("dev1")
     const controller = new BoardController(model);

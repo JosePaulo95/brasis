@@ -1,23 +1,58 @@
 import BoardModel from "../models/board";
+import { InteractionModel } from "../models/InteractionModel";
 
 export default class BoardController{
     model = {} as BoardModel
     old_x!: number;
     old_y!: number;
+    interactions: Array<InteractionModel>;
     
     constructor(model: BoardModel){
         this.model = model
+        this.interactions = [
+            new InteractionModel("*", this.hello)
+        ]
+    }
+    hello(x:number,y:number){
+        alert("deu bom"+x+""+y)
     }
     select(x: number, y: number): BoardModel {
+        const previous_actor = Boolean(this.hasActor(this.old_x, this.old_y))
+        const top_current = this.getTopLayer(x,y)
+        const event_key = `${previous_actor}-${top_current}` 
 
-        this.manageActorSelection(x,y)
-        this.manageMove(x,y,this.old_x, this.old_y)
+        this.interactions.forEach(action => {
+            action.method.call(this,x,y)
+        }, this);
+
+        // this.interactions.filter(i=>i.event_key==event_key).forEach(action => {
+        //     action.method.call(this,x,y)
+        // }, this);
+
+        // this.getSubscribedInteractions(event_key).forEach(action => {
+        //     action.method.call(x,y)
+        // }, this);
+
+        //this.manageActorSelection(x,y)
+        //this.manageMove(x,y,this.old_x, this.old_y)
 
         // this.model.propagateSelection({old_x: this.old_x, old_y: this.old_y, x, y})
         this.old_x = x
         this.old_y = y
         
         return this.model
+    }
+    getSubscribedInteractions(event_key: string) {
+        return this.interactions.filter(i => i.event_key == event_key)
+    }
+    getTopLayer(x: number, y: number) {
+        if(this.getHUD(x,y).value){
+            return "hud"
+        }
+        if(this.hasActor(x,y)){
+            return "actor"
+        }
+        return "bg"
     }
 
     triggersInteraction(action_code: string, x: number, y: number) {
@@ -27,7 +62,7 @@ export default class BoardController{
     manageMove(x: number, y: number, old_x: number, old_y: number) {
         const prev_actor = this.hasActor(old_x, old_y)
         const cur_hud = this.getHUD(x, y)
-        if(prev_actor?.value){
+        if(prev_actor){
             if(cur_hud.value){
 
             }else{
@@ -51,7 +86,7 @@ export default class BoardController{
         }
     }
     hasActor(x: number, y: number) {
-        return this.model.actors_board[x] && this.model.actors_board[x][y]
+        return this.model.actors_board[x] && this.model.actors_board[x][y].value
     }
     getHUD(x: number, y: number) {
         return this.model.hud_board[x] && this.model.hud_board[x][y]
