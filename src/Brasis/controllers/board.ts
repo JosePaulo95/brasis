@@ -10,9 +10,9 @@ export default class BoardController{
     constructor(model: BoardModel){
         this.model = model
         this.interactions = [
+            new InteractionModel("*", this.dismissHUD),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>hud", this.moveActor),
-            new InteractionModel("*>hud", this.dismissHUD),
         ]
     }
     hello(x:number,y:number){
