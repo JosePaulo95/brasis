@@ -10,7 +10,9 @@ export default class BoardController{
     constructor(model: BoardModel){
         this.model = model
         this.interactions = [
-            new InteractionModel("*>actor", this.selectActor)
+            new InteractionModel("*>actor", this.selectActor),
+            new InteractionModel("actor>hud", this.moveActor),
+            new InteractionModel("*>hud", this.dismissHUD),
         ]
     }
     hello(x:number,y:number){
@@ -18,11 +20,11 @@ export default class BoardController{
     }
     select(x: number, y: number): BoardModel {
         const previous_actor = this.getTopLayer(this.old_x, this.old_y)
-        const top_current = this.getTopLayer(x,y)
+        const top_current = this.getTopLayer(x, y)
         const event_key = `${previous_actor}>${top_current}` 
 
         this.interactions.filter(i=>i.match(event_key)).forEach(action => {
-            action.method.call(this,x,y)
+            action.method.call(this, x, y, this.old_x, this.old_y)
         }, this);
 
         // this.interactions.filter(i=>i.event_key==event_key).forEach(action => {
@@ -62,30 +64,23 @@ export default class BoardController{
         this.selectActor(x,y)
     }
 
-    manageMove(x: number, y: number, old_x: number, old_y: number) {
-        const prev_actor = this.hasActor(old_x, old_y)
-        const cur_hud = this.getHUD(x, y)
-        if(prev_actor){
-            if(cur_hud.value){
-
-            }else{
-                const possible_houses_1 = this.getNeighbors(old_x, old_y, 1)
-
-                for (let i = 0; i < possible_houses_1.length; i++) {
-                    const house = possible_houses_1[i];
-                    this.model.hud_board[house.x][house.y].value = 0
-                }
+    moveActor(x: number, y: number, old_x: number, old_y: number) {
+        this.model.actors_board[old_x][old_y].value = 0
+        this.model.actors_board[x][y].value = 1
+    }
+    dismissHUD() {
+        for (let i = 0; i < this.model.hud_board.length; i++) {
+            for (let j = 0; j < this.model.hud_board[i].length; j++) {
+                this.model.hud_board[i][j].value = 0
             }
         }
     }
     selectActor(x: number, y: number) {
-        if(this.hasActor(x,y)){
-            const possible_houses_1 = this.getNeighbors(x,y,1)
+        const possible_houses_1 = this.getNeighbors(x,y,1)
 
-            for (let i = 0; i < possible_houses_1.length; i++) {
-                const house = possible_houses_1[i];
-                this.model.hud_board[house.x][house.y].value = 1
-            }
+        for (let i = 0; i < possible_houses_1.length; i++) {
+            const house = possible_houses_1[i];
+            this.model.hud_board[house.x][house.y].value = 1
         }
     }
     hasActor(x: number, y: number) {

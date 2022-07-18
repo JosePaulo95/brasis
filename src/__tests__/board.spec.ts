@@ -41,4 +41,26 @@ describe('board component', () => {
     //f         act   possibleMoves
     //f         bg    -
   })
+  it('moves actor', async () => {
+    const model = new BoardModel("3x3 actor in center")
+    const controller = new BoardController(model);
+
+    expect(model.actors_board[1][1].value).toEqual(1)
+    expect(model.actors_board[1][2].value).toEqual(0)
+    controller.moveActor(1,2,1,1)
+    expect(model.actors_board[1][1].value).toEqual(0)
+    expect(model.actors_board[1][2].value).toEqual(1)
+  })
+
+  it('dismiss hud', async () => {
+    const model = new BoardModel("3x3 actor in center")
+    const controller = new BoardController(model);
+
+    controller.selectActor(1,1)
+    controller.dismissHUD()
+    expect(model.hud_board[1][0].value).toEqual(0)
+    expect(model.hud_board[0][1].value).toEqual(0)
+    expect(model.hud_board[1][2].value).toEqual(0)
+    expect(model.hud_board[2][1].value).toEqual(0)
+  })
 })
