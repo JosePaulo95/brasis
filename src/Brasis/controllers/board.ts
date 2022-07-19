@@ -68,7 +68,9 @@ export default class BoardController{
 
     async moveActor(x: number, y: number, old_x: number, old_y: number) {
         await delay(500)
-        this.model.actors_board[old_x][old_y].value = 0
+        const actor = this.model.actors_board[old_x][old_y]
+        await actor.animMove(old_x-x, old_y-y)
+        this.model.actors_board[old_x][old_y]. value = 0
         this.model.actors_board[x][y].value = 1
     }
     dismissHUD() {
