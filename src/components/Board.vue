@@ -1,4 +1,7 @@
   <template>
+    <StatusMenu
+      :controller="controller"
+    />
     <div class="board-container">
       <table class="board">
         <tbody>
@@ -23,16 +26,19 @@
   import BoardModel from '@/Brasis/models/board';
   import BoardController from '@/Brasis/controllers/board'
   import { defineComponent, PropType } from 'vue';
+  import StatusMenu from "./StatusMenu.vue"
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
-import LayerHUD from "./BoardLayers/LayerHUD.vue"
+  import LayerHUD from "./BoardLayers/LayerHUD.vue"
+
 
   export default defineComponent({
     name: 'Board',
     components: {
     LayerBackground,
     LayerActors,
-    LayerHUD
+    LayerHUD,
+    StatusMenu
 },
     data(){
       return {
@@ -53,7 +59,8 @@ import LayerHUD from "./BoardLayers/LayerHUD.vue"
     methods: {
       clicked(x: number, y: number){
         //const new_state = this.controller.select(x, y)
-        this.state = this.controller.select(x, y)
+        this.controller.select(x, y)
+        //this.state = this.controller.model
         //{}//new_state
         // if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
           

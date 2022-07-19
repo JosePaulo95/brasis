@@ -6,6 +6,7 @@ export default class BoardController{
     old_x!: number;
     old_y!: number;
     interactions: Array<InteractionModel>;
+    interaction_on = true;
     
     constructor(model: BoardModel){
         this.model = model
@@ -18,15 +19,18 @@ export default class BoardController{
     hello(x:number,y:number){
         alert("deu bom"+x+""+y)
     }
-    select(x: number, y: number): BoardModel {
+    async select(x: number, y: number): Promise<any> {
         const previous_actor = this.getTopLayer(this.old_x, this.old_y)
         const top_current = this.getTopLayer(x, y)
         const event_key = `${previous_actor}>${top_current}` 
 
-        this.interactions.filter(i=>i.match(event_key)).forEach(action => {
-            action.method.call(this, x, y, this.old_x, this.old_y)
-        }, this);
-
+        this.interaction_on = false
+        const interactions = this.interactions.filter(i=>i.match(event_key))
+        for (let i = 0; i < interactions.length; i++) {
+            await interactions[i].method.call(this, x, y, this.old_x, this.old_y)
+        }
+        
+        this.interaction_on = true
         // this.interactions.filter(i=>i.event_key==event_key).forEach(action => {
         //     action.method.call(this,x,y)
         // }, this);
@@ -41,8 +45,6 @@ export default class BoardController{
         // this.model.propagateSelection({old_x: this.old_x, old_y: this.old_y, x, y})
         this.old_x = x
         this.old_y = y
-        
-        return this.model
     }
     getSubscribedInteractions(event_key: string) {
         return this.interactions.filter(i => i.event_key == event_key)
