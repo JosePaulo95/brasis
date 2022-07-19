@@ -29,7 +29,7 @@ describe('board component', () => {
     const model = new BoardModel("5x5 w/ 2 allies")
     const controller = new BoardController(model);
     const p = new Point(2,2)
-    controller.triggersInteraction("showPossibleMoves", p)
+    controller.selectActor(p)
     expect(model.hud_board[0][1].value).toEqual(0)
     expect(model.hud_board[1][0].value).toEqual(0)
 

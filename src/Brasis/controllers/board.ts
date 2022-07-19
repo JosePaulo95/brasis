@@ -62,10 +62,6 @@ export default class BoardController{
         return "bg"
     }
 
-    triggersInteraction(action_code: string, p: Point) {
-        //this.selectActor(new Point(), p)
-    }
-
     async moveActor(cur_point: Point, prev_point?: Point) {
         if(prev_point){
             await delay(500)
