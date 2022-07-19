@@ -1,12 +1,13 @@
 
 export class Point {
-    x: number|undefined
-    y: number|undefined
+    x: number
+    y: number
     
-    constructor(x?:number, y?:number){
-        this.set(x,y)
+    constructor(x:number, y:number){
+        this.x = x
+        this.y = y
     }
-    set(x?:number, y?:number) {
+    set(x:number, y:number) {
         this.x = x
         this.y = y
     }

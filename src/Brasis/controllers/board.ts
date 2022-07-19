@@ -1,12 +1,12 @@
 import BoardModel from "../models/board";
 import { InteractionModel } from "../models/InteractionModel";
+import { Point } from "../models/Point";
 
 export default class BoardController{
     model = {} as BoardModel
-    old_x!: number;
-    old_y!: number;
     interactions: Array<InteractionModel>;
     interaction_on = true;
+    prev_point: Point|undefined;
     
     constructor(model: BoardModel){
         this.model = model
@@ -20,14 +20,15 @@ export default class BoardController{
         alert("deu bom"+x+""+y)
     }
     async select(x: number, y: number): Promise<any> {
-        const previous_actor = this.getTopLayer(this.old_x, this.old_y)
-        const top_current = this.getTopLayer(x, y)
+        const cur_point = new Point(x,y)
+        const previous_actor = this.getTopLayer(this.prev_point)
+        const top_current = this.getTopLayer(cur_point)
         const event_key = `${previous_actor}>${top_current}` 
 
         this.interaction_on = false
         const interactions = this.interactions.filter(i=>i.match(event_key))
         for (let i = 0; i < interactions.length; i++) {
-            await interactions[i].method.call(this, x, y, this.old_x, this.old_y)
+            await interactions[i].method.call(this, cur_point, this.prev_point)
         }
         
         this.interaction_on = true
@@ -43,35 +44,36 @@ export default class BoardController{
         //this.manageMove(x,y,this.old_x, this.old_y)
 
         // this.model.propagateSelection({old_x: this.old_x, old_y: this.old_y, x, y})
-        this.old_x = x
-        this.old_y = y
+        this.prev_point = new Point(x,y)
     }
     getSubscribedInteractions(event_key: string) {
         return this.interactions.filter(i => i.event_key == event_key)
     }
-    getTopLayer(x: number|undefined, y: number|undefined) {
-        if(x==undefined || y==undefined){
+    getTopLayer(p?: Point) {
+        if(!p){
             return ""
         }
-        if(this.getHUD(x,y).value){
+        if(this.getHUD(p)){
             return "hud"
         }
-        if(this.hasActor(x,y)){
+        if(this.hasActor(p)){
             return "actor"
         }
         return "bg"
     }
 
-    triggersInteraction(action_code: string, x: number, y: number) {
-        this.selectActor(x,y)
+    triggersInteraction(action_code: string, p: Point) {
+        //this.selectActor(new Point(), p)
     }
 
-    async moveActor(x: number, y: number, old_x: number, old_y: number) {
-        await delay(500)
-        const actor = this.model.actors_board[old_x][old_y]
-        await actor.animMove(old_x-x, old_y-y)
-        this.model.actors_board[old_x][old_y]. value = 0
-        this.model.actors_board[x][y].value = 1
+    async moveActor(cur_point: Point, prev_point?: Point) {
+        if(prev_point){
+            await delay(500)
+            // const actor = this.model.actors_board[prev_point.x][prev_point.y]
+            // await actor.animMove(old_x-x, old_y-y)
+            this.model.actors_board[prev_point.x][prev_point.y]. value = 0
+            this.model.actors_board[cur_point.x][cur_point.y].value = 1
+        }
     }
     dismissHUD() {
         for (let i = 0; i < this.model.hud_board.length; i++) {
@@ -80,37 +82,37 @@ export default class BoardController{
             }
         }
     }
-    selectActor(x: number, y: number) {
-        const possible_houses_1 = this.getNeighbors(x,y,1).concat(this.getNeighbors(x,y,2))
+    selectActor(cur_point: Point, prev_point?: Point) {
+        const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
 
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
             this.model.hud_board[house.x][house.y].value = 1
         }
     }
-    hasActor(x: number, y: number) {
-        return this.model.actors_board[x] && this.model.actors_board[x][y].value
+    hasActor(p: Point) {
+        return this.model.actors_board[p.x] && this.model.actors_board[p.x][p.y].value
     }
-    getHUD(x: number, y: number) {
-        return this.model.hud_board[x] && this.model.hud_board[x][y]
+    getHUD(p: Point) {
+        return this.model.hud_board[p.x] && this.model.hud_board[p.x][p.y].value
     }
-    getNeighbors(x: number, y: number, d=1, root=true): any {
-        if(!this.is_valid_house(x,y) || (this.hasActor(x,y) && !root)){
+    getNeighbors(p: Point, d=1, root=true): any {
+        if(!this.is_valid_house(p) || (this.hasActor(p) && !root)){
             return undefined
         }
         
         if(d==0){
-            return {x, y}
+            return p
         }
         return [
-            this.getNeighbors(x,    y-1,    d-1, false),
-            this.getNeighbors(x,    y+1,    d-1, false),
-            this.getNeighbors(x-1,  y,      d-1, false),
-            this.getNeighbors(x+1,  y,      d-1, false)
+            this.getNeighbors(new Point(p.x,    p.y-1),    d-1, false),
+            this.getNeighbors(new Point(p.x,    p.y+1),    d-1, false),
+            this.getNeighbors(new Point(p.x-1,  p.y),      d-1, false),
+            this.getNeighbors(new Point(p.x+1,  p.y),      d-1, false)
         ].filter(Boolean).flat(d).filter((elm, index, arr) => index == arr.findIndex(i=>i.x==elm.x&&i.y==elm.y))
     }
-    is_valid_house(x: number, y: number) {
-        return this.model.bg_board[x] && this.model.bg_board[x][y]
+    is_valid_house(p: Point) {
+        return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
     }
 }
 function delay(ms: number):any {
