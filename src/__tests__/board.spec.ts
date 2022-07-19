@@ -21,17 +21,26 @@ describe('board component', () => {
   })
 
   it('action possibleMoves', async () => {
-    const model = new BoardModel("3x3 actor in center")
+    const model = new BoardModel("5x5 w/ 2 allies")
     const controller = new BoardController(model);
 
-    controller.triggersInteraction("showPossibleMoves", 1, 1)
-    expect(model.hud_board[0][0].value).toEqual(0)
-    expect(model.hud_board[1][1].value).toEqual(0)
+    controller.triggersInteraction("showPossibleMoves", 2, 2)
+    expect(model.hud_board[0][1].value).toEqual(0)
+    expect(model.hud_board[1][0].value).toEqual(0)
 
-    expect(model.hud_board[1][0].value).toEqual(1)
-    expect(model.hud_board[0][1].value).toEqual(1)
     expect(model.hud_board[1][2].value).toEqual(1)
     expect(model.hud_board[2][1].value).toEqual(1)
+    expect(model.hud_board[2][3].value).toEqual(1)
+    expect(model.hud_board[2][0].value).toEqual(1)
+    expect(model.hud_board[1][1].value).toEqual(1)
+    expect(model.hud_board[0][2].value).toEqual(1)
+    expect(model.hud_board[1][3].value).toEqual(1)
+    expect(model.hud_board[2][4].value).toEqual(1)
+    expect(model.hud_board[3][1].value).toEqual(1)
+    expect(model.hud_board[3][3].value).toEqual(1)
+
+    expect(model.hud_board[3][2].value).toEqual(0)
+    expect(model.hud_board[4][2].value).toEqual(0)
 
     //prev_act  cur
     //v         hud   action(move)
@@ -47,7 +56,7 @@ describe('board component', () => {
 
     expect(model.actors_board[1][1].value).toEqual(1)
     expect(model.actors_board[1][2].value).toEqual(0)
-    controller.moveActor(1,2,1,1)
+    await controller.moveActor(1,2,1,1)
     expect(model.actors_board[1][1].value).toEqual(0)
     expect(model.actors_board[1][2].value).toEqual(1)
   })
