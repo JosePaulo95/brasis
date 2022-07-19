@@ -1,10 +1,10 @@
 import BaseLayerModel from "./BaseLayerModel";
 
 export default class ActorLayerModel extends BaseLayerModel{
-    async animMove(dif_x: number, dif_y: number) {
-        const steps = this.convertToSteps(dif_x, dif_y);
+    async animMove(path: Array<Point>) {
+        const steps = path.map(i=>this.pathToStep(i))
     }
-    convertToSteps(dif_x: number, dif_y: number) {
+    pathToSteps(dif_x: number, dif_y: number) {
         const steps: Array<string> = new Array(Math.abs(dif_x)+Math.abs(dif_y))
 
         const vertical = dif_y>0?"down":"up"

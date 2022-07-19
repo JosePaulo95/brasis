@@ -64,9 +64,10 @@ export default class BoardController{
 
     async moveActor(cur_point: Point, prev_point?: Point) {
         if(prev_point){
-            await delay(500)
-            // const actor = this.model.actors_board[prev_point.x][prev_point.y]
-            // await actor.animMove(old_x-x, old_y-y)
+            const actor = this.model.actors_board[prev_point.x][prev_point.y]
+            const shortest_path = this.calcShortestPath(prev_point, cur_point)
+            
+            await actor.animMove(shortest_path)
             this.model.actors_board[prev_point.x][prev_point.y]. value = 0
             this.model.actors_board[cur_point.x][cur_point.y].value = 1
         }
@@ -80,7 +81,7 @@ export default class BoardController{
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
-
+        
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
             this.model.hud_board[house.x][house.y].value = 1
@@ -106,6 +107,11 @@ export default class BoardController{
             this.getNeighbors(new Point(p.x-1,  p.y),      d-1, false),
             this.getNeighbors(new Point(p.x+1,  p.y),      d-1, false)
         ].filter(Boolean).flat(d).filter((elm, index, arr) => index == arr.findIndex(i=>i.x==elm.x&&i.y==elm.y))
+    }
+    calcShortestPath(a: Point, b: Point): Array<Point> {
+        const points:Array<Point> = [];
+
+        return points;
     }
     is_valid_house(p: Point) {
         return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
