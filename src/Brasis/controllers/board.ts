@@ -112,20 +112,21 @@ export default class BoardController{
         const points:Array<Point> = [];
         const d = this.getDistance(a,b)
         if(d!=undefined){
-            const cur = a
+            let cur = a
             points.push(cur)
 
             for (let i = 0; i < d; i++) {
                 let neighbors = this.getNeighbors(cur, 1)
-                // let neighbors_w_distance = neighbors.map(p => { return {d: this.getDistance(cur, p), p}})
-                // let sorted = neighbors_w_distance.sort((a,b)=>a.d-b.d)
-                // let next = sorted[0]
-                // points.push(next)
+                let neighbors_w_distance = neighbors.map(p => { return {d: this.getDistance(b, p), p}})
+                let sorted = neighbors_w_distance.sort((a,b)=>a.d-b.d)
+                let next = sorted[0]
+                cur = next.p
+                points.push(cur)
             }
         }
         return points;
     }
-    getDistance(a: Point, b: Point): number|undefined {
+    getDistance(a: Point, b: Point): number {
         let d = 0, neighbors = [], found
 
         do{
@@ -135,7 +136,7 @@ export default class BoardController{
         }while(d<10 && !found)
 
 
-        return found?d-1:undefined
+        return found?d-1:Infinity
     }
     is_valid_house(p: Point) {
         return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]

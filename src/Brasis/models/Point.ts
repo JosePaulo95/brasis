@@ -11,4 +11,7 @@ export class Point {
         this.x = x
         this.y = y
     }
+    match(p: Point): boolean {
+        return p.x == this.x && p.y == this.y
+    }
 }
