@@ -93,25 +93,49 @@ export default class BoardController{
     getHUD(p: Point) {
         return this.model.hud_board[p.x] && this.model.hud_board[p.x][p.y].value
     }
-    getNeighbors(p: Point, d=1, root=true): any {
+    getNeighbors(p: Point, d=1, root=true): Array<Point> {
         if(!this.is_valid_house(p) || (this.hasActor(p) && !root)){
-            return undefined
+            return []
         }
         
         if(d==0){
-            return p
+            return [p]
         }
         return [
             this.getNeighbors(new Point(p.x,    p.y-1),    d-1, false),
             this.getNeighbors(new Point(p.x,    p.y+1),    d-1, false),
             this.getNeighbors(new Point(p.x-1,  p.y),      d-1, false),
             this.getNeighbors(new Point(p.x+1,  p.y),      d-1, false)
-        ].filter(Boolean).flat(d).filter((elm, index, arr) => index == arr.findIndex(i=>i.x==elm.x&&i.y==elm.y))
+        ].filter(Boolean).flat(10).filter((elm, index, arr) => index == arr.findIndex(i=>i.x==elm.x&&i.y==elm.y))
     }
     calcShortestPath(a: Point, b: Point): Array<Point> {
         const points:Array<Point> = [];
+        const d = this.getDistance(a,b)
+        if(d!=undefined){
+            const cur = a
+            points.push(cur)
 
+            for (let i = 0; i < d; i++) {
+                let neighbors = this.getNeighbors(cur, 1)
+                // let neighbors_w_distance = neighbors.map(p => { return {d: this.getDistance(cur, p), p}})
+                // let sorted = neighbors_w_distance.sort((a,b)=>a.d-b.d)
+                // let next = sorted[0]
+                // points.push(next)
+            }
+        }
         return points;
+    }
+    getDistance(a: Point, b: Point): number|undefined {
+        let d = 0, neighbors = [], found
+
+        do{
+            neighbors = this.getNeighbors(a, d)
+            found = neighbors.some(p => p.x==b.x && p.y==b.y)
+            d++
+        }while(d<10 && !found)
+
+
+        return found?d-1:undefined
     }
     is_valid_house(p: Point) {
         return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
