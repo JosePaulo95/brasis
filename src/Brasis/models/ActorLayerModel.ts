@@ -3,6 +3,16 @@ import { Point } from "./Point";
 const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
+    animReset() {
+        anime ({
+            targets: '.actor',
+            keyframes:[{
+                translateX: "0%",
+                translateY: "0%",
+            }],
+            easing: 'steps(1)',
+        });
+    }
     async animMove(path: Array<Point>) {
         await anime ({
             targets: '.actor',

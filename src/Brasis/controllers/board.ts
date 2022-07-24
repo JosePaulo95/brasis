@@ -70,6 +70,7 @@ export default class BoardController{
             await actor.animMove(shortest_path)
             this.model.actors_board[prev_point.x][prev_point.y]. value = 0
             this.model.actors_board[cur_point.x][cur_point.y].value = 1
+            actor.animReset()
         }
     }
     dismissHUD() {
@@ -142,7 +143,5 @@ export default class BoardController{
         return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
     }
 }
-function delay(ms: number):any {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
