@@ -26,12 +26,13 @@ import { defineComponent } from 'vue';
 
 <style scoped>
   .actor {
+    --i:0;
     background-image: url("../../assets/Knight/SeparateAnim/Idle.png");
     display:inline-block;
     height: inherit;
     width: inherit;
     background-size: cover;
-    background-position-x: calc(2*100%);
+    background-position: right calc(var(--i)*100%) top 100%;
     /* --n:.5;
     --i:3; 
     --j:0; 
