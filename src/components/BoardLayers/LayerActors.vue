@@ -31,6 +31,7 @@ import { defineComponent } from 'vue';
     background-image: url("../../assets/Knight/SpriteSheet.png");
     background-size: calc(100%*4);
     background-position: left calc(var(--i)*100%) top calc(var(--j)*100%);
+    z-index: 3; 
     /* --n:.5;
     --i:3; 
     --j:0; 
@@ -40,6 +41,6 @@ import { defineComponent } from 'vue';
     width:calc(16px / var(--n));
     background-position:calc(var(--i)/var(--n) * 16px) calc(var(--j)/var(--n) * 16px);
     background-size:calc(64px / var(--n)) calc(16px / var(--n));
-    z-index: 3; */
+    */
   }
 </style>
