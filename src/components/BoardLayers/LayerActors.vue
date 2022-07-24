@@ -26,12 +26,11 @@ import { defineComponent } from 'vue';
 
 <style scoped>
   .actor {
-    --i:0;
-    --j:0;
+    --i:1;
+    --j:1;
     background-image: url("../../assets/Knight/SpriteSheet.png");
     background-size: calc(100%*4);
-    background-position: left calc(var(--i)*100%) top calc(var(--j)*100%);
-    z-index: 3; 
+    background-position: right calc(var(--i)*100%) bottom calc(var(--j)*100%);
+    z-index: 3;
   }
-  
 </style>
