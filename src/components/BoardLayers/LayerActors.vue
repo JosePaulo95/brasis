@@ -1,5 +1,7 @@
 <template>
-  <img :class="'actor cell-content'" v-bind:src="getBackgroundSprite('actors', cell.value)" alt="" />
+  <div v-if="cell.value" :class="'actor cell-content'" >
+    
+  </div>
 </template>
 
 <script lang="ts">
@@ -24,6 +26,21 @@ import { defineComponent } from 'vue';
 
 <style scoped>
   .actor {
-    z-index: 3;
+    background-image: url("../../assets/Knight/SeparateAnim/Idle.png");
+    display:inline-block;
+    height: inherit;
+    width: inherit;
+    background-size: cover;
+    background-position-x: calc(2*100%);
+    /* --n:.5;
+    --i:3; 
+    --j:0; 
+
+    background-image: url("../../assets/Knight/SeparateAnim/Idle.png");
+    height:calc(16px / var(--n));
+    width:calc(16px / var(--n));
+    background-position:calc(var(--i)/var(--n) * 16px) calc(var(--j)/var(--n) * 16px);
+    background-size:calc(64px / var(--n)) calc(16px / var(--n));
+    z-index: 3; */
   }
 </style>
