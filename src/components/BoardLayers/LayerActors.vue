@@ -1,5 +1,5 @@
 <template>
-  <img class="cell-content" v-bind:src="getBackgroundSprite('actors', cell.value)" alt="" />
+  <img :class="'actor cell-content'" v-bind:src="getBackgroundSprite('actors', cell.value)" alt="" />
 </template>
 
 <script lang="ts">
@@ -23,5 +23,7 @@ import { defineComponent } from 'vue';
 
 
 <style scoped>
-  
+  .actor {
+    z-index: 3;
+  }
 </style>
