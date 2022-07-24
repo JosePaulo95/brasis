@@ -27,12 +27,13 @@ import { defineComponent } from 'vue';
 <style scoped>
   .actor {
     --i:0;
-    background-image: url("../../assets/Knight/SeparateAnim/Idle.png");
+    --j:2;
+    background-image: url("../../assets/Knight/SpriteSheet.png");
     display:inline-block;
     height: inherit;
     width: inherit;
-    background-size: cover;
-    background-position: right calc(var(--i)*100%) top 100%;
+    background-size: calc(100%*4);
+    background-position: left calc(var(--i)*100%) top calc(var(--j)*100%);
     /* --n:.5;
     --i:3; 
     --j:0; 
