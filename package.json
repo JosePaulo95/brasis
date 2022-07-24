@@ -8,6 +8,7 @@
     "test": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "animejs": "^3.2.1",
     "vue": "^3.2.13",
     "vuex": "^4.0.0"
   },
