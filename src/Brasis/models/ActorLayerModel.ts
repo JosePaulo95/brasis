@@ -3,9 +3,11 @@ import { Point } from "./Point";
 const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
-    animReset() {
+    animReset(origin: Point) {
+        const x = origin.x
+        const y = origin.y
         anime ({
-            targets: '.actor',
+            targets: `#cell-${x}-${y} .actor`,
             keyframes:[{
                 translateX: "0%",
                 translateY: "0%",
@@ -14,8 +16,10 @@ export default class ActorLayerModel extends BaseLayerModel{
         });
     }
     async animMove(path: Array<Point>) {
+        const x = path[0].x
+        const y = path[0].y
         await anime ({
-            targets: '.actor',
+            targets: `#cell-${x}-${y} .actor`,
             keyframes:this.pathToTranslations(path),
             easing: 'linear',
         }).finished;

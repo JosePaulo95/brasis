@@ -70,7 +70,7 @@ export default class BoardController{
             await actor.animMove(shortest_path)
             this.model.actors_board[prev_point.x][prev_point.y]. value = 0
             this.model.actors_board[cur_point.x][cur_point.y].value = 1
-            actor.animReset()
+            actor.animReset(prev_point)
         }
     }
     dismissHUD() {
