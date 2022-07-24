@@ -1,19 +1,26 @@
 import BaseLayerModel from "./BaseLayerModel";
+import { Point } from "./Point";
+const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
     async animMove(path: Array<Point>) {
-        const steps = path.map(i=>this.pathToStep(i))
+        await anime ({
+            targets: '.actor',
+            keyframes:this.pathToTranslations(path),
+            easing: 'linear',
+        }).finished;
     }
-    pathToSteps(dif_x: number, dif_y: number) {
-        const steps: Array<string> = new Array(Math.abs(dif_x)+Math.abs(dif_y))
+    pathToTranslations(path: Array<Point>) {
+        const translations = []
+        const origin = path[0]
+        for (let i = 1; i < path.length; i++) {
+            let destiny = path[i]
 
-        const vertical = dif_y>0?"down":"up"
-        const horizontal = dif_x>0?"right":"left"
+            let difx = destiny.x-origin.x
+            let dify = destiny.y-origin.y
 
-        steps.fill(vertical, 0)
-        steps.fill(horizontal, Math.abs(dif_y))
-        console.log(steps);
-        
-        return steps
+            translations.push({translateY: difx+"00%", translateX: dify+"00%"})
+        }
+        return translations
     }
 }
