@@ -29,6 +29,7 @@
   import StatusMenu from "./StatusMenu.vue"
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
+  import "../styles/actor_anim.scss"
   import LayerHUD from "./BoardLayers/LayerHUD.vue"
 
 

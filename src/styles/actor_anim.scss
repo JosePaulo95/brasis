@@ -1,0 +1,7 @@
+
+@for $id from 0 through 999 {
+    #actor-#{$id} {
+        --i: 1;
+        --j: 1;
+    }
+}
