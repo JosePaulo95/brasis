@@ -68,8 +68,8 @@ export default class BoardController{
             const shortest_path = this.calcShortestPath(prev_point, cur_point)
             
             await actor.animMove(shortest_path)
-            this.model.actors_board[prev_point.x][prev_point.y]. value = 0
-            this.model.actors_board[cur_point.x][cur_point.y].value = 1
+            this.model.actors_board[prev_point.x][prev_point.y] = this.model.actors_board[cur_point.x][cur_point.y]
+            this.model.actors_board[cur_point.x][cur_point.y] = actor
             actor.animReset(prev_point)
         }
     }
