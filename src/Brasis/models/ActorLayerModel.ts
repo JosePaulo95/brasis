@@ -3,6 +3,25 @@ import { Point } from "./Point";
 const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
+    direction = "bottom";
+
+    async animMove(path: Array<Point>) {
+        const x = path[0].x
+        const y = path[0].y
+        this.direction = "right"
+        
+        //await move(step)
+
+        // await anime ({
+        //     targets: `#cell-${x}-${y} .actor`,
+        //     keyframes:this.pathToTranslations(path),
+        //     easing: 'linear',
+        //     update: function anim(anim: any){
+        //         debugger
+        //         console.log(anim.remaining)
+        //     } 
+        // }).finished;
+    }
     animReset(origin: Point) {
         const x = origin.x
         const y = origin.y
@@ -13,16 +32,8 @@ export default class ActorLayerModel extends BaseLayerModel{
                 translateY: "0%",
             }],
             easing: 'steps(1)',
+            "animation-name": "example"
         });
-    }
-    async animMove(path: Array<Point>) {
-        const x = path[0].x
-        const y = path[0].y
-        await anime ({
-            targets: `#cell-${x}-${y} .actor`,
-            keyframes:this.pathToTranslations(path),
-            easing: 'linear',
-        }).finished;
     }
     pathToTranslations(path: Array<Point>) {
         const translations = []
