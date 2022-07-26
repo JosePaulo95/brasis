@@ -28,6 +28,7 @@
   import LayerActors from "./BoardLayers/LayerActors.vue"
   import "../styles/actor_anim.scss"
   import LayerHUD from "./BoardLayers/LayerHUD.vue"
+import AudioController from '@/Brasis/controllers/AudioController';
 
 
   export default defineComponent({
@@ -48,11 +49,15 @@
       model: {
         type: Object as PropType<BoardModel>,
         required: true
+      },
+      audio_controller: {
+        type: Object as PropType<AudioController>,
+        required: true
       }
     },
     beforeMount(){
       this.state = this.model
-      this.controller = new BoardController(this.state)
+      this.controller = new BoardController(this.state, this.audio_controller)
     },
     methods: {
       clicked(x: number, y: number){

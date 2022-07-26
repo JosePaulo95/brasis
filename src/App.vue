@@ -1,6 +1,7 @@
 <template>
   <Board
     :model="this.board_model"
+    :audio_controller="this.audio_controller"
   />
 </template>
 
@@ -8,6 +9,8 @@
 import { defineComponent } from 'vue';
 import Board from './components/Board.vue';
 import BoardModel from '@/Brasis/models/board'
+import AudioModel from './Brasis/models/AudioModel';
+import AudioController from './Brasis/controllers/AudioController';
 
 export default defineComponent({
   name: 'App',
@@ -16,11 +19,14 @@ export default defineComponent({
   },
   data(){
     return {
-      board_model: {}
+      board_model: {},
+      audio_controller: {}
     }
   },
   beforeMount(){
     this.board_model = new BoardModel("5x5 w/ 2 allies")
+    const audio_model = new AudioModel()
+    this.audio_controller = new AudioController(audio_model)
   }
 });
 </script>

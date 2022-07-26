@@ -1,15 +1,18 @@
 import BoardModel from "../models/board";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
+import AudioController from "./audioController";
 
 export default class BoardController{
     model = {} as BoardModel
     interactions: Array<InteractionModel>;
     interaction_on = true;
     prev_point: Point|undefined;
+    audio_controller: AudioController|undefined;
     
-    constructor(model: BoardModel){
+    constructor(model: BoardModel, audio_controller?: AudioController){
         this.model = model
+        this.audio_controller = audio_controller
         this.interactions = [
             new InteractionModel("*", this.dismissHUD),
             new InteractionModel("*>actor", this.selectActor),
