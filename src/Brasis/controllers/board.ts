@@ -55,6 +55,10 @@ export default class BoardController{
             const actor = this.model.actors_board[prev_point.x][prev_point.y]
             const shortest_path = this.calcShortestPath(prev_point, cur_point)
             
+            // AudioManager.plays("moving", shortest_path.length)
+            // AnimationManager.plays("moving", actor, shortest_path)
+            // ActorsModelManager.update("swap", p1, p2)
+
             await actor.animMove(shortest_path)
             this.model.actors_board[prev_point.x][prev_point.y] = this.model.actors_board[cur_point.x][cur_point.y]
             this.model.actors_board[cur_point.x][cur_point.y] = actor
