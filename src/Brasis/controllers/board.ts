@@ -1,7 +1,7 @@
 import BoardModel from "../models/board";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
-import AudioController from "./audioController";
+import AudioController from "./AudioController";
 
 export default class BoardController{
     model = {} as BoardModel
