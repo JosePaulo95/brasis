@@ -32,18 +32,6 @@ export default class BoardController{
         }
         
         this.interaction_on = true
-        // this.interactions.filter(i=>i.event_key==event_key).forEach(action => {
-        //     action.method.call(this,x,y)
-        // }, this);
-
-        // this.getSubscribedInteractions(event_key).forEach(action => {
-        //     action.method.call(x,y)
-        // }, this);
-
-        //this.manageActorSelection(x,y)
-        //this.manageMove(x,y,this.old_x, this.old_y)
-
-        // this.model.propagateSelection({old_x: this.old_x, old_y: this.old_y, x, y})
         this.prev_point = new Point(x,y)
     }
     getSubscribedInteractions(event_key: string) {
