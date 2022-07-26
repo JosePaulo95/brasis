@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cell.value||1" :class="'actor cell-content '+cell.direction" >
+  <div v-if="cell.value" :id="'actor-'+cell.id" :class="'actor cell-content '+cell.direction" >
     01
   </div>
 </template>
@@ -17,6 +17,11 @@
         required: true
       },
     },
+    data() {
+      return {
+        
+      }
+    },
     methods: {
       getBackgroundSprite: getBackgroundSprite
     }
@@ -24,42 +29,37 @@
 </script>
 
 
+
 <style scoped>
-  :root {
-    --i:1;
-    --j:1;
-  }
   .actor {
     background-image: url("../../assets/Knight/SpriteSheet.png");
     background-size: calc(100%*4);
     background-position: right calc(var(--i)*100%) bottom calc(var(--j)*100%);
     z-index: 3;
-  }
-  .walk-down {
-    animation-duration: 1s;
+    animation-duration: 0.8s;
     animation-iteration-count: infinite;
-    animation-name: example;
   }
-  @keyframes example {
+  .bottom {
+    --i: 1 !important;
+    animation-name: walk;
+  }
+  .top {
+    --i: 2 !important;
+    animation-name: walk;
+  }
+  .left {
+    --i: 3 !important;
+    animation-name: walk;
+  }
+  .right {
+    --i: 4 !important;
+    animation-name: walk;
+  }
+
+  @keyframes walk {
     0% {--j: 1;}
     25% {--j: 2;}
     50% {--j: 3;}
     75% {--j: 4;}
-  }
-  .top {
-    --i: 2;
-    --j: 1;
-  }
-  .left {
-    --i: 3;
-    --j: 1;
-  }
-  .right {
-    --i: 4;
-    --j: 1;
-  }
-  .bottom {
-    --i: 1;
-    --j: 1;
   }
 </style>

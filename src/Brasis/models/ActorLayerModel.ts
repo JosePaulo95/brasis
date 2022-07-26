@@ -3,24 +3,24 @@ import { Point } from "./Point";
 const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
-    direction = "bottom";
+    direction = "";
 
     async animMove(path: Array<Point>) {
         const x = path[0].x
         const y = path[0].y
-        this.direction = "right"
-        
-        //await move(step)
 
-        // await anime ({
-        //     targets: `#cell-${x}-${y} .actor`,
-        //     keyframes:this.pathToTranslations(path),
-        //     easing: 'linear',
-        //     update: function anim(anim: any){
-        //         debugger
-        //         console.log(anim.remaining)
-        //     } 
-        // }).finished;
+        const translations = this.pathToTranslations(path)
+        debugger
+        for (let i = 0; i < translations.length; i++) {
+            this.direction = translations[i].direction;
+            await anime ({
+                targets: `#cell-${x}-${y} .actor`,
+                keyframes: [translations[i]],
+                easing: 'linear',
+                duration: 500
+            }).finished;
+            this.direction = "";
+        }
     }
     animReset(origin: Point) {
         const x = origin.x
@@ -38,13 +38,21 @@ export default class ActorLayerModel extends BaseLayerModel{
     pathToTranslations(path: Array<Point>) {
         const translations = []
         const origin = path[0]
+        let difx, dify
+        let prev = origin
+
         for (let i = 1; i < path.length; i++) {
-            let destiny = path[i]
+            let next = path[i]
+            difx = next.y-prev.y
+            dify = next.x-prev.x
 
-            let difx = destiny.x-origin.x
-            let dify = destiny.y-origin.y
+            let direction = difx>0?"right":difx<0?"left":dify>0?"bottom":"top"
 
-            translations.push({translateY: difx+"00%", translateX: dify+"00%"})
+            difx = next.y-origin.y
+            dify = next.x-origin.x
+
+            translations.push({translateX: difx+"00%", translateY: dify+"00%", direction: direction})
+            prev = next
         }
         return translations
     }
