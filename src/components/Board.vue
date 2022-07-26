@@ -56,14 +56,7 @@
     },
     methods: {
       clicked(x: number, y: number){
-        //const new_state = this.controller.select(x, y)
         this.controller.select(x, y)
-        //this.state = this.controller.model
-        //{}//new_state
-        // if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
-          
-        //   this.ui_board[x+1][y] = 1
-        // }
       },
     }
   });
