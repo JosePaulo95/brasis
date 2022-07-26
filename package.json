@@ -8,6 +8,7 @@
     "test": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "animejs": "^3.2.1",
     "vue": "^3.2.13",
     "vuex": "^4.0.0"
   },
@@ -21,6 +22,8 @@
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "babel-jest": "^27.0.6",
     "jest": "^27.0.5",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5"
   }

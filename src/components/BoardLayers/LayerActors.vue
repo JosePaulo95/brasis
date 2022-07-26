@@ -1,11 +1,13 @@
 <template>
-  <img class="cell-content" v-bind:src="getBackgroundSprite('actors', cell.value)" alt="" />
+  <div v-if="cell.value" :id="'actor-'+cell.id" :class="'actor cell-content '+cell.direction" >
+    01
+  </div>
 </template>
 
 <script lang="ts">
   import ActorLayerModel from '@/Brasis/models/ActorLayerModel';
-import { getBackgroundSprite } from '@/Brasis/views';
-import { defineComponent } from 'vue';
+  import { getBackgroundSprite } from '@/Brasis/views';
+  import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'LayerActors',
@@ -15,6 +17,11 @@ import { defineComponent } from 'vue';
         required: true
       },
     },
+    data() {
+      return {
+        
+      }
+    },
     methods: {
       getBackgroundSprite: getBackgroundSprite
     }
@@ -22,6 +29,37 @@ import { defineComponent } from 'vue';
 </script>
 
 
+
 <style scoped>
-  
+  .actor {
+    background-image: url("../../assets/Knight/SpriteSheet.png");
+    background-size: calc(100%*4);
+    background-position: right calc(var(--i)*100%) bottom calc(var(--j)*100%);
+    z-index: 3;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+  }
+  .bottom {
+    --i: 1 !important;
+    animation-name: walk;
+  }
+  .top {
+    --i: 2 !important;
+    animation-name: walk;
+  }
+  .left {
+    --i: 3 !important;
+    animation-name: walk;
+  }
+  .right {
+    --i: 4 !important;
+    animation-name: walk;
+  }
+
+  @keyframes walk {
+    0% {--j: 1;}
+    25% {--j: 2;}
+    50% {--j: 3;}
+    75% {--j: 4;}
+  }
 </style>
