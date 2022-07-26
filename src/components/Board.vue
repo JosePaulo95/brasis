@@ -11,9 +11,6 @@
                 <LayerBackground :cell="state.bg_board[x][y]" />
                 <LayerHUD :cell="state.hud_board[x][y]" />
                 <LayerActors :cell="state.actors_board[x][y]" />
-                <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
-                <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
-                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt=""> -->
               </div>
             </td>
           </tr>
