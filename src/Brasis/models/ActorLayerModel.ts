@@ -5,6 +5,7 @@ const anime = require ('animejs/lib/anime.min.js');
 
 export default class ActorLayerModel extends BaseLayerModel{
     direction = "";
+    animation = "";
 
     async animMove(path: Array<Point>, audio_controller: AudioController|undefined) {
         const x = path[0].x
@@ -13,6 +14,7 @@ export default class ActorLayerModel extends BaseLayerModel{
         const translations = this.pathToTranslations(path)
         for (let i = 0; i < translations.length; i++) {
             this.direction = translations[i].direction;
+            this.animation = "walking"
             audio_controller?.startsPlaying("on-moving", 2)
             await anime ({
                 targets: `#cell-${x}-${y} .actor`,
@@ -20,8 +22,8 @@ export default class ActorLayerModel extends BaseLayerModel{
                 easing: 'linear',
                 duration: 500
             }).finished;
-            this.direction = "";
         }
+        this.animation = "";
         audio_controller?.stopsPlaying("on-moving")
         audio_controller?.play("on-move-end")
     }
