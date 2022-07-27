@@ -57,7 +57,7 @@ export default class BoardController{
         if(prev_point){
             const actor = this.model.actors_board[prev_point.x][prev_point.y]
             const shortest_path = this.calcShortestPath(prev_point, cur_point)
-            
+
             // AudioManager.plays("moving", shortest_path.length)
             // AnimationManager.plays("moving", actor, shortest_path)
             // ActorsModelManager.update("swap", p1, p2)
@@ -76,6 +76,8 @@ export default class BoardController{
         }
     }
     selectActor(cur_point: Point, prev_point?: Point) {
+        this.audio_controller?.play("select")
+
         const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
         
         for (let i = 0; i < possible_houses_1.length; i++) {
