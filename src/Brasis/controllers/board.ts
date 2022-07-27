@@ -1,16 +1,20 @@
 import BoardModel from "../models/board";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
+import AudioController from "./AudioController";
 
 export default class BoardController{
     model = {} as BoardModel
     interactions: Array<InteractionModel>;
     interaction_on = true;
     prev_point: Point|undefined;
+    audio_controller: AudioController|undefined;
     
-    constructor(model: BoardModel){
+    constructor(model: BoardModel, audio_controller?: AudioController){
         this.model = model
+        this.audio_controller = audio_controller
         this.interactions = [
+            new InteractionModel("actor>bg", this.audioCancel),
             new InteractionModel("*", this.dismissHUD),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>hud", this.moveActor),
@@ -32,18 +36,6 @@ export default class BoardController{
         }
         
         this.interaction_on = true
-        // this.interactions.filter(i=>i.event_key==event_key).forEach(action => {
-        //     action.method.call(this,x,y)
-        // }, this);
-
-        // this.getSubscribedInteractions(event_key).forEach(action => {
-        //     action.method.call(x,y)
-        // }, this);
-
-        //this.manageActorSelection(x,y)
-        //this.manageMove(x,y,this.old_x, this.old_y)
-
-        // this.model.propagateSelection({old_x: this.old_x, old_y: this.old_y, x, y})
         this.prev_point = new Point(x,y)
     }
     getSubscribedInteractions(event_key: string) {
@@ -66,8 +58,14 @@ export default class BoardController{
         if(prev_point){
             const actor = this.model.actors_board[prev_point.x][prev_point.y]
             const shortest_path = this.calcShortestPath(prev_point, cur_point)
-            
-            await actor.animMove(shortest_path)
+
+            this.audio_controller?.play("on-square-to-move-selection")
+
+            // AudioManager.plays("moving", shortest_path.length)
+            // AnimationManager.plays("moving", actor, shortest_path)
+            // ActorsModelManager.update("swap", p1, p2)
+
+            await actor.animMove(shortest_path, this.audio_controller)
             this.model.actors_board[prev_point.x][prev_point.y] = this.model.actors_board[cur_point.x][cur_point.y]
             this.model.actors_board[cur_point.x][cur_point.y] = actor
             actor.animReset(prev_point)
@@ -80,7 +78,21 @@ export default class BoardController{
             }
         }
     }
+    audioCancel(){
+        //todo: hasAny
+        let hasAny = false
+        for (let i = 0; i < this.model.hud_board.length; i++) {
+            for (let j = 0; j < this.model.hud_board[i].length; j++) {
+                if(this.model.hud_board[i][j].value){
+                    hasAny = true
+                }
+            }
+        }
+        hasAny&&this.audio_controller?.play("cancel")
+    }
     selectActor(cur_point: Point, prev_point?: Point) {
+        this.audio_controller?.play("select")
+
         const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
         
         for (let i = 0; i < possible_houses_1.length; i++) {

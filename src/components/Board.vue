@@ -11,9 +11,6 @@
                 <LayerBackground :cell="state.bg_board[x][y]" />
                 <LayerHUD :cell="state.hud_board[x][y]" />
                 <LayerActors :cell="state.actors_board[x][y]" />
-                <!-- <img class="cell-content" v-bind:src="getBackgroundSprite('bg', cell)" alt="">
-                <img class="cell-content transparent" v-bind:src="getBackgroundSprite('board-ui', ui_board?ui_board[x]?ui_board[x][y]:0:0)" alt="">
-                <img class="cell-content" v-bind:src="getBackgroundSprite('actors', actors_board?actors_board[x]?actors_board[x][y]:0:0)" alt=""> -->
               </div>
             </td>
           </tr>
@@ -31,6 +28,7 @@
   import LayerActors from "./BoardLayers/LayerActors.vue"
   import "../styles/actor_anim.scss"
   import LayerHUD from "./BoardLayers/LayerHUD.vue"
+import AudioController from '@/Brasis/controllers/AudioController';
 
 
   export default defineComponent({
@@ -51,22 +49,19 @@
       model: {
         type: Object as PropType<BoardModel>,
         required: true
+      },
+      audio_controller: {
+        type: Object as PropType<AudioController>,
+        required: true
       }
     },
     beforeMount(){
       this.state = this.model
-      this.controller = new BoardController(this.state)
+      this.controller = new BoardController(this.state, this.audio_controller)
     },
     methods: {
       clicked(x: number, y: number){
-        //const new_state = this.controller.select(x, y)
         this.controller.select(x, y)
-        //this.state = this.controller.model
-        //{}//new_state
-        // if(this.actors_board && this.actors_board[x] && this.actors_board[x][y]){
-          
-        //   this.ui_board[x+1][y] = 1
-        // }
       },
     }
   });
