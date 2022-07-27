@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cell.value" :id="'actor-'+cell.id" :class="'actor cell-content '+cell.direction" >
+  <div v-if="cell.value" :id="'actor-'+cell.id" :class="`actor cell-content ${cell.direction} ${cell.animation}`" >
     01
   </div>
 </template>
@@ -41,21 +41,19 @@
   }
   .bottom {
     --i: 1 !important;
-    animation-name: walk;
   }
   .top {
     --i: 2 !important;
-    animation-name: walk;
   }
   .left {
     --i: 3 !important;
-    animation-name: walk;
   }
   .right {
     --i: 4 !important;
+  }
+  .walking {
     animation-name: walk;
   }
-
   @keyframes walk {
     0% {--j: 1;}
     25% {--j: 2;}
