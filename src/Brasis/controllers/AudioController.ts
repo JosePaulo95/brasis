@@ -12,6 +12,21 @@ export default class AudioController {
         if(audio_file){
             audio_file.play()
         }
-        debugger
+    }
+    startsPlaying (index: string, speed=1) {
+        const audio_file = this.audio_model.find(index)
+        if(audio_file){
+            audio_file.playbackRate = speed
+            audio_file.addEventListener('ended', function() {
+                audio_file.play()
+            }, false);
+            audio_file.play()
+        }
+    }
+    stopsPlaying (index: string) {
+        const audio_file = this.audio_model.find(index)
+        if(audio_file){
+            audio_file.pause()
+        }
     }
 }
