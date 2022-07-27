@@ -14,6 +14,7 @@ export default class BoardController{
         this.model = model
         this.audio_controller = audio_controller
         this.interactions = [
+            new InteractionModel("actor>bg", this.audioCancel),
             new InteractionModel("*", this.dismissHUD),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>hud", this.moveActor),
@@ -76,6 +77,18 @@ export default class BoardController{
                 this.model.hud_board[i][j].value = 0
             }
         }
+    }
+    audioCancel(){
+        //todo: hasAny
+        let hasAny = false
+        for (let i = 0; i < this.model.hud_board.length; i++) {
+            for (let j = 0; j < this.model.hud_board[i].length; j++) {
+                if(this.model.hud_board[i][j].value){
+                    hasAny = true
+                }
+            }
+        }
+        hasAny&&this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         this.audio_controller?.play("select")
