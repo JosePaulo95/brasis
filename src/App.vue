@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Board from './components/Board.vue';
-import BoardModel from '@/Brasis/models/board'
+import BoardModel from './Brasis/models/BoardModel'
 import AudioModel from './Brasis/models/AudioModel';
 import AudioController from './Brasis/controllers/AudioController';
 

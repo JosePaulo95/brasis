@@ -20,8 +20,8 @@
   </template>
 
   <script lang="ts">
-  import BoardModel from '@/Brasis/models/board';
-  import BoardController from '@/Brasis/controllers/board'
+  import BoardModel from '../Brasis/models/BoardModel';
+  import BoardController from '@/Brasis/controllers/BoardController'
   import { defineComponent, PropType } from 'vue';
   import StatusMenu from "./StatusMenu.vue"
   import LayerBackground from "./BoardLayers/LayerBackground.vue"

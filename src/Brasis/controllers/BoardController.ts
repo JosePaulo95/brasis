@@ -1,4 +1,4 @@
-import BoardModel from "../models/board";
+import BoardModel from "../models/BoardModel";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
 import AudioController from "./AudioController";
