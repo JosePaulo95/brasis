@@ -20,9 +20,6 @@ export default class BoardController{
             new InteractionModel("actor>hud", this.moveActor),
         ]
     }
-    hello(x:number,y:number){
-        alert("deu bom"+x+""+y)
-    }
     async select(x: number, y: number): Promise<any> {
         const cur_point = new Point(x,y)
         const previous_actor = this.getTopLayer(this.prev_point)
