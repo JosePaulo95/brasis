@@ -4,7 +4,7 @@ import { Point } from "./Point";
 export class BaseLayerContainer <T extends BaseLayerModel> {
     board: T[][];
 
-    constructor (c: any, id_table: Array<Array<number>>) {
+    constructor (c: new(...args: any[])=>T, id_table: Array<Array<number>>) {
         this.board = id_table.map(row => 
             row.map(cell =>
                 new c(cell)
