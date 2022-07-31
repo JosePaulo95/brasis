@@ -8,8 +8,8 @@
           <tr v-for="(row, x) in state.default_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <div @click="clicked(x, y)" class="cell-container">
-                <LayerBackground :cell="state.bg_board[x][y]" />
-                <LayerHUD :cell="state.hud_board[x][y]" />
+                <LayerBackground :cell="state.bg_board.at(x, y)" />
+                <LayerHUD :cell="state.hud_board.at(x, y)" />
                 <LayerActors :cell="state.actors_board.at(x,y)" />
               </div>
             </td>

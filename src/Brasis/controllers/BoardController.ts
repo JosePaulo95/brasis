@@ -21,6 +21,7 @@ export default class BoardController{
         ]
     }
     async select(x: number, y: number): Promise<any> {
+        debugger
         const cur_point = new Point(x,y)
         const previous_actor = this.getTopLayer(this.prev_point)
         const top_current = this.getTopLayer(cur_point)
@@ -42,7 +43,7 @@ export default class BoardController{
         if(!p){
             return ""
         }
-        if(this.getHUD(p)){
+        if(this.model.hud_board.at(p).value){
             return "hud"
         }
         if(this.model.actors_board.at(p).value){
@@ -68,23 +69,10 @@ export default class BoardController{
         }
     }
     dismissHUD() {
-        for (let i = 0; i < this.model.hud_board.length; i++) {
-            for (let j = 0; j < this.model.hud_board[i].length; j++) {
-                this.model.hud_board[i][j].value = 0
-            }
-        }
+        this.model.hud_board.clear()
     }
     audioCancel(){
-        //todo: hasAny
-        let hasAny = false
-        for (let i = 0; i < this.model.hud_board.length; i++) {
-            for (let j = 0; j < this.model.hud_board[i].length; j++) {
-                if(this.model.hud_board[i][j].value){
-                    hasAny = true
-                }
-            }
-        }
-        hasAny&&this.audio_controller?.play("cancel")
+        this.model.hud_board.hasAny() && this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         this.audio_controller?.play("select")
@@ -93,14 +81,11 @@ export default class BoardController{
         
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
-            this.model.hud_board[house.x][house.y].value = 1
+            this.model.hud_board.at(house).value = 1
         }
     }
-    getHUD(p: Point) {
-        return this.model.hud_board[p.x] && this.model.hud_board[p.x][p.y].value
-    }
     getNeighbors(p: Point, d=1, root=true): Array<Point> {
-        if(!this.is_valid_house(p) || (this.model.actors_board.at(p).value && !root)){
+        if(!this.model.bg_board.at(p) || (this.model.actors_board.at(p).value && !root)){
             return []
         }
         
@@ -143,9 +128,6 @@ export default class BoardController{
 
 
         return found?d-1:Infinity
-    }
-    is_valid_house(p: Point) {
-        return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
     }
 }
 

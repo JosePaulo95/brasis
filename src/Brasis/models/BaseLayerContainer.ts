@@ -10,7 +10,6 @@ export class BaseLayerContainer <T extends BaseLayerModel> {
                 new c(cell)
             )
         )
-        debugger
     }
 
     at (a: Point, b?: undefined) : T;
@@ -27,5 +26,25 @@ export class BaseLayerContainer <T extends BaseLayerModel> {
         const aux = this.at(p1)
         this.board[p1.x][p1.y] = this.board[p2.x][p2.y]
         this.board[p2.x][p2.y] = aux
+    }
+
+    clear () {
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                this.board[i][j].value = 0
+            }
+        }
+    }
+
+    hasAny () {
+        let hasAny = false
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                if(this.board[i][j].value){
+                    return true
+                }
+            }
+        }
+        return hasAny
     }
 }

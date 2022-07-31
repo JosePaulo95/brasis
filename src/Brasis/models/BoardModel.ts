@@ -5,10 +5,10 @@ import BgLayerModel from "./BgLayerModel";
 import HUDLayerModel from "./HUDLayerModel";
 
 export default class BoardModel{
-    default_board: Array<Array<BaseLayerModel>>;
-    bg_board: Array<Array<BgLayerModel>>;
+    default_board: Array<Array<number>>;
+    bg_board: BaseLayerContainer<BgLayerModel>;
     actors_board: BaseLayerContainer<ActorLayerModel>;
-    hud_board: Array<Array<HUDLayerModel>>;
+    hud_board: BaseLayerContainer<HUDLayerModel>;
 
     constructor(level_code?:string){
         switch (level_code) {
@@ -18,14 +18,14 @@ export default class BoardModel{
                     [0,0,0,0],
                     [0,0,0,0],
                     [0,0,0,0]
-                ].map(row => row.map(cell => new BaseLayerModel(cell)))
+                ]
                 
-                this.bg_board = [
+                this.bg_board = new BaseLayerContainer(BgLayerModel, [
                     [55,55,55,55],
                     [55,55,55,55],
                     [55,55,55,55],
                     [55,55,55,55]
-                ].map(row => row.map(cell => new BgLayerModel(cell)))
+                ])
                 
                 this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0,0],
@@ -34,12 +34,12 @@ export default class BoardModel{
                     [0,0,0,0],
                 ])
         
-                this.hud_board = [
+                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
                     [0,0,0,0],
                     [0,0,0,0],
                     [0,0,0,0],
                     [0,0,0,0],
-                ].map(row => row.map(cell => new HUDLayerModel(cell)))
+                ])
                 break;
             case "5x5 w/ 2 allies":
                 this.default_board = [
@@ -48,11 +48,15 @@ export default class BoardModel{
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,0,0,0]
-                ].map(row => row.map(cell => new BaseLayerModel(cell)))
+                ]
                 
-                this.bg_board = this.default_board.map(
-                    i=>i.map(j=>55)
-                ).map(row => row.map(cell => new BgLayerModel(cell)))
+                this.bg_board = new BaseLayerContainer(BgLayerModel,[
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55]
+                ])
                 
                 this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0,0,0],
@@ -62,26 +66,26 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
         
-                this.hud_board = [
+                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,0,0,0]
-                ].map(row => row.map(cell => new HUDLayerModel(cell)))
+                ])
                 break;
             default:
                 this.default_board = [
                     [0,0,0],
                     [0,0,0],
                     [0,0,0],
-                ].map(row => row.map(cell => new BaseLayerModel(cell)))
+                ]
                 
-                this.bg_board = [
+                this.bg_board = new BaseLayerContainer(BgLayerModel, [
                     [55,55,55],
                     [55,55,55],
                     [55,55,55],
-                ].map(row => row.map(cell => new BgLayerModel(cell)))
+                ])
                 
                 this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0],
@@ -89,11 +93,11 @@ export default class BoardModel{
                     [0,0,0],
                 ])
         
-                this.hud_board = [
+                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
                     [0,0,0],
                     [0,0,0],
                     [0,0,0],
-                ].map(row => row.map(cell => new HUDLayerModel(cell)))        
+                ])       
                 break;
         }   
     }
