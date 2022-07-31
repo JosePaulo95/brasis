@@ -10,7 +10,7 @@
               <div @click="clicked(x, y)" class="cell-container">
                 <LayerBackground :cell="state.bg_board[x][y]" />
                 <LayerHUD :cell="state.hud_board[x][y]" />
-                <LayerActors :cell="state.actors_board[x][y]" />
+                <LayerActors :cell="state.actors_board.at(x,y)" />
               </div>
             </td>
           </tr>

@@ -1,4 +1,5 @@
 import ActorLayerModel from "./ActorLayerModel";
+import { BaseLayerContainer } from "./BaseLayerContainer";
 import BaseLayerModel from "./BaseLayerModel";
 import BgLayerModel from "./BgLayerModel";
 import HUDLayerModel from "./HUDLayerModel";
@@ -6,7 +7,7 @@ import HUDLayerModel from "./HUDLayerModel";
 export default class BoardModel{
     default_board: Array<Array<BaseLayerModel>>;
     bg_board: Array<Array<BgLayerModel>>;
-    actors_board: Array<Array<ActorLayerModel>>;
+    actors_board: BaseLayerContainer<ActorLayerModel>;
     hud_board: Array<Array<HUDLayerModel>>;
 
     constructor(level_code?:string){
@@ -26,12 +27,12 @@ export default class BoardModel{
                     [55,55,55,55]
                 ].map(row => row.map(cell => new BgLayerModel(cell)))
                 
-                this.actors_board = [
+                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0,0],
                     [0,1,0,0],
                     [0,0,0,0],
                     [0,0,0,0],
-                ].map(row => row.map(cell => new ActorLayerModel(cell)))
+                ])
         
                 this.hud_board = [
                     [0,0,0,0],
@@ -53,13 +54,13 @@ export default class BoardModel{
                     i=>i.map(j=>55)
                 ).map(row => row.map(cell => new BgLayerModel(cell)))
                 
-                this.actors_board = [
+                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,1,0,0],
                     [0,0,1,0,0],
                     [0,0,0,0,0]
-                ].map(row => row.map(cell => new ActorLayerModel(cell)))
+                ])
         
                 this.hud_board = [
                     [0,0,0,0,0],
@@ -82,11 +83,11 @@ export default class BoardModel{
                     [55,55,55],
                 ].map(row => row.map(cell => new BgLayerModel(cell)))
                 
-                this.actors_board = [
+                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
                     [0,0,0],
                     [0,1,0],
                     [0,0,0],
-                ].map(row => row.map(cell => new ActorLayerModel(cell)))
+                ])
         
                 this.hud_board = [
                     [0,0,0],
