@@ -8,9 +8,9 @@
           <tr v-for="(row, x) in state.default_board">
             <td v-for="(cell, y) in row" :id="'cell-'+x+'-'+y">
               <div @click="clicked(x, y)" class="cell-container">
-                <LayerBackground :cell="state.bg_board[x][y]" />
-                <LayerHUD :cell="state.hud_board[x][y]" />
-                <LayerActors :cell="state.actors_board[x][y]" />
+                <LayerBackground :cell="state.bg_board.at(x, y)" />
+                <LayerActionSquare :cell="state.action_square_board.at(x, y)" />
+                <LayerActors :cell="state.actors_board.at(x,y)" />
               </div>
             </td>
           </tr>
@@ -20,14 +20,14 @@
   </template>
 
   <script lang="ts">
-  import BoardModel from '@/Brasis/models/board';
-  import BoardController from '@/Brasis/controllers/board'
+  import BoardModel from '../Brasis/models/BoardModel';
+  import BoardController from '@/Brasis/controllers/BoardController'
   import { defineComponent, PropType } from 'vue';
   import StatusMenu from "./StatusMenu.vue"
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
   import "../styles/actor_anim.scss"
-  import LayerHUD from "./BoardLayers/LayerHUD.vue"
+  import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
 import AudioController from '@/Brasis/controllers/AudioController';
 
 
@@ -36,7 +36,7 @@ import AudioController from '@/Brasis/controllers/AudioController';
     components: {
     LayerBackground,
     LayerActors,
-    LayerHUD,
+    LayerActionSquare,
     StatusMenu
 },
     data(){

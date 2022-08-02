@@ -9,4 +9,9 @@ export default class BaseLayerModel{
         this.id = String(BaseLayerModel.next_id);
         BaseLayerModel.next_id++;
     }
+
+    setValue(val: number) {
+        throw new Error("Method not implemented.");
+    }
+    
 }
