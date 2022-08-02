@@ -1,5 +1,5 @@
-import BoardController from "@/Brasis/controllers/board"
-import BoardModel from "@/Brasis/models/board";
+import BoardController from "@/Brasis/controllers/BoardController"
+import BoardModel from "../Brasis/models/BoardModel";
 import { Point } from "@/Brasis/models/Point";
 
 

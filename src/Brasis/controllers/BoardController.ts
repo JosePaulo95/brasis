@@ -1,4 +1,4 @@
-import BoardModel from "../models/board";
+import BoardModel from "../models/BoardModel";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
 import AudioController from "./AudioController";
@@ -15,15 +15,13 @@ export default class BoardController{
         this.audio_controller = audio_controller
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
-            new InteractionModel("*", this.dismissHUD),
+            new InteractionModel("*", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
-            new InteractionModel("actor>hud", this.moveActor),
+            new InteractionModel("actor>action-square", this.moveActor),
         ]
     }
-    hello(x:number,y:number){
-        alert("deu bom"+x+""+y)
-    }
     async select(x: number, y: number): Promise<any> {
+        debugger
         const cur_point = new Point(x,y)
         const previous_actor = this.getTopLayer(this.prev_point)
         const top_current = this.getTopLayer(cur_point)
@@ -45,10 +43,10 @@ export default class BoardController{
         if(!p){
             return ""
         }
-        if(this.getHUD(p)){
-            return "hud"
+        if(this.model.action_square_board.at(p).value){
+            return "action-square"
         }
-        if(this.hasActor(p)){
+        if(this.model.actors_board.at(p).value){
             return "actor"
         }
         return "bg"
@@ -56,7 +54,7 @@ export default class BoardController{
 
     async moveActor(cur_point: Point, prev_point?: Point) {
         if(prev_point){
-            const actor = this.model.actors_board[prev_point.x][prev_point.y]
+            const actor = this.model.actors_board.at(prev_point)
             const shortest_path = this.calcShortestPath(prev_point, cur_point)
 
             this.audio_controller?.play("on-square-to-move-selection")
@@ -66,29 +64,15 @@ export default class BoardController{
             // ActorsModelManager.update("swap", p1, p2)
 
             await actor.animMove(shortest_path, this.audio_controller)
-            this.model.actors_board[prev_point.x][prev_point.y] = this.model.actors_board[cur_point.x][cur_point.y]
-            this.model.actors_board[cur_point.x][cur_point.y] = actor
+            this.model.actors_board.swap(prev_point, cur_point)
             actor.animReset(prev_point)
         }
     }
-    dismissHUD() {
-        for (let i = 0; i < this.model.hud_board.length; i++) {
-            for (let j = 0; j < this.model.hud_board[i].length; j++) {
-                this.model.hud_board[i][j].value = 0
-            }
-        }
+    dismissActionSquares() {
+        this.model.action_square_board.clear()
     }
     audioCancel(){
-        //todo: hasAny
-        let hasAny = false
-        for (let i = 0; i < this.model.hud_board.length; i++) {
-            for (let j = 0; j < this.model.hud_board[i].length; j++) {
-                if(this.model.hud_board[i][j].value){
-                    hasAny = true
-                }
-            }
-        }
-        hasAny&&this.audio_controller?.play("cancel")
+        this.model.action_square_board.hasAny() && this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         this.audio_controller?.play("select")
@@ -97,17 +81,11 @@ export default class BoardController{
         
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
-            this.model.hud_board[house.x][house.y].value = 1
+            this.model.action_square_board.at(house).value = 1
         }
     }
-    hasActor(p: Point) {
-        return this.model.actors_board[p.x] && this.model.actors_board[p.x][p.y].value
-    }
-    getHUD(p: Point) {
-        return this.model.hud_board[p.x] && this.model.hud_board[p.x][p.y].value
-    }
     getNeighbors(p: Point, d=1, root=true): Array<Point> {
-        if(!this.is_valid_house(p) || (this.hasActor(p) && !root)){
+        if(!this.model.bg_board.at(p) || (this.model.actors_board.at(p).value && !root)){
             return []
         }
         
@@ -150,9 +128,6 @@ export default class BoardController{
 
 
         return found?d-1:Infinity
-    }
-    is_valid_house(p: Point) {
-        return this.model.bg_board[p.x] && this.model.bg_board[p.x][p.y]
     }
 }
 

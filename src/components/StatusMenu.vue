@@ -5,13 +5,13 @@
 </template>
 
 <script lang="ts">
-import board from "@/Brasis/controllers/board";
+import BoardController from "../Brasis/controllers/BoardController";
 import { PropType } from "@vue/runtime-dom";
 
 export default {
   name: 'StatusMenu',
   props: {
-    controller: Object as PropType<board>
+    controller: Object as PropType<BoardController>
   }
 }
 </script>
