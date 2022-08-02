@@ -2,13 +2,13 @@ import ActorLayerModel from "./ActorLayerModel";
 import { BaseLayerContainer } from "./BaseLayerContainer";
 import BaseLayerModel from "./BaseLayerModel";
 import BgLayerModel from "./BgLayerModel";
-import HUDLayerModel from "./HUDLayerModel";
+import ActionSquareLayerModel from "./ActionSquareLayerModel";
 
 export default class BoardModel{
     default_board: Array<Array<number>>;
     bg_board: BaseLayerContainer<BgLayerModel>;
     actors_board: BaseLayerContainer<ActorLayerModel>;
-    hud_board: BaseLayerContainer<HUDLayerModel>;
+    action_square_board: BaseLayerContainer<ActionSquareLayerModel>;
 
     constructor(level_code?:string){
         switch (level_code) {
@@ -34,7 +34,7 @@ export default class BoardModel{
                     [0,0,0,0],
                 ])
         
-                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
                     [0,0,0,0],
                     [0,0,0,0],
                     [0,0,0,0],
@@ -66,7 +66,7 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
         
-                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,0,0,0],
@@ -93,7 +93,7 @@ export default class BoardModel{
                     [0,0,0],
                 ])
         
-                this.hud_board = new BaseLayerContainer(HUDLayerModel, [
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
                     [0,0,0],
                     [0,0,0],
                     [0,0,0],

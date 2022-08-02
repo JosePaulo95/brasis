@@ -15,9 +15,9 @@ export default class BoardController{
         this.audio_controller = audio_controller
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
-            new InteractionModel("*", this.dismissHUD),
+            new InteractionModel("*", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
-            new InteractionModel("actor>hud", this.moveActor),
+            new InteractionModel("actor>action-square", this.moveActor),
         ]
     }
     async select(x: number, y: number): Promise<any> {
@@ -43,8 +43,8 @@ export default class BoardController{
         if(!p){
             return ""
         }
-        if(this.model.hud_board.at(p).value){
-            return "hud"
+        if(this.model.action_square_board.at(p).value){
+            return "action-square"
         }
         if(this.model.actors_board.at(p).value){
             return "actor"
@@ -68,11 +68,11 @@ export default class BoardController{
             actor.animReset(prev_point)
         }
     }
-    dismissHUD() {
-        this.model.hud_board.clear()
+    dismissActionSquares() {
+        this.model.action_square_board.clear()
     }
     audioCancel(){
-        this.model.hud_board.hasAny() && this.audio_controller?.play("cancel")
+        this.model.action_square_board.hasAny() && this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         this.audio_controller?.play("select")
@@ -81,7 +81,7 @@ export default class BoardController{
         
         for (let i = 0; i < possible_houses_1.length; i++) {
             const house = possible_houses_1[i];
-            this.model.hud_board.at(house).value = 1
+            this.model.action_square_board.at(house).value = 1
         }
     }
     getNeighbors(p: Point, d=1, root=true): Array<Point> {
