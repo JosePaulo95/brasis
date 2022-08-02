@@ -7,14 +7,14 @@ describe('board component', () => {
         const trigger_dismiss = new InteractionModel("actor>*", ()=>{})
 
         expect(trigger_all.match("actor>actor")).toBe(true)
-        expect(trigger_all.match("hud")).toBe(true)
+        expect(trigger_all.match("action-square")).toBe(true)
 
         expect(trigger_possible_moves.match("actor>actor")).toBe(true)
         expect(trigger_possible_moves.match(">actor")).toBe(true)
         expect(trigger_possible_moves.match("actor>bg")).toBe(false)
 
         expect(trigger_dismiss.match(">actor")).toBe(false)
-        expect(trigger_dismiss.match("hud>actor")).toBe(false)
+        expect(trigger_dismiss.match("action-square>actor")).toBe(false)
         expect(trigger_dismiss.match("actor>bg")).toBe(true)
     })
 })

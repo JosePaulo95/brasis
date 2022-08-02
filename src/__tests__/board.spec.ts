@@ -12,7 +12,7 @@ describe('board component', () => {
     model.action_square_board.at(p3).value=1
     expect(controller.getTopLayer(p1)).toBe("bg")
     expect(controller.getTopLayer(p2)).toBe("actor")
-    expect(controller.getTopLayer(p3)).toBe("hud")
+    expect(controller.getTopLayer(p3)).toBe("action-square")
     expect(controller.getTopLayer(undefined)).toBe("")
   })
 
@@ -48,10 +48,10 @@ describe('board component', () => {
     expect(model.action_square_board.at(4, 2).value).toEqual(0)
 
     //prev_act  cur
-    //v         hud   action(move)
+    //v         action-square   action(move)
     //v         act   dismiss, possibleMoves
     //v         bg    dismiss
-    //f         hud   x
+    //f         action-square   x
     //f         act   possibleMoves
     //f         bg    -
   })
@@ -67,12 +67,12 @@ describe('board component', () => {
     // expect(model.actors_board[1][1].value).toEqual(0)
     // expect(model.actors_board[1][2].value).toEqual(1)
   })
-  it('dismiss hud', async () => {
+  it('dismiss action-square', async () => {
     const model = new BoardModel("3x3 actor in center")
     const controller = new BoardController(model);
     const p = new Point(1, 1)
     controller.selectActor(p)
-    controller.dismissHUD()
+    controller.dismissActionSquares()
     expect(model.action_square_board.at(1, 0).value).toEqual(0)
     expect(model.action_square_board.at(0, 1).value).toEqual(0)
     expect(model.action_square_board.at(1, 2).value).toEqual(0)
