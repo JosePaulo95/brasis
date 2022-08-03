@@ -74,6 +74,39 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
                 break;
+            case "5x5 w/ allies and enemies":
+                this.default_board = [
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0]
+                ]
+                
+                this.bg_board = new BaseLayerContainer(BgLayerModel,[
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55],
+                    [55,55,55,55,55]
+                ])
+                
+                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                    [0,0,0,0,2],
+                    [0,2,0,0,2],
+                    [0,0,1,0,0],
+                    [0,1,1,0,0],
+                    [0,0,0,0,0]
+                ])
+        
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0],
+                    [0,0,0,0,0]
+                ])
+                break;
             default:
                 this.default_board = [
                     [0,0,0],
