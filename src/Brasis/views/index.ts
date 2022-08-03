@@ -5,9 +5,6 @@ export function getBackgroundSprite (type: String, sprite_code: number) {
     switch (type) {
         case "bg":
             return require('@/assets/Tilesets/terrain arido/tile'+code+'.png')
-        case "actors":
-            if(sprite_code)
-                return require('@/assets/Actors/tile000.png')
         case "action-square":
             if(sprite_code)
                 return require('@/assets/Tilesets/action-square/tile001.png')
