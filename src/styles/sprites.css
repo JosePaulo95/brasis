@@ -1,0 +1,7 @@
+.ally.knight {
+    background-image: url("../assets/Sprites/knight-blue.png");
+}
+
+.enemy.knight {
+    background-image: url("../assets/Sprites/knight-red.png");
+}

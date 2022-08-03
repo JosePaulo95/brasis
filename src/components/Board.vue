@@ -27,6 +27,7 @@
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
   import "../styles/actor_anim.scss"
+  import "../styles/sprites.css"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
 import AudioController from '@/Brasis/controllers/AudioController';
 
