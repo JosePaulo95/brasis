@@ -6,6 +6,26 @@ const anime = require ('animejs/lib/anime.min.js');
 export default class ActorLayerModel extends BaseLayerModel{
     direction = "";
     animation = "";
+    character: string;
+    team: string;
+
+    constructor(value=0){
+        super(value);
+        switch (value) {
+            case 1:
+                this.character = "knight"
+                this.team = "ally"
+                break;
+            case 2:
+                this.character = "knight"
+                this.team = "enemy"
+                break;
+            default:
+                this.character = "knight"
+                this.team = "ally"
+                break;
+        }
+    }    
 
     async animMove(path: Array<Point>, audio_controller: AudioController|undefined) {
         const x = path[0].x
