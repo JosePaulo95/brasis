@@ -21,7 +21,6 @@ export default class BoardController{
         ]
     }
     async select(x: number, y: number): Promise<any> {
-        debugger
         const cur_point = new Point(x,y)
         const previous_actor = this.getTopLayer(this.prev_point)
         const top_current = this.getTopLayer(cur_point)
