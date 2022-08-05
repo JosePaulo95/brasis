@@ -84,11 +84,11 @@ export default class BoardModel{
                 ]
                 
                 this.bg_board = new BaseLayerContainer(BgLayerModel,[
-                    [55,55,55,55,55],
-                    [55,55,55,55,55],
-                    [55,55,55,55,55],
-                    [55,55,55,55,55],
-                    [55,55,55,55,55]
+                    [0,1,2,3,55],
+                    [11,12,13,14,55],
+                    [22,23,24,25,55],
+                    [33,34,35,55,55],
+                    [55,55,55,55,36]
                 ])
                 
                 this.actors_board = new BaseLayerContainer(ActorLayerModel, [
