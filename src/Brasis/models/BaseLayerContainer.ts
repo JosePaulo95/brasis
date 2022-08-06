@@ -3,7 +3,7 @@ import { Point } from "./Point";
 
 export class BaseLayerContainer <T extends BaseLayerModel> {
     board: T[][];
-
+    
     constructor (c: new(...args: any[])=>T, id_table: Array<Array<number>>) {
         this.board = id_table.map(row => 
             row.map(cell =>
@@ -36,11 +36,11 @@ export class BaseLayerContainer <T extends BaseLayerModel> {
         }
     }
 
-    hasAny () {
+    hasAny (checkFunction = (cell:T):boolean => {return cell.value!=0}) {
         let hasAny = false
         for (let i = 0; i < this.board.length; i++) {
             for (let j = 0; j < this.board[i].length; j++) {
-                if(this.board[i][j].value){
+                if(checkFunction(this.board[i][j])){
                     return true
                 }
             }
