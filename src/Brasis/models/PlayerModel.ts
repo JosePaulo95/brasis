@@ -1,9 +1,10 @@
 
 
 export class PlayerModel {
+    playable: boolean;
 
-    constructor () {
-        
+    constructor (playable = false) {
+        this.playable = playable;
     }
 
 }
