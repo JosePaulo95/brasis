@@ -7,8 +7,8 @@ describe('turn management', () => {
     it("knows if it is over", async () => {
         const boardModel1 = new BoardModel("dev1")
         const boardModel2 = new BoardModel("5x5 w/ allies and enemies")
-        const p1 = new PlayerModel()
-        const p2 = new PlayerModel()
+        const p1 = new PlayerModel("teamA")
+        const p2 = new PlayerModel("teamB")
 
         const level1 = new LevelModel(boardModel1, p1, p2);
         const level2 = new LevelModel(boardModel2, p1, p2);
@@ -18,8 +18,8 @@ describe('turn management', () => {
     })
 
     it("only allow player to move his own units", () => {
-        const p1 = new PlayerModel(true);
-        const p2 = new PlayerModel();
+        const p1 = new PlayerModel("teamA", true);
+        const p2 = new PlayerModel("teamB");
         const boardModel = new BoardModel("5x5 w/ allies and enemies");
         const boardController = new BoardController(boardModel);
 
@@ -31,7 +31,5 @@ describe('turn management', () => {
         
         boardController.select(2,2)
         expect(boardModel.action_square_board.hasAny()).toBe(true)
-        
-
     })
 })

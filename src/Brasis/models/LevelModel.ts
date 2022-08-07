@@ -6,9 +6,11 @@ import { PlayerModel } from "./PlayerModel";
 export class LevelModel {
     board: BoardModel;
     turn = 1;
+    current_team: string;
 
     constructor (board: BoardModel, p1: PlayerModel, p2: PlayerModel) {
         this.board = board;
+        this.current_team = p1.team;
     }
     
     playerAwins(): boolean {

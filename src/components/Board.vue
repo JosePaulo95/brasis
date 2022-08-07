@@ -29,8 +29,8 @@
   import "../styles/actor_anim.scss"
   import "../styles/sprites.css"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
-import AudioController from '@/Brasis/controllers/AudioController';
-
+  import AudioController from '@/Brasis/controllers/AudioController';
+  import { LevelModel } from '@/Brasis/models/LevelModel';
 
   export default defineComponent({
     name: 'Board',
@@ -54,11 +54,15 @@ import AudioController from '@/Brasis/controllers/AudioController';
       audio_controller: {
         type: Object as PropType<AudioController>,
         required: true
+      },
+      level_model: {
+        type: Object as PropType<LevelModel>,
+        required: true
       }
     },
     beforeMount(){
       this.state = this.model
-      this.controller = new BoardController(this.state, this.audio_controller)
+      this.controller = new BoardController(this.state, this.audio_controller, this.level_model)
     },
     methods: {
       clicked(x: number, y: number){
