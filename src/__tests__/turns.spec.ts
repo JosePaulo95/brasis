@@ -13,8 +13,8 @@ describe('turn management', () => {
         const level1 = new LevelModel(boardModel1, p1, p2);
         const level2 = new LevelModel(boardModel2, p1, p2);
         
-        expect(level1.player1wins()).toBe(true)
-        expect(level2.player1wins()).toBe(false)
+        expect(level1.playerAwins()).toBe(true)
+        expect(level2.playerAwins()).toBe(false)
     })
 
     it("only allow player to move his own units", () => {

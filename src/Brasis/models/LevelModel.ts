@@ -11,18 +11,16 @@ export class LevelModel {
         this.board = board;
     }
     
-    player1wins(): boolean {
-        return this.playerwins(1)
+    playerAwins(): boolean {
+        return this.playerwins("teamA")
     }
     
-    player2wins(): boolean {
-        return this.playerwins(2)
+    playerBwins(): boolean {
+        return this.playerwins("teamB")
     }
-    private playerwins(team_id: number): boolean {
-        const team = team_id==1?"ally":"enemy"
-
+    private playerwins(team_id: string): boolean {
         const isOpponent = (actor: ActorLayerModel): boolean => {
-            return actor.team != team
+            return actor.team != team_id
         }
         
         return !this.board.actors_board.hasAny(isOpponent)

@@ -1,7 +1,7 @@
-.ally.knight {
+.teamA.knight {
     background-image: url("../assets/Sprites/knight-blue.png");
 }
 
-.enemy.knight {
+.teamB.knight {
     background-image: url("../assets/Sprites/knight-red.png");
 }

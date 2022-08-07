@@ -14,15 +14,15 @@ export default class ActorLayerModel extends BaseLayerModel{
         switch (value) {
             case 1:
                 this.character = "knight"
-                this.team = "ally"
+                this.team = "teamA"
                 break;
             case 2:
                 this.character = "knight"
-                this.team = "enemy"
+                this.team = "teamB"
                 break;
             default:
                 this.character = "knight"
-                this.team = "ally"
+                this.team = "teamA"
                 break;
         }
     }    
