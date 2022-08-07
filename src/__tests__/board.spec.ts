@@ -21,7 +21,6 @@ describe('board component', () => {
     const controller = new BoardController(model);
     const p = new Point(2,2)
     const neighbors = controller.getNeighbors(p,1)
-    console.log(neighbors);
     expect(neighbors.length).toEqual(3)
   })
 
