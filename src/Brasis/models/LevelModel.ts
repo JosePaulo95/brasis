@@ -7,10 +7,14 @@ export class LevelModel {
     board: BoardModel;
     turn = 1;
     current_team: string;
+    player1: PlayerModel;
+    player2: PlayerModel;
 
     constructor (board: BoardModel, p1: PlayerModel, p2: PlayerModel) {
         this.board = board;
         this.current_team = p1.team;
+        this.player1 = p1;
+        this.player2 = p2;
     }
     
     playerAwins(): boolean {
@@ -29,6 +33,6 @@ export class LevelModel {
     }
     
     isPlayer1Turn(): boolean {
-        return this.turn==1;
+        return this.player1.team == this.current_team;
     }
 }
