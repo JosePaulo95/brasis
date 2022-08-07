@@ -81,7 +81,7 @@ export default class BoardController{
         const current_team = this.level_model?.current_team
         
         if(actor && actor.team){
-            if(actor.team == current_team){
+            if (actor.team == current_team || !this.level_model){
                 this.showPossibleMoves(cur_point)
             } else {
                 //do nothing
