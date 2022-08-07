@@ -2,6 +2,7 @@ import BoardController from "@/Brasis/controllers/BoardController";
 import BoardModel from "@/Brasis/models/BoardModel";
 import { LevelModel } from "@/Brasis/models/LevelModel";
 import { PlayerModel } from "@/Brasis/models/PlayerModel";
+import { Point } from "@/Brasis/models/Point";
 
 describe('turn management', () => {
     it("knows if it is over", async () => {
@@ -20,16 +21,17 @@ describe('turn management', () => {
     it("only allow player to move his own units", () => {
         const p1 = new PlayerModel("teamA", true);
         const p2 = new PlayerModel("teamB");
-        const boardModel = new BoardModel("5x5 w/ allies and enemies");
-        const boardController = new BoardController(boardModel);
-
+        const boardModel = new BoardModel("5x5 w/ allies and enemies");        
         const level = new LevelModel(boardModel, p1, p2);
+        const boardController = new BoardController(boardModel, undefined, level);
         expect(level.isPlayer1Turn()).toBe(true)
 
-        boardController.select(1,1)
+        const pt1 = new Point(1,1)
+        boardController.selectActor(pt1)
         expect(boardModel.action_square_board.hasAny()).toBe(false)
-        
-        boardController.select(2,2)
+
+        const pt2 = new Point(2,2)
+        boardController.selectActor(pt2)
         expect(boardModel.action_square_board.hasAny()).toBe(true)
     })
 })
