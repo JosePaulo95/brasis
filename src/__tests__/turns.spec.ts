@@ -16,4 +16,22 @@ describe('turn management', () => {
         expect(level1.player1wins()).toBe(true)
         expect(level2.player1wins()).toBe(false)
     })
+
+    it("only allow player to move his own units", () => {
+        const p1 = new PlayerModel(true);
+        const p2 = new PlayerModel();
+        const boardModel = new BoardModel("5x5 w/ allies and enemies");
+        const boardController = new BoardController(boardModel);
+
+        const level = new LevelModel(boardModel, p1, p2);
+        expect(level.isPlayer1Turn()).toBe(true)
+
+        boardController.select(1,1)
+        expect(boardModel.action_square_board.hasAny()).toBe(false)
+        
+        boardController.select(2,2)
+        expect(boardModel.action_square_board.hasAny()).toBe(true)
+        
+
+    })
 })
