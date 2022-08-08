@@ -21,19 +21,21 @@ export default class BoardController{
         ]
     }
     async select(x: number, y: number): Promise<any> {
-        const cur_point = new Point(x,y)
-        const previous_actor = this.getTopLayer(this.prev_point)
-        const top_current = this.getTopLayer(cur_point)
-        const event_key = `${previous_actor}>${top_current}` 
+        if(this.interaction_on){
+            const cur_point = new Point(x,y)
+            const previous_actor = this.getTopLayer(this.prev_point)
+            const top_current = this.getTopLayer(cur_point)
+            const event_key = `${previous_actor}>${top_current}` 
 
-        this.interaction_on = false
-        const interactions = this.interactions.filter(i=>i.match(event_key))
-        for (let i = 0; i < interactions.length; i++) {
-            await interactions[i].method.call(this, cur_point, this.prev_point)
+            this.interaction_on = false
+            const interactions = this.interactions.filter(i=>i.match(event_key))
+            for (let i = 0; i < interactions.length; i++) {
+                await interactions[i].method.call(this, cur_point, this.prev_point)
+            }
+            
+            this.interaction_on = true
+            this.prev_point = new Point(x,y)
         }
-        
-        this.interaction_on = true
-        this.prev_point = new Point(x,y)
     }
     getSubscribedInteractions(event_key: string) {
         return this.interactions.filter(i => i.event_key == event_key)
