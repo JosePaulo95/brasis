@@ -10,7 +10,11 @@ export default class BoardModel{
     actors_board: BaseLayerContainer<ActorLayerModel>;
     action_square_board: BaseLayerContainer<ActionSquareLayerModel>;
 
+    round = 0;
+
     constructor(level_code?:string){
+        this.round = 0;
+
         switch (level_code) {
             case "dev1":
                 this.default_board = [
@@ -133,5 +137,26 @@ export default class BoardModel{
                 ])       
                 break;
         }   
+    }
+
+    evaluate(): number {
+        const any_teamA = this.actors_board.hasAny(a=>a.team == "teamA")
+        const any_teamB = this.actors_board.hasAny(a=>a.team == "teamB")
+
+        if(any_teamA && !any_teamB){
+            return 1;
+        }
+        if(!any_teamA && any_teamB){
+            return -1;
+        }
+        return 0;
+    }
+
+    getRound () : number {
+        return this.round;
+    }
+
+    getCurrentTeam () : string {
+        return this.round%2?"teamB":"teamA";
     }
 }

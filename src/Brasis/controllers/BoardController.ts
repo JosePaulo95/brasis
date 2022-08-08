@@ -1,6 +1,5 @@
 import BoardModel from "../models/BoardModel";
 import { InteractionModel } from "../models/InteractionModel";
-import { LevelModel } from "../models/LevelModel";
 import { Point } from "../models/Point";
 import AudioController from "./AudioController";
 
@@ -10,12 +9,10 @@ export default class BoardController{
     interaction_on = true;
     prev_point: Point|undefined;
     audio_controller: AudioController|undefined;
-    level_model: LevelModel | undefined;
     
-    constructor(model: BoardModel, audio_controller?: AudioController, level_model?: LevelModel){
+    constructor(model: BoardModel, audio_controller?: AudioController){
         this.model = model
         this.audio_controller = audio_controller
-        this.level_model = level_model
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
             new InteractionModel("*", this.dismissActionSquares),
@@ -78,10 +75,10 @@ export default class BoardController{
     }
     selectActor(cur_point: Point, prev_point?: Point) {
         const actor = this.model.actors_board.at(cur_point)
-        const current_team = this.level_model?.current_team
+        const current_team = this.model.getCurrentTeam()
         
         if(actor && actor.team){
-            if (actor.team == current_team || !this.level_model){
+            if (actor.team == current_team){
                 this.showPossibleMoves(cur_point)
             } else {
                 //do nothing

@@ -30,7 +30,6 @@
   import "../styles/sprites.css"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
   import AudioController from '@/Brasis/controllers/AudioController';
-  import { LevelModel } from '@/Brasis/models/LevelModel';
 
   export default defineComponent({
     name: 'Board',
@@ -55,10 +54,6 @@
         type: Object as PropType<AudioController>,
         required: true
       },
-      level_model: {
-        type: Object as PropType<LevelModel>,
-        required: true
-      }
     },
     beforeMount(){
       this.state = this.model

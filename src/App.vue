@@ -12,7 +12,6 @@ import Board from './components/Board.vue';
 import BoardModel from './Brasis/models/BoardModel'
 import AudioModel from './Brasis/models/AudioModel';
 import AudioController from './Brasis/controllers/AudioController';
-import { LevelModel } from './Brasis/models/LevelModel';
 import { PlayerModel } from './Brasis/models/PlayerModel';
 
 export default defineComponent({
@@ -34,8 +33,6 @@ export default defineComponent({
     this.audio_controller = new AudioController(audio_model)
     const p1 = new PlayerModel("teamA")
     const p2 = new PlayerModel("teamB")
-    this.level_model = new LevelModel(board, p1, p2)
-
   }
 });
 </script>
