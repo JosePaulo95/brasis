@@ -57,7 +57,7 @@
     },
     beforeMount(){
       this.state = this.model
-      this.controller = new BoardController(this.state, this.audio_controller, this.level_model)
+      this.controller = new BoardController(this.state, this.audio_controller)
     },
     methods: {
       clicked(x: number, y: number){
