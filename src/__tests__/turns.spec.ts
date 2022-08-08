@@ -13,7 +13,7 @@ describe('turn management', () => {
     })
 
     it("only allow player to move his own units", () => {
-        const boardModel = new BoardModel("5x5 w/ allies and enemies");        
+        const boardModel = new BoardModel("5x5 w/ allies and enemies");
         const boardController = new BoardController(boardModel);
 
         expect(boardModel.getRound()).toBe(0)
@@ -26,5 +26,18 @@ describe('turn management', () => {
         const pt2 = new Point(2,2)
         boardController.selectActor(pt2)
         expect(boardModel.action_square_board.hasAny()).toBe(true)
+    })
+
+    it("actors cannot move twice in same round", async () => {
+        const boardModel = new BoardModel("5x5 w/ allies and enemies");
+        const boardController = new BoardController(boardModel);
+
+        expect(boardModel.action_square_board.hasAny()).toBe(false)
+        await boardController.select(2,2)
+        expect(boardModel.action_square_board.hasAny()).toBe(true)
+        await boardController.select(2,3)
+        expect(boardModel.action_square_board.hasAny()).toBe(false)
+        await boardController.select(2,3)
+        expect(boardModel.action_square_board.hasAny()).toBe(false)
     })
 })

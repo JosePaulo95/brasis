@@ -63,6 +63,7 @@ export default class BoardController{
             // ActorsModelManager.update("swap", p1, p2)
 
             await actor.animMove(shortest_path, this.audio_controller)
+            actor.disabled = true;
             this.model.actors_board.swap(prev_point, cur_point)
             actor.animReset(prev_point)
         }
@@ -78,7 +79,7 @@ export default class BoardController{
         const current_team = this.model.getCurrentTeam()
         
         if(actor && actor.team){
-            if (actor.team == current_team){
+            if (actor.team == current_team && !actor.disabled){
                 this.showPossibleMoves(cur_point)
             } else {
                 //do nothing

@@ -8,6 +8,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     animation = "";
     character: string;
     team: string;
+    disabled = false;
 
     constructor(value=0){
         super(value);

@@ -2,7 +2,7 @@
   <div
     v-if="cell.value"
     :id="'actor-'+cell.id"
-    :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation}`"
+    :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
   >
   
   </div>
@@ -60,5 +60,8 @@
     25% {--j: 2;}
     50% {--j: 3;}
     75% {--j: 4;}
+  }
+  .disabled {
+    filter: brightness(0.65);
   }
 </style>
