@@ -111,6 +111,27 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
                 break;
+            case "2x2 w/ ally and enemy":
+                this.default_board = [
+                    [0,0],
+                    [0,0],
+                ]
+                
+                this.bg_board = new BaseLayerContainer(BgLayerModel,[
+                    [0,36],
+                    [36,0],
+                ])
+                
+                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                    [2,0],
+                    [0,1],
+                ])
+        
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
+                    [0,0],
+                    [0,0],
+                ])
+                break;
             default:
                 this.default_board = [
                     [0,0,0],
