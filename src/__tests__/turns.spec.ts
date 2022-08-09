@@ -40,4 +40,27 @@ describe('turn management', () => {
         await boardController.select(2,3)
         expect(boardModel.action_square_board.hasAny()).toBe(false)
     })
+
+    it("rounds pass", async () => {
+        const boardModel = new BoardModel("2x2 w/ ally and enemy");
+        const boardController = new BoardController(boardModel);
+
+        //00 01
+        //10 11
+
+        expect(boardModel.getRound()).toBe(0)
+        expect(boardModel.getCurrentTeam()).toBe("teamA")
+        await boardController.select(1,1)
+        await boardController.select(0,1)
+
+        expect(boardModel.getRound()).toBe(1)
+        expect(boardModel.getCurrentTeam()).toBe("teamB")
+        await boardController.select(0,0)
+        await boardController.select(1,0)
+
+        expect(boardModel.getRound()).toBe(2)
+        expect(boardModel.getCurrentTeam()).toBe("teamA")
+        await boardController.select(0,1)
+        await boardController.select(0,0)
+    })
 })
