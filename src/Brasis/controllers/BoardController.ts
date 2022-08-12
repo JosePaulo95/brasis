@@ -18,6 +18,7 @@ export default class BoardController{
             new InteractionModel("*", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>action-square", this.moveActor),
+            new InteractionModel("actor>action-square", this.checkEndOfTurn),
         ]
     }
     async select(x: number, y: number): Promise<any> {
@@ -69,6 +70,20 @@ export default class BoardController{
             this.model.actors_board.swap(prev_point, cur_point)
             actor.animReset(prev_point)
         }
+    }
+    async checkEndOfTurn(cur_point: Point, prev_point?: Point) {
+        const current_team = this.model.getCurrentTeam()
+        const has_ally_to_move = this.model.actors_board.hasAny(a => 
+            a.team == current_team &&
+            !a.disabled &&
+            a.value>0
+        )
+        if(!has_ally_to_move){
+            this.passTurn()
+        }
+    }
+    passTurn(){
+        this.model.round++;
     }
     dismissActionSquares() {
         this.model.action_square_board.clear()
