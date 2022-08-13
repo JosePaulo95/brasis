@@ -47,4 +47,17 @@ export class BaseLayerContainer <T extends BaseLayerModel> {
         }
         return hasAny
     }
+
+    update(new_props: any, matchFunction = (cell:T):boolean => {return cell.value!=0}){
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                if(matchFunction(this.board[i][j])){
+                    Object.keys(new_props).map(key => {
+                        //this.board[i][j][key].setValue(new_props[key])
+                    })
+                    this.board[i][j] = {...this.board[i][j], ...new_props} as T
+                }
+            }
+        }
+    }
 }
