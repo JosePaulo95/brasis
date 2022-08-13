@@ -84,6 +84,14 @@ export default class BoardController{
     }
     passTurn(){
         this.model.round++;
+        //todo: refactor
+        for (let i = 0; i < this.model.actors_board.board.length; i++) {
+            for (let j = 0; j < this.model.actors_board.board[i].length; j++) {
+                this.model.actors_board.board[i][j].disabled = false
+            }
+        }
+        
+        //this.model.actors_board.update({disabled: false})
     }
     dismissActionSquares() {
         this.model.action_square_board.clear()
