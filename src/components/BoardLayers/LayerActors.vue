@@ -1,6 +1,10 @@
 <template>
-  <div v-if="cell.value" :id="'actor-'+cell.id" :class="`actor cell-content ${cell.direction} ${cell.animation}`" >
-    01
+  <div
+    v-if="cell.value"
+    :id="'actor-'+cell.id"
+    :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
+  >
+  
   </div>
 </template>
 
@@ -28,11 +32,8 @@
   });
 </script>
 
-
-
 <style scoped>
   .actor {
-    background-image: url("../../assets/Knight/SpriteSheet.png");
     background-size: calc(100%*4);
     background-position: right calc(var(--i)*100%) bottom calc(var(--j)*100%);
     z-index: 3;
@@ -59,5 +60,8 @@
     25% {--j: 2;}
     50% {--j: 3;}
     75% {--j: 4;}
+  }
+  .disabled {
+    filter: brightness(0.65);
   }
 </style>

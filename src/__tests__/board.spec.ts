@@ -21,7 +21,6 @@ describe('board component', () => {
     const controller = new BoardController(model);
     const p = new Point(2,2)
     const neighbors = controller.getNeighbors(p,1)
-    console.log(neighbors);
     expect(neighbors.length).toEqual(3)
   })
 
@@ -56,16 +55,21 @@ describe('board component', () => {
     //f         bg    -
   })
   it('moves actor', async () => {
-    const model = new BoardModel("3x3 actor in center")
-    const controller = new BoardController(model);
+    const boardModel = new BoardModel("2x2 w/ ally and enemy");
+    const boardController = new BoardController(boardModel);
 
+    expect(boardModel.actors_board.at(0,0).value).toBeTruthy()
+    expect(boardModel.actors_board.at(0,1).value).not.toBeTruthy()
+    expect(boardModel.actors_board.at(1,0).value).not.toBeTruthy()
+    expect(boardModel.actors_board.at(1,1).value).toBeTruthy()
 
+    await boardController.select(1,1)
+    await boardController.select(0,1)
 
-    // expect(model.actors_board[1][1].value).toEqual(1)
-    // expect(model.actors_board[1][2].value).toEqual(0)
-    // await controller.moveActor(new Point(1,2), new Point(1,1))
-    // expect(model.actors_board[1][1].value).toEqual(0)
-    // expect(model.actors_board[1][2].value).toEqual(1)
+    expect(boardModel.actors_board.at(0,0).value).toBeTruthy()
+    expect(boardModel.actors_board.at(0,1).value).toBeTruthy()
+    expect(boardModel.actors_board.at(1,0).value).not.toBeTruthy()
+    expect(boardModel.actors_board.at(1,1).value).not.toBeTruthy()
   })
   it('dismiss action-square', async () => {
     const model = new BoardModel("3x3 actor in center")

@@ -1,0 +1,7 @@
+.teamA.knight {
+    background-image: url("../assets/Sprites/knight-blue.png");
+}
+
+.teamB.knight {
+    background-image: url("../assets/Sprites/knight-red.png");
+}

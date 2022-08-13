@@ -18,23 +18,25 @@ export default class BoardController{
             new InteractionModel("*", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>action-square", this.moveActor),
+            new InteractionModel("actor>action-square", this.checkEndOfTurn),
         ]
     }
     async select(x: number, y: number): Promise<any> {
-        debugger
-        const cur_point = new Point(x,y)
-        const previous_actor = this.getTopLayer(this.prev_point)
-        const top_current = this.getTopLayer(cur_point)
-        const event_key = `${previous_actor}>${top_current}` 
+        if(this.interaction_on){
+            const cur_point = new Point(x,y)
+            const previous_actor = this.getTopLayer(this.prev_point)
+            const top_current = this.getTopLayer(cur_point)
+            const event_key = `${previous_actor}>${top_current}` 
 
-        this.interaction_on = false
-        const interactions = this.interactions.filter(i=>i.match(event_key))
-        for (let i = 0; i < interactions.length; i++) {
-            await interactions[i].method.call(this, cur_point, this.prev_point)
+            this.interaction_on = false
+            const interactions = this.interactions.filter(i=>i.match(event_key))
+            for (let i = 0; i < interactions.length; i++) {
+                await interactions[i].method.call(this, cur_point, this.prev_point)
+            }
+            
+            this.interaction_on = true
+            this.prev_point = new Point(x,y)
         }
-        
-        this.interaction_on = true
-        this.prev_point = new Point(x,y)
     }
     getSubscribedInteractions(event_key: string) {
         return this.interactions.filter(i => i.event_key == event_key)
@@ -64,9 +66,32 @@ export default class BoardController{
             // ActorsModelManager.update("swap", p1, p2)
 
             await actor.animMove(shortest_path, this.audio_controller)
+            actor.disabled = true;
             this.model.actors_board.swap(prev_point, cur_point)
             actor.animReset(prev_point)
         }
+    }
+    async checkEndOfTurn(cur_point: Point, prev_point?: Point) {
+        const current_team = this.model.getCurrentTeam()
+        const has_ally_to_move = this.model.actors_board.hasAny(a => 
+            a.team == current_team &&
+            !a.disabled &&
+            a.value>0
+        )
+        if(!has_ally_to_move){
+            this.passTurn()
+        }
+    }
+    passTurn(){
+        this.model.round++;
+        //todo: refactor
+        for (let i = 0; i < this.model.actors_board.board.length; i++) {
+            for (let j = 0; j < this.model.actors_board.board[i].length; j++) {
+                this.model.actors_board.board[i][j].disabled = false
+            }
+        }
+        
+        //this.model.actors_board.update({disabled: false})
     }
     dismissActionSquares() {
         this.model.action_square_board.clear()
@@ -75,6 +100,18 @@ export default class BoardController{
         this.model.action_square_board.hasAny() && this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
+        const actor = this.model.actors_board.at(cur_point)
+        const current_team = this.model.getCurrentTeam()
+        
+        if(actor && actor.team){
+            if (actor.team == current_team && !actor.disabled){
+                this.showPossibleMoves(cur_point)
+            } else {
+                //do nothing
+            }
+        }
+    }
+    showPossibleMoves(cur_point: Point) {
         this.audio_controller?.play("select")
 
         const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
