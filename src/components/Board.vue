@@ -11,6 +11,9 @@
                 <LayerBackground :cell="state.bg_board.at(x, y)" />
                 <LayerActionSquare :cell="state.action_square_board.at(x, y)" />
                 <LayerActors :cell="state.actors_board.at(x,y)" />
+                <div class="cell-container">
+                  {{x}}{{y}}
+                </div>
               </div>
             </td>
           </tr>
