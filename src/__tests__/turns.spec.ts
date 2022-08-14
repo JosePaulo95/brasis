@@ -5,7 +5,7 @@ import { Point } from "@/Brasis/models/Point";
 
 describe('turn management', () => {
     it("knows if it is over", async () => {
-        const boardModel1 = new BoardModel("dev1")
+        const boardModel1 = new BoardModel("4x4 alone unit")
         const boardModel2 = new BoardModel("5x5 w/ allies and enemies")
         
         expect(boardModel1.evaluate()).toBe(1)

@@ -16,7 +16,7 @@ export default class BoardModel{
         this.round = 0;
 
         switch (level_code) {
-            case "dev1":
+            case "4x4 alone unit":
                 this.default_board = [
                     [0,0,0,0],
                     [0,0,0,0],
