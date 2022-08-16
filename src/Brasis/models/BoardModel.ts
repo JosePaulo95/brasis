@@ -3,6 +3,7 @@ import { BaseLayerContainer } from "./BaseLayerContainer";
 import BaseLayerModel from "./BaseLayerModel";
 import BgLayerModel from "./BgLayerModel";
 import ActionSquareLayerModel from "./ActionSquareLayerModel";
+import { Point } from "./Point";
 
 export default class BoardModel{
     default_board: Array<Array<number>>;
@@ -179,5 +180,18 @@ export default class BoardModel{
 
     getCurrentTeam () : string {
         return this.round%2?"teamB":"teamA";
+    }
+
+    getNeighbors (p: Point) {
+        const p4 = [
+            new Point(p.x-1, p.y),
+            new Point(p.x, p.y-1),
+            new Point(p.x+1, p.y),
+            new Point(p.x, p.y+1)
+        ]
+        return p4.filter(p=>
+            this.bg_board.at(p)
+            //&& this.bg_board.at(p).value!=0
+        )
     }
 }
