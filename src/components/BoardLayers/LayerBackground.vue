@@ -1,6 +1,6 @@
 <template>
   <div
-    
+    :class="`terrain-sprite terrain-sprite-${cell.value}`"
   >
   </div>
 </template>
@@ -20,7 +20,8 @@
   });
 </script>
 
-
 <style scoped>
-  
+.terrain-sprite{
+  background-size: contain;
+}
 </style>
