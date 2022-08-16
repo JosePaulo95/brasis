@@ -10,6 +10,7 @@
               <div @click="clicked(x, y)" class="cell-container">
                 <LayerBackground :cell="state.bg_board.at(x, y)" />
                 <LayerActionSquare :cell="state.action_square_board.at(x, y)" />
+                <LayerWalls :cell="state.walls_board.at(x,y)" />
                 <LayerActors :cell="state.actors_board.at(x,y)" />
                 <div class="cell-container">
                   {{x}}{{y}}
@@ -29,9 +30,11 @@
   import StatusMenu from "./StatusMenu.vue"
   import LayerBackground from "./BoardLayers/LayerBackground.vue"
   import LayerActors from "./BoardLayers/LayerActors.vue"
+  import LayerWalls from "./BoardLayers/LayerWalls.vue"
   import "../styles/actor_anim.scss"
   import "../styles/sprites.css"
   import "../styles/terrain-sprites.scss"
+  import "../styles/wall-sprites.scss"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
   import AudioController from '@/Brasis/controllers/AudioController';
 
@@ -41,6 +44,7 @@
     LayerBackground,
     LayerActors,
     LayerActionSquare,
+    LayerWalls,
     StatusMenu
 },
     data(){

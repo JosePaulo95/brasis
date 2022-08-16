@@ -3,11 +3,13 @@ import { BaseLayerContainer } from "./BaseLayerContainer";
 import BaseLayerModel from "./BaseLayerModel";
 import BgLayerModel from "./BgLayerModel";
 import ActionSquareLayerModel from "./ActionSquareLayerModel";
+import WallLayerModel from "./WallLayerModel";
 import { Point } from "./Point";
 
 export default class BoardModel{
     default_board: Array<Array<number>>;
     bg_board: BaseLayerContainer<BgLayerModel>;
+    walls_board: BaseLayerContainer<WallLayerModel>;
     actors_board: BaseLayerContainer<ActorLayerModel>;
     action_square_board: BaseLayerContainer<ActionSquareLayerModel>;
 
@@ -39,12 +41,8 @@ export default class BoardModel{
                     [0,0,0,0],
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
-                    [0,0,0,0],
-                    [0,0,0,0],
-                    [0,0,0,0],
-                    [0,0,0,0],
-                ])
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
             case "4x4 x1 with obstacles and units":
                 this.default_board = [
@@ -68,11 +66,12 @@ export default class BoardModel{
                     [0,0,0,0],
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, [
                     [0,0,0,0],
+                    [0,0,214,214],
                     [0,0,0,0],
-                    [0,0,0,0],
-                    [0,0,0,0],
+                    [0,0,0,0]
                 ])
                 break;
             case "5x5 w/ 2 allies":
@@ -100,13 +99,8 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0]
-                ])
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
             case "5x5 w/ allies and enemies":
                 this.default_board = [
@@ -133,13 +127,8 @@ export default class BoardModel{
                     [0,0,0,0,0]
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0],
-                    [0,0,0,0,0]
-                ])
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
             case "2x2 w/ ally and enemy":
                 this.default_board = [
@@ -157,10 +146,8 @@ export default class BoardModel{
                     [0,1],
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
-                    [0,0],
-                    [0,0],
-                ])
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
             default:
                 this.default_board = [
@@ -181,11 +168,8 @@ export default class BoardModel{
                     [0,0,0],
                 ])
         
-                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, [
-                    [0,0,0],
-                    [0,0,0],
-                    [0,0,0],
-                ])       
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
         }   
     }
