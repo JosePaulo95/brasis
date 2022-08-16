@@ -31,6 +31,7 @@
   import LayerActors from "./BoardLayers/LayerActors.vue"
   import "../styles/actor_anim.scss"
   import "../styles/sprites.css"
+  import "../styles/terrain-sprites.scss"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
   import AudioController from '@/Brasis/controllers/AudioController';
 

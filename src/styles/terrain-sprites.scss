@@ -1,0 +1,18 @@
+
+$start: 0;
+$end: 9;
+
+@for $i from $start through $end {
+    .terrain-sprite-#{$i} {
+        background-image: url("../assets/Tilesets/terrain\ arido/tile00#{$i}.png");
+    }
+}
+
+$start: 10;
+$end: 55;
+
+@for $i from $start through $end {
+    .terrain-sprite-#{$i} {
+        background-image: url("../assets/Tilesets/terrain\ arido/tile0#{$i}.png");
+    }
+}
