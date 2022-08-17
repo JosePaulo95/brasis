@@ -5,12 +5,13 @@ import BgLayerModel from "./BgLayerModel";
 import ActionSquareLayerModel from "./ActionSquareLayerModel";
 import WallLayerModel from "./WallLayerModel";
 import { Point } from "./Point";
+import { ActorLayerContainer } from "./ActorLayerContainer";
 
 export default class BoardModel{
     default_board: Array<Array<number>>;
     bg_board: BaseLayerContainer<BgLayerModel>;
     walls_board: BaseLayerContainer<WallLayerModel>;
-    actors_board: BaseLayerContainer<ActorLayerModel>;
+    actors_board: ActorLayerContainer;
     action_square_board: BaseLayerContainer<ActionSquareLayerModel>;
 
     round = 0;
@@ -34,7 +35,7 @@ export default class BoardModel{
                     [55,55,55,55]
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0,0],
                     [0,1,0,0],
                     [0,0,0,0],
@@ -59,7 +60,7 @@ export default class BoardModel{
                     [55,55,55,55]
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0,0],
                     [0,2,0,0],
                     [0,0,1,0],
@@ -91,7 +92,7 @@ export default class BoardModel{
                     [55,55,55,55,55]
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0,0,0],
                     [0,0,0,0,0],
                     [0,0,1,0,0],
@@ -119,7 +120,7 @@ export default class BoardModel{
                     [55,55,55,55,36]
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0,0,2],
                     [0,2,0,0,2],
                     [0,0,1,0,0],
@@ -141,7 +142,7 @@ export default class BoardModel{
                     [36,0],
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [2,0],
                     [0,1],
                 ])
@@ -162,7 +163,7 @@ export default class BoardModel{
                     [55,55,55],
                 ])
                 
-                this.actors_board = new BaseLayerContainer(ActorLayerModel, [
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0],
                     [0,1,0],
                     [0,0,0],
@@ -196,15 +197,16 @@ export default class BoardModel{
     }
 
     getNeighbors (p: Point) {
-        const p4 = [
+        const n = [
             new Point(p.x-1, p.y),
             new Point(p.x, p.y-1),
             new Point(p.x+1, p.y),
             new Point(p.x, p.y+1)
         ]
-        return p4.filter(p=>
-            this.bg_board.at(p)
-            //&& this.bg_board.at(p).value!=0
+        return n.filter(n=>
+            this.bg_board.at(n)
+            && this.walls_board.at(n).value == 0
+            && this.actors_board.sameTeam(p, n)
         )
     }
 }
