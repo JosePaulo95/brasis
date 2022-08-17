@@ -1,15 +1,37 @@
 import { Mapper } from "@/agents/Mapper";
 import BoardModel from "@/Brasis/models/BoardModel";
+import { Path } from "@/Brasis/models/Path";
 import { Point } from "@/Brasis/models/Point";
 
 describe("pathfinding", () =>{
     it("build initial paths", () => {
-        const board = new BoardModel("4x4 alone unit")
+        const board = new BoardModel("4x4 x1 with obstacles and units")
         const mapper = new Mapper(board)
 
         expect(mapper.paths_table.length).toBe(4)
         expect(mapper.paths_table[0].length).toBe(4)
-        expect(mapper.paths_table[1][1].length).toBe(16)
+        expect(mapper.paths_table[1][1].length).toBe(14)
+    })
+
+    it("initial paths are correct (shortest)", () => {
+        const board = new BoardModel("4x4 x1 with obstacles and units")
+        const mapper = new Mapper(board)
+
+        const pathing_22 = mapper.paths_table[2][2]
+        const pathing_22_to_02 = pathing_22.find(p => p.endpoint.match(0,2)) as Path
+
+        expect(pathing_22_to_02.path.length).toBe(5)
+    })
+
+    it("it knows possible moves", ()=>{
+        const board = new BoardModel("4x4 x1 with obstacles and units")
+        const mapper = new Mapper(board)
+
+        const possible_moves = mapper.getPossibleMovesOf(2,2)
+        
+        expect(possible_moves.some(p => p.match(1,1))).toBe(false)
+        expect(possible_moves.some(p => p.match(1,2))).toBe(false)
+        expect(possible_moves.length).toBe(7)
     })
     // it("knows distant paths", ()=>{
     //     const model = new BoardModel("5x5 w/ 2 allies")

@@ -20,14 +20,23 @@ export class Mapper {
                 paths_table[i].push([])
             }
         }
-
+        
         for (let i = 0; i < paths_table.length; i++) {
             for (let j = 0; j < paths_table[i].length; j++) {
                 paths_table[i][j] = this.pathsFrom(board_model, i, j)
             }
         }
-
+        
         return paths_table;
+    }
+    
+    getPossibleMovesOf(x: number, y: number): Point[] {
+        const p = new Point(x,y)
+        
+        return this.paths_table[x][y]
+            .filter(path => path.path.length<=3)
+            .filter(path => this.board_model.actors_board.sameTeam(p, path.endpoint))
+            .map(path => path.endpoint)
     }
 
     pathsFrom (board_model: BoardModel, x: number, y: number): Path[] {
