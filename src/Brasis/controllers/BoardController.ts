@@ -1,3 +1,4 @@
+import { Mapper } from "@/agents/Mapper";
 import BoardModel from "../models/BoardModel";
 import { InteractionModel } from "../models/InteractionModel";
 import { Point } from "../models/Point";
@@ -9,9 +10,11 @@ export default class BoardController{
     interaction_on = true;
     prev_point: Point|undefined;
     audio_controller: AudioController|undefined;
+    mapper: Mapper;
     
     constructor(model: BoardModel, audio_controller?: AudioController){
         this.model = model
+        this.mapper = new Mapper(this.model)
         this.audio_controller = audio_controller
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
@@ -27,7 +30,6 @@ export default class BoardController{
             const previous_actor = this.getTopLayer(this.prev_point)
             const top_current = this.getTopLayer(cur_point)
             const event_key = `${previous_actor}>${top_current}` 
-
             this.interaction_on = false
             const interactions = this.interactions.filter(i=>i.match(event_key))
             for (let i = 0; i < interactions.length; i++) {
@@ -114,10 +116,10 @@ export default class BoardController{
     showPossibleMoves(cur_point: Point) {
         this.audio_controller?.play("select")
 
-        const possible_houses_1 = this.getNeighbors(cur_point,1).concat(this.getNeighbors(cur_point,2))
-        
-        for (let i = 0; i < possible_houses_1.length; i++) {
-            const house = possible_houses_1[i];
+        const possible_houses = this.mapper.getPossibleMovesOf(cur_point.x, cur_point.y).filter(p=>!p.match(cur_point))
+
+        for (let i = 0; i < possible_houses.length; i++) {
+            const house = possible_houses[i];
             this.model.action_square_board.at(house).value = 1
         }
     }
