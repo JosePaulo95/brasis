@@ -35,7 +35,8 @@ export class Mapper {
         const p = new Point(x,y)
         
         return this.paths_table[x][y]
-            .filter(path => path.path.length<=3)
+            .filter(path => path.path.length<=3 && path.path.length>1)
+            .filter(path => !this.board_model.actors_board.at(path.endpoint).value)
             .filter(path => !path.path.some(step => !this.board_model.actors_board.emptyOrSameTeam(p, step)))
             .map(path => path.endpoint)
     }
@@ -70,5 +71,10 @@ export class Mapper {
     getPaths (p: Point, d: number): Array<Path> {
         throw new Error("Method not implemented.");
         //return this.paths[p.x][p.y].filter(p => p.path.length <= d)
+    }
+
+    getPath(a: Point, b: Point): Point[] {
+        const path = this.paths_table[a.x][a.y].find(p => p.endpoint.match(b)) as Path
+        return path.path;
     }
 }
