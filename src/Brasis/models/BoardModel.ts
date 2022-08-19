@@ -63,7 +63,7 @@ export default class BoardModel{
                 this.actors_board = new ActorLayerContainer(ActorLayerModel, [
                     [0,0,0,0],
                     [0,2,0,0],
-                    [0,0,1,0],
+                    [0,1,0,0],
                     [0,0,0,0],
                 ])
         
@@ -206,7 +206,7 @@ export default class BoardModel{
         return n.filter(n=>
             this.bg_board.at(n)
             && this.walls_board.at(n).value == 0
-            && this.actors_board.sameTeam(p, n)
+            && this.actors_board.emptyOrSameTeam(p, n)
         )
     }
 }
