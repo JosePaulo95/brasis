@@ -59,7 +59,7 @@ export default class BoardController{
     async moveActor(cur_point: Point, prev_point?: Point) {
         if(prev_point){
             const actor = this.model.actors_board.at(prev_point)
-            const shortest_path = this.calcShortestPath(prev_point, cur_point)
+            const shortest_path = this.mapper.getPath(prev_point, cur_point)
 
             this.audio_controller?.play("on-square-to-move-selection")
 
