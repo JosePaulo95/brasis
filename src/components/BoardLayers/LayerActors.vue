@@ -36,7 +36,7 @@
   .actor {
     background-size: calc(100%*4);
     background-position: right calc(var(--i)*100%) bottom calc(var(--j)*100%);
-    z-index: 3;
+    z-index: 4;
     animation-duration: 0.8s;
     animation-iteration-count: infinite;
   }

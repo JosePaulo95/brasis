@@ -2,7 +2,7 @@ import BaseLayerModel from "./BaseLayerModel";
 import { Point } from "./Point";
 
 export class BaseLayerContainer <T extends BaseLayerModel> {
-    board: T[][];
+    public board: T[][];
     
     constructor (c: new(...args: any[])=>T, id_table: Array<Array<number>>) {
         this.board = id_table.map(row => 
@@ -11,7 +11,7 @@ export class BaseLayerContainer <T extends BaseLayerModel> {
             )
         )
     }
-
+    
     at (a: Point, b?: undefined) : T;
     at (a: number, b: number) : T;
     at (a: any, b: any) : T {
