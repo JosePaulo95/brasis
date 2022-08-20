@@ -20,8 +20,8 @@ describe('board component', () => {
     const model = new BoardModel("5x5 w/ 2 allies")
     const controller = new BoardController(model);
     const p = new Point(2,2)
-    const neighbors = controller.getNeighbors(p,1)
-    expect(neighbors.length).toEqual(3)
+    const neighbors = model.getNeighbors(p)
+    expect(neighbors.length).toEqual(4)
   })
 
   it('action possibleMoves', async () => {
