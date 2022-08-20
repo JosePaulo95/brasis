@@ -27,7 +27,7 @@ export default defineComponent({
     }
   },
   beforeMount(){
-    const board = new BoardModel("5x5 w/ allies and enemies")
+    const board = new BoardModel("4x4 x1 with obstacles and units")
     this.board_model = board
     const audio_model = new AudioModel()
     this.audio_controller = new AudioController(audio_model)

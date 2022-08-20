@@ -1,0 +1,9 @@
+
+$start: 200;
+$end: 230;
+
+@for $i from $start through $end {
+    .wall-sprite-#{$i} {
+        background-image: url("../assets/Tilesets/nature/tile#{$i}.png");
+    }
+}
