@@ -8,10 +8,10 @@ export class Mapper {
 
     constructor (board_model: BoardModel) {
         this.board_model = board_model;
-        this.paths_table = this.buildPaths(board_model);
+        this.paths_table = this.emptyPaths(board_model);
     }
 
-    buildPaths( board_model: BoardModel ): Path[][][] {
+    emptyPaths( board_model: BoardModel ): Path[][][] {
         const paths_table:Path[][][] = []
         
         for (let i = 0; i < board_model.default_board.length; i++) {
@@ -21,15 +21,21 @@ export class Mapper {
             }
         }
         
+        return paths_table;
+    }
+
+    buildAllPaths( board_model: BoardModel ): Path[][][] {
+        const paths_table:Path[][][] = []
+        
         for (let i = 0; i < paths_table.length; i++) {
             for (let j = 0; j < paths_table[i].length; j++) {
-                //paths_table[i][j] = this.pathsFrom(board_model, i, j)
+                paths_table[i][j] = this.pathsFrom(board_model, i, j)
             }
         }
         
         return paths_table;
     }
-    
+
     getPossibleMovesOf(x: number, y: number): Point[] {
         this.paths_table[x][y] = this.pathsFrom(this.board_model, x, y)
         const p = new Point(x,y)
