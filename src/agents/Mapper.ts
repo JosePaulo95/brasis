@@ -47,6 +47,18 @@ export class Mapper {
             .map(path => path.endpoint)
     }
 
+    getReachableEnemiesFrom (x: number, y: number): Point[] {
+        const origin = new Point(x,y)
+        this.paths_table[x][y] = this.pathsFrom(this.board_model, x, y)
+        const reachable_points = this.paths_table[x][y]
+            .filter(path => path.path.length<=4 && path.path.length>1)
+            .map(path => path.endpoint)
+        const reachable_enemies = reachable_points
+            .filter(p => !this.board_model.actors_board.emptyOrSameTeam(origin, p))
+
+        return reachable_enemies
+    }
+
     pathsFrom (board_model: BoardModel, x: number, y: number): Path[] {
         const paths:Path[] = []
         const queue:Path[] = []

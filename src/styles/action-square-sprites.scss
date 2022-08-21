@@ -1,0 +1,9 @@
+
+$start: 0;
+$end: 9;
+
+@for $i from $start through $end {
+    .action-square-sprite-#{$i} {
+        background-image: url("../assets/Tilesets/action-square/tile00#{$i}.png");
+    }
+}

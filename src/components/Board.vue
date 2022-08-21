@@ -35,6 +35,7 @@
   import "../styles/sprites.css"
   import "../styles/terrain-sprites.scss"
   import "../styles/wall-sprites.scss"
+  import "../styles/action-square-sprites.scss"
   import LayerActionSquare from "./BoardLayers/LayerActionSquare.vue"
   import AudioController from '@/Brasis/controllers/AudioController';
 

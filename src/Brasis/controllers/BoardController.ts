@@ -117,10 +117,15 @@ export default class BoardController{
         this.audio_controller?.play("select")
 
         const possible_houses = this.mapper.getPossibleMovesOf(cur_point.x, cur_point.y).filter(p=>!p.match(cur_point))
+        const atk_houses = this.mapper.getReachableEnemiesFrom(cur_point.x, cur_point.y)
 
         for (let i = 0; i < possible_houses.length; i++) {
             const house = possible_houses[i];
             this.model.action_square_board.at(house).value = 1
+        }
+
+        for (let i = 0; i < atk_houses.length; i++) {
+            this.model.action_square_board.at(atk_houses[i]).value = 4
         }
     }
 }
