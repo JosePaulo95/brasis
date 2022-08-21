@@ -18,9 +18,10 @@ export default class BoardController{
         this.audio_controller = audio_controller
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
-            new InteractionModel("*", this.dismissActionSquares),
+            new InteractionModel("actor", this.dismissActionSquares),
+            new InteractionModel("bg", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
-            new InteractionModel("actor>action-square", this.moveActor),
+            new InteractionModel("actor>action-square", this.doAction),
             new InteractionModel("actor>action-square", this.checkEndOfTurn),
         ]
     }
@@ -54,6 +55,28 @@ export default class BoardController{
             return "actor"
         }
         return "bg"
+    }
+
+    async doAction(cur_point: Point, prev_point?: Point) {
+        const action = this.model.action_square_board.at(cur_point)
+        debugger
+        switch (action.getType()) {
+            case "move":
+                await this.moveActor(cur_point, prev_point)
+                break;
+            case "attack":
+                await this.attack(cur_point, prev_point)
+                break;
+            default:
+                break;
+        }
+        this.dismissActionSquares()
+    }
+
+    async attack(cur_point: Point, prev_point?: Point) {
+        if(prev_point){
+            console.log(`actor at (${prev_point.x}, ${prev_point.y}) atks (${cur_point.x}, ${cur_point.y})`)
+        }
     }
 
     async moveActor(cur_point: Point, prev_point?: Point) {

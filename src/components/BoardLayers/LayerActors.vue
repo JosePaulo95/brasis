@@ -10,7 +10,6 @@
 
 <script lang="ts">
   import ActorLayerModel from '@/Brasis/models/ActorLayerModel';
-  import { getBackgroundSprite } from '@/Brasis/views';
   import { defineComponent } from 'vue';
 
   export default defineComponent({
@@ -25,9 +24,6 @@
       return {
         
       }
-    },
-    methods: {
-      getBackgroundSprite: getBackgroundSprite
     }
   });
 </script>
