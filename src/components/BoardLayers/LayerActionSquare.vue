@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="cell.value"
-    :class="`transparent action-square-sprite action-square-sprite-${cell.value}`"
+    :class="`cell-content transparent action-square-sprite action-square-sprite-${cell.value}`"
   >
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="cell.value"
-    :class="`wall-sprite wall-sprite-${cell.value}`"
+    :class="`cell-content wall-sprite wall-sprite-${cell.value}`"
   >
   </div>
 </template>

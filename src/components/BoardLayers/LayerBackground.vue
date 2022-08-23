@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`terrain-sprite terrain-sprite-${cell.value}`"
+    :class="`cell-content terrain-sprite terrain-sprite-${cell.value}`"
   >
   </div>
 </template>

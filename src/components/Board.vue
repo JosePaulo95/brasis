@@ -106,7 +106,7 @@
       width: inherit;
       height: inherit;
     }
-    .cell-container * {
+    .cell-content {
       position: absolute;
       width: inherit;
       height: inherit;

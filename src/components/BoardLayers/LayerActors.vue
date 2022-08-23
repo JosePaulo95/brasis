@@ -1,11 +1,10 @@
 <template>
-  <div
-    v-if="cell.value"
-    :id="'actor-'+cell.id"
-    :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
-  >
-  
-  </div>
+    <div
+      v-if="cell.value"
+      :id="'actor-'+cell.id"
+      :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
+    >
+    </div>
 </template>
 
 <script lang="ts">
@@ -51,11 +50,19 @@
   .walking {
     animation-name: walk;
   }
+  .attacking {
+    animation-name: attack;
+  }
+
   @keyframes walk {
     0% {--j: 1;}
     25% {--j: 2;}
     50% {--j: 3;}
     75% {--j: 4;}
+  }
+  @keyframes attack {
+    0% {--j: 5;}
+    100% {--j: 5;}
   }
   .disabled {
     filter: brightness(0.65);
