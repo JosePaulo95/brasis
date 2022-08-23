@@ -21,9 +21,9 @@ export default class ActorLayerModel extends BaseLayerModel{
                 this.character = "knight"
                 this.team = "teamB"
                 break;
-            default:
-                this.character = "knight"
-                this.team = "teamA"
+                default:
+                    this.character = "knight"
+                    this.team = "teamA"
                 break;
         }
     }    
@@ -31,7 +31,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     async animMove(path: Array<Point>, audio_controller: AudioController|undefined) {
         const x = path[0].x
         const y = path[0].y
-
+        
         const translations = this.pathToTranslations(path)
         for (let i = 0; i < translations.length; i++) {
             this.direction = translations[i].direction;
@@ -48,6 +48,12 @@ export default class ActorLayerModel extends BaseLayerModel{
         audio_controller?.stopsPlaying("on-moving")
         audio_controller?.play("on-move-end")
     }
+
+    async doAttack(face_direction: string) {
+        this.animation = "attacking"
+        debugger
+    }
+
     animReset(origin: Point) {
         const x = origin.x
         const y = origin.y

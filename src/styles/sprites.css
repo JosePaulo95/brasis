@@ -1,7 +1,18 @@
+.cell-content {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    image-rendering: pixelated;
+}
+
 .teamA.knight {
     background-image: url("../assets/Sprites/knight-blue.png");
 }
 
 .teamB.knight {
     background-image: url("../assets/Sprites/knight-red.png");
+}
+
+.sword {
+    background-image: url("../assets/Weapons/Sprite.png");
 }

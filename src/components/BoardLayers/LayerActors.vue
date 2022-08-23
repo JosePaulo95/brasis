@@ -1,10 +1,16 @@
-<template>
-    <div
-      v-if="cell.value"
-      :id="'actor-'+cell.id"
-      :class="`actor cell-content ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
-    >
-    </div>
+<template>  
+  <div
+    v-if="cell.value"
+    :id="'actor-'+cell.id"
+    :class="`cell-content actor ${cell.team} ${cell.character} ${cell.direction} ${cell.animation} ${cell.disabled?'disabled':''}`"
+  >
+  </div>
+  <div
+    v-if="cell.animation=='attacking'"
+    :id="'weapon-'+cell.id"
+    :class="`cell-content weapon sword`"
+  >
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,6 +40,13 @@
     z-index: 4;
     animation-duration: 0.8s;
     animation-iteration-count: infinite;
+  }
+  .weapon {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    z-index: 5;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
   .bottom {
     --i: 1 !important;

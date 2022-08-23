@@ -59,7 +59,7 @@ export default class BoardController{
 
     async doAction(cur_point: Point, prev_point?: Point) {
         const action = this.model.action_square_board.at(cur_point)
-        debugger
+        
         switch (action.getType()) {
             case "move":
                 await this.moveActor(cur_point, prev_point)
@@ -75,7 +75,13 @@ export default class BoardController{
 
     async attack(cur_point: Point, prev_point?: Point) {
         if(prev_point){
-            console.log(`actor at (${prev_point.x}, ${prev_point.y}) atks (${cur_point.x}, ${cur_point.y})`)
+            const attacking_actor = this.model.actors_board.at(prev_point)
+            const attacked_actor = this.model.actors_board.at(cur_point)
+
+            const face_direction = "";//attacking_actor.face(attacked_actor)
+
+            await attacking_actor.doAttack(face_direction)
+            attacking_actor.disabled = true;
         }
     }
 
