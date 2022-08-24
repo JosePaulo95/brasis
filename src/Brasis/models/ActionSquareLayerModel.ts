@@ -19,7 +19,6 @@ export default class ActionSquareLayerModel extends BaseLayerModel{
                 this.type = ""
                 break;
         }
-        debugger
         return this.type;
     }
     public setType(value: String) {

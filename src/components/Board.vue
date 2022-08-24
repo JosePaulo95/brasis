@@ -12,7 +12,7 @@
                 <LayerActionSquare :cell="state.action_square_board.at(x, y)" />
                 <LayerWalls :cell="state.walls_board.at(x,y)" />
                 <LayerActors :cell="state.actors_board.at(x,y)" />
-                <div class="cell-container">
+                <div class="cell-content">
                   {{x}}{{y}}
                 </div>
               </div>

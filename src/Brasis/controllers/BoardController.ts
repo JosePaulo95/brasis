@@ -80,7 +80,7 @@ export default class BoardController{
 
             const face_direction = "";//attacking_actor.face(attacked_actor)
 
-            await attacking_actor.doAttack(face_direction)
+            await attacking_actor.doAttack(prev_point, cur_point)
             attacking_actor.disabled = true;
         }
     }

@@ -150,6 +150,28 @@ export default class BoardModel{
                 this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
                 this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
                 break;
+            case "3x3 interleaved and full":
+                this.default_board = [
+                    [0,0,0],
+                    [0,0,0],
+                    [0,0,0],
+                ]
+                
+                this.bg_board = new BaseLayerContainer(BgLayerModel, [
+                    [55,55,55],
+                    [55,55,55],
+                    [55,55,55],
+                ])
+                
+                this.actors_board = new ActorLayerContainer(ActorLayerModel, [
+                    [1,2,1],
+                    [2,1,2],
+                    [1,2,1],
+                ])
+        
+                this.action_square_board = new BaseLayerContainer(ActionSquareLayerModel, this.default_board)
+                this.walls_board = new BaseLayerContainer(WallLayerModel, this.default_board)
+                break;
             default:
                 this.default_board = [
                     [0,0,0],
@@ -206,7 +228,7 @@ export default class BoardModel{
         return n.filter(n=>
             this.bg_board.at(n)
             && this.walls_board.at(n).value == 0
-            && this.actors_board.emptyOrSameTeam(p, n)
+            //&& this.actors_board.emptyOrSameTeam(p, n)
         )
     }
 }

@@ -49,9 +49,20 @@ export default class ActorLayerModel extends BaseLayerModel{
         audio_controller?.play("on-move-end")
     }
 
-    async doAttack(face_direction: string) {
-        this.animation = "attacking"
-        debugger
+    async doAttack(attacker_pos: Point, attacked_pos: Point) {        
+        // const translation = this.attackingToTranslations(attacker, attacked)
+
+        this.direction = this.getsDirection(attacker_pos, attacked_pos);
+        // this.animation = "attacking"
+        
+        // await anime ({
+        //     targets: `#cell-${x}-${y} .weapon`,
+        //     keyframes: [translation],
+        //     easing: 'linear',
+        //     duration: 500
+        // }).finished;
+        
+        // this.animation = "";
     }
 
     animReset(origin: Point) {
@@ -67,6 +78,14 @@ export default class ActorLayerModel extends BaseLayerModel{
             "animation-name": "example"
         });
     }
+
+    getsDirection(a: Point, b: Point): string {
+        const difx = a.y-b.y
+        const dify = a.x-b.x
+    
+        return difx>0?"left":difx<0?"right":dify>0?"top":"bottom"
+    }
+
     pathToTranslations(path: Array<Point>) {
         const translations = []
         const origin = path[0]

@@ -62,19 +62,22 @@ export class Mapper {
     pathsFrom (board_model: BoardModel, x: number, y: number): Path[] {
         const paths:Path[] = []
         const queue:Path[] = []
+        const visited: Point[] = []
         const start_path:Path|undefined = new Path([new Point(x,y)])
         queue.push(start_path)
 
         while(queue.length > 0){
-            let prev_path = queue.shift() as Path            
+            let prev_path = queue.shift() as Path
             paths.push (prev_path)
+            visited.push(prev_path.endpoint)
         
             let neighbors = board_model.getNeighbors(prev_path.endpoint)
-            neighbors = neighbors.filter(n => !paths.some(p=>p.endpoint.match(n)))
-            neighbors = neighbors.filter(n => !queue.some(p=>p.endpoint.match(n)))
+            neighbors = neighbors.filter(n => !visited.some(p => p.match(n)))
+            //neighbors = neighbors.filter(n => !queue.some(p=>p.endpoint.match(n)))
             neighbors.forEach(p => {
                 queue.push(new Path([...prev_path.path, p]))
             });
+            debugger
         }
         return paths;
     }
