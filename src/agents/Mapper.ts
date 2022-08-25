@@ -54,16 +54,24 @@ export class Mapper {
 
         const reachable_walking = this.paths_table[x][y]
             .filter(path => path.path.length<=d && path.path.length>1)
+            .filter(path => path.path
+                .every(step => this.board_model.actors_board.emptyOrSameTeam(origin, step))
+            )
             .map(path => path.endpoint)
         
-        // const reachable_at_limit = this.paths_table[x][y]
-        //     .filter(path => path.path.length==4)
-        //     .map(path => path.endpoint)
-
-        reachable_enemies = reachable_enemies.concat(
-            reachable_walking
-            .filter(p => !this.board_model.actors_board.emptyOrSameTeam(origin, p))
+        const reachable_at_limit = this.paths_table[x][y]
+        .filter(path => path.path.length<=d+1 && path.path.length>1)
+        .filter(path => path.path.slice(0,-1)
+            .every(step => this.board_model.actors_board.emptyOrSameTeam(origin, step))
         )
+        .map(path => path.endpoint)
+
+        reachable_enemies = reachable_enemies
+        .concat(
+            reachable_walking
+        ).concat(
+            reachable_at_limit
+        ).filter(p => !this.board_model.actors_board.emptyOrSameTeam(origin, p))
 
         return reachable_enemies
     }
