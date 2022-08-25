@@ -103,7 +103,10 @@ export class Mapper {
     }
 
     getPath(a: Point, b: Point): Point[] {
-        const path = this.paths_table[a.x][a.y].find(p => p.endpoint.match(b)) as Path
+        const path = this.paths_table[a.x][a.y].find(p => 
+            p.endpoint.match(b) &&
+            p.path.every(step => this.board_model.actors_board.emptyOrSameTeam(step, a))
+        ) as Path
         return path.path;
     }
 }
