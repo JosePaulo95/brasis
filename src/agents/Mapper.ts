@@ -64,14 +64,13 @@ export class Mapper {
         .filter(path => path.path.slice(0,-1)
             .every(step => this.board_model.actors_board.emptyOrSameTeam(origin, step))
         )
+        .filter(path => 
+            path.path.slice(-2)[0].match(origin) ||
+            this.board_model.actors_board.at(path.path.slice(-2)[0]).value == 0
+        )
         .map(path => path.endpoint)
 
-        reachable_enemies = reachable_enemies
-        .concat(
-            reachable_walking
-        ).concat(
-            reachable_at_limit
-        ).filter(p => !this.board_model.actors_board.emptyOrSameTeam(origin, p))
+        reachable_enemies = reachable_at_limit.filter(p => !this.board_model.actors_board.emptyOrSameTeam(origin, p))
 
         return reachable_enemies
     }
