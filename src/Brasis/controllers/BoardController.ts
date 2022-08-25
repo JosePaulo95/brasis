@@ -78,18 +78,62 @@ export default class BoardController{
             const attacking_actor = this.model.actors_board.at(prev_point)
             const attacked_actor = this.model.actors_board.at(cur_point)
 
-            const basic_attack_success = attacking_actor.rollDice()
+            const discount = this.getsDiscountByPos(prev_point, cur_point)
 
-            await attacking_actor.doAttack(prev_point, cur_point)
+            const basic_attack_success = attacking_actor.rollDice(discount)
 
             if(basic_attack_success){
-                await attacked_actor.getsHit();
+                await attacking_actor.doAttack(prev_point, cur_point, discount)
+                await attacked_actor.getsHit(discount);
             }else{
-                await attacked_actor.doDodge();
+                await attacking_actor.doAttack(prev_point, cur_point, discount)
+                await attacked_actor.doDodge(discount);
             }
             debugger
             attacking_actor.disabled = true;
         }
+    }
+    getsDiscountByPos(attacker_pos: Point, attacked_pos: Point) {
+        const attacked_actor = this.model.actors_board.at(attacked_pos)
+        let back, left_side, right_side
+        switch (attacked_actor.direction) {
+            case "left":
+                right_side = new Point(-1, 0)
+                left_side = new Point(1, 0)
+                back = new Point(0, 1)
+                break;
+            case "right":
+                right_side = new Point(1, 0)
+                left_side = new Point(-1, 0)
+                back = new Point(0, -1)
+                break;
+            case "top":
+                right_side = new Point(-1, 0)
+                left_side = new Point(1, 0)
+                back = new Point(1, 0)
+                break;
+            case "bottom":
+                right_side = new Point(0, 1)
+                left_side = new Point(0, -1)
+                back = new Point(-1, 0)
+                break;
+            default:
+                right_side = new Point(0, 0)
+                left_side = new Point(0, 0)
+                back = new Point(0, 0)
+        }
+
+        const back_pos = new Point(attacked_pos.x+back.x, attacked_pos.y+back.y)
+        const left_pos = new Point(attacked_pos.x+left_side.x, attacked_pos.y+left_side.y)
+        const right_pos = new Point(attacked_pos.x+right_side.x, attacked_pos.y+right_side.y)
+
+        if(back_pos.match(attacker_pos)){
+            return 2
+        }
+        if(left_pos.match(attacker_pos) || right_pos.match(attacker_pos)){
+            return 1
+        }
+        return 0
     }
 
     async moveActor(cur_point: Point, prev_point?: Point) {

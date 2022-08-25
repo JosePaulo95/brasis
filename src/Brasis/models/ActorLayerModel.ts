@@ -10,6 +10,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     team: string;
     disabled = false;
     life: number;
+    discount_str = ""
 
     constructor(value=0){
         super(value);
@@ -18,11 +19,13 @@ export default class ActorLayerModel extends BaseLayerModel{
                 this.character = "knight"
                 this.team = "teamA"
                 this.life = 8
+                this.direction = "bottom"
                 break;
             case 2:
                 this.character = "knight"
                 this.team = "teamB"
                 this.life = 8
+                this.direction = "bottom"
                 break;
                 default:
                     this.character = "knight"
@@ -53,20 +56,23 @@ export default class ActorLayerModel extends BaseLayerModel{
         audio_controller?.play("on-move-end")
     }
     
-    async doAttack(attacker_pos: Point, attacked_pos: Point) {        
+    async doAttack(attacker_pos: Point, attacked_pos: Point, discount: number) {        
         this.direction = this.getsDirection(attacker_pos, attacked_pos);
         this.animation = "attacking"
-        
-        await new Promise(resolve => setTimeout(resolve, 500));    
+        this.discount_str = `+${discount}`
+        await new Promise(resolve => setTimeout(resolve, 500));
+        this.discount_str = ``
         this.animation = "";
     }
     
-    async doDodge() {
+    async doDodge(discount: number) {
         const backup_direction = this.direction+""
         this.direction = ""
         this.animation = "dodging"
-        
+        this.discount_str = `-${discount}`
+
         await new Promise(resolve => setTimeout(resolve, 500));    
+        this.discount_str = ``
         this.direction = backup_direction
         this.animation = "";
     }
@@ -92,10 +98,13 @@ export default class ActorLayerModel extends BaseLayerModel{
         return difx>0?"left":difx<0?"right":dify>0?"top":"bottom"
     }
     
-    async getsHit() {
+    async getsHit(discount: number) {
         this.animation = "getting-hitted"
+        this.discount_str = `-${discount}`
+
         await new Promise(resolve => setTimeout(resolve, 500));
         this.animation = "";
+        this.discount_str = ``
 
         this.life--
         if(this.life <= 0){
@@ -103,8 +112,8 @@ export default class ActorLayerModel extends BaseLayerModel{
         }
     }
 
-    rollDice() {
-        return this.life >= this.getRandomInt(10);
+    rollDice(discount: number) {
+        return this.life + discount >= this.getRandomInt(10);
     }
     getRandomInt(max: number) {
         return Math.floor(Math.random() * max+1);

@@ -16,7 +16,7 @@
     v-if="cell.value"
     :class="`cell-content life-indicator`"
   >
-    {{cell.life}}
+    {{cell.life}}{{cell.discount_str}}
   </div>
 </template>
 
@@ -63,6 +63,7 @@
     font-family: monospace;
     color: white;
     text-shadow: 0rem 0.2rem black;
+    white-space: nowrap;
   }
   .bottom {
     --i: 1 !important;
