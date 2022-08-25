@@ -29,6 +29,20 @@ describe("Attack interaction", ()=>{
         expect(squares.some(p => p.match(2, 1))).toBeTruthy()
     })
 
+    it("[bug] cant jump enemies for attack", async () => {
+        const boardModel = new BoardModel("3x3 interleaved and full");
+        const boardController = new BoardController(boardModel);
+
+        const squares = boardController.mapper.getReachableEnemiesFrom(0,2)
+
+        expect(squares.some(p => p.match(0,0))).toBeFalsy()
+
+        expect(squares.some(p => p.match(0, 1))).toBeTruthy()
+        expect(squares.some(p => p.match(1, 0))).toBeFalsy()
+        expect(squares.some(p => p.match(1, 2))).toBeTruthy()
+        expect(squares.some(p => p.match(2, 1))).toBeFalsy()
+    })
+
     it("attacker faces attacked", async () => {
         const actor = new ActorLayerModel(1); 
 
@@ -47,5 +61,28 @@ describe("Attack interaction", ()=>{
         expect(d_right).toEqual("right")
         expect(d_top).toEqual("top")
         expect(d_bottom).toEqual("bottom")
+    })
+
+    it("calculates discount correctly", () => {
+        const boardModel = new BoardModel("3x3 interleaved and full");
+        const boardController = new BoardController(boardModel);
+
+        const center =  new Point(1,1)
+        const left =    new Point(1,0)
+        const right =   new Point(1,2)
+        const top =     new Point(0,1)
+        const bottom =  new Point(2,1)
+
+        expect(
+            boardController.getsDiscountByPos(center, bottom)
+        ).toEqual(2)
+
+        expect(
+            boardController.getsDiscountByPos(center, left)
+        ).toEqual(1)
+
+        expect(
+            boardController.getsDiscountByPos(center, top)
+        ).toEqual(0)
     })
 })
