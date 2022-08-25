@@ -83,8 +83,8 @@ export default class BoardController{
             const basic_attack_success = attacking_actor.rollDice(discount)
 
             if(basic_attack_success){
-                await attacking_actor.doAttack(prev_point, cur_point, discount)
-                await attacked_actor.getsHit(discount);
+                await attacking_actor.doAttack(prev_point, cur_point, discount),
+                await attacked_actor.getsHit(discount)
             }else{
                 await attacking_actor.doAttack(prev_point, cur_point, discount)
                 await attacked_actor.doDodge(discount);
@@ -182,6 +182,7 @@ export default class BoardController{
         this.model.action_square_board.hasAny() && this.audio_controller?.play("cancel")
     }
     selectActor(cur_point: Point, prev_point?: Point) {
+        this.dismissActionSquares()
         const actor = this.model.actors_board.at(cur_point)
         const current_team = this.model.getCurrentTeam()
         

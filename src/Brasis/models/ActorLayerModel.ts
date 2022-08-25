@@ -59,7 +59,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     async doAttack(attacker_pos: Point, attacked_pos: Point, discount: number) {        
         this.direction = this.getsDirection(attacker_pos, attacked_pos);
         this.animation = "attacking"
-        this.discount_str = `+${discount}`
+        this.discount_str = discount==1?"+":discount==2?"++":""
         await new Promise(resolve => setTimeout(resolve, 500));
         this.discount_str = ``
         this.animation = "";
@@ -69,7 +69,7 @@ export default class ActorLayerModel extends BaseLayerModel{
         const backup_direction = this.direction+""
         this.direction = ""
         this.animation = "dodging"
-        this.discount_str = `-${discount}`
+        //this.discount_str = `-${discount}`
 
         await new Promise(resolve => setTimeout(resolve, 500));    
         this.discount_str = ``
@@ -100,7 +100,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     
     async getsHit(discount: number) {
         this.animation = "getting-hitted"
-        this.discount_str = `-${discount}`
+        //this.discount_str = `-${discount}`
 
         await new Promise(resolve => setTimeout(resolve, 500));
         this.animation = "";
@@ -113,7 +113,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     }
 
     rollDice(discount: number) {
-        return this.life + discount >= this.getRandomInt(10);
+        return true//this.life + discount >= this.getRandomInt(10);
     }
     getRandomInt(max: number) {
         return Math.floor(Math.random() * max+1);
