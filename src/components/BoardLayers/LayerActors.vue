@@ -11,6 +11,13 @@
     :class="`cell-content weapon sword`"
   >
   </div>
+
+  <div
+    v-if="cell.value"
+    :class="`cell-content life-indicator`"
+  >
+    {{cell.life}}
+  </div>
 </template>
 
 <script lang="ts">
@@ -49,6 +56,14 @@
     background-size: contain;
     background-repeat: no-repeat;
   }
+  .life-indicator {
+    font-size: 2rem;
+    z-index: 6;
+    font-weight: bold;
+    font-family: monospace;
+    color: white;
+    text-shadow: 0rem 0.2rem black;
+  }
   .bottom {
     --i: 1 !important;
   }
@@ -67,6 +82,12 @@
   .attacking {
     animation-name: attack;
   }
+  .dodging {
+    animation-name: dodge;
+  }
+  .getting-hitted{
+    animation-name: get-hit;
+  }
 
   @keyframes walk {
     0% {--j: 1;}
@@ -77,6 +98,14 @@
   @keyframes attack {
     0% {--j: 5;}
     100% {--j: 5;}
+  }
+  @keyframes dodge {
+    0% {--i: 4; --j: 7;}
+    100% {--i:4; --j: 7;}
+  }
+  @keyframes get-hit {
+    0% {--j: 6;}
+    100% {--j: 6;}
   }
   .disabled {
     filter: brightness(0.65);

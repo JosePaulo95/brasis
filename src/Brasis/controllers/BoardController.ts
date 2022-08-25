@@ -78,9 +78,16 @@ export default class BoardController{
             const attacking_actor = this.model.actors_board.at(prev_point)
             const attacked_actor = this.model.actors_board.at(cur_point)
 
-            const face_direction = "";//attacking_actor.face(attacked_actor)
+            const basic_attack_success = attacking_actor.rollDice()
 
             await attacking_actor.doAttack(prev_point, cur_point)
+
+            if(basic_attack_success){
+                await attacked_actor.getsHit();
+            }else{
+                await attacked_actor.doDodge();
+            }
+            debugger
             attacking_actor.disabled = true;
         }
     }

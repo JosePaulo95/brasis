@@ -77,7 +77,6 @@ export class Mapper {
             neighbors.forEach(p => {
                 queue.push(new Path([...prev_path.path, p]))
             });
-            debugger
         }
         return paths;
     }

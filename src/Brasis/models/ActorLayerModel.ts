@@ -9,6 +9,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     character: string;
     team: string;
     disabled = false;
+    life: number;
 
     constructor(value=0){
         super(value);
@@ -16,27 +17,30 @@ export default class ActorLayerModel extends BaseLayerModel{
             case 1:
                 this.character = "knight"
                 this.team = "teamA"
+                this.life = 8
                 break;
             case 2:
                 this.character = "knight"
                 this.team = "teamB"
+                this.life = 8
                 break;
                 default:
                     this.character = "knight"
                     this.team = "teamA"
-                break;
-        }
-    }    
-
-    async animMove(path: Array<Point>, audio_controller: AudioController|undefined) {
-        const x = path[0].x
-        const y = path[0].y
-        
-        const translations = this.pathToTranslations(path)
-        for (let i = 0; i < translations.length; i++) {
-            this.direction = translations[i].direction;
-            this.animation = "walking"
-            audio_controller?.startsPlaying("on-moving", 2)
+                    this.life = 0
+                    break;
+                }
+            }    
+            
+            async animMove(path: Array<Point>, audio_controller: AudioController|undefined) {
+                const x = path[0].x
+                const y = path[0].y
+                
+                const translations = this.pathToTranslations(path)
+                for (let i = 0; i < translations.length; i++) {
+                    this.direction = translations[i].direction;
+                    this.animation = "walking"
+                    audio_controller?.startsPlaying("on-moving", 2)
             await anime ({
                 targets: `#cell-${x}-${y} .actor`,
                 keyframes: [translations[i]],
@@ -48,21 +52,22 @@ export default class ActorLayerModel extends BaseLayerModel{
         audio_controller?.stopsPlaying("on-moving")
         audio_controller?.play("on-move-end")
     }
-
+    
     async doAttack(attacker_pos: Point, attacked_pos: Point) {        
-        // const translation = this.attackingToTranslations(attacker, attacked)
-
         this.direction = this.getsDirection(attacker_pos, attacked_pos);
         this.animation = "attacking"
         
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        // await anime ({
-        //     targets: `#cell-${x}-${y} .weapon`,
-        //     keyframes: [translation],
-        //     easing: 'linear',
-        //     duration: 500
-        // }).finished;
+        await new Promise(resolve => setTimeout(resolve, 500));    
+        this.animation = "";
+    }
+    
+    async doDodge() {
+        const backup_direction = this.direction+""
+        this.direction = ""
+        this.animation = "dodging"
         
+        await new Promise(resolve => setTimeout(resolve, 500));    
+        this.direction = backup_direction
         this.animation = "";
     }
 
@@ -79,14 +84,31 @@ export default class ActorLayerModel extends BaseLayerModel{
             "animation-name": "example"
         });
     }
-
+        
     getsDirection(a: Point, b: Point): string {
         const difx = a.y-b.y
         const dify = a.x-b.x
-    
+        
         return difx>0?"left":difx<0?"right":dify>0?"top":"bottom"
     }
+    
+    async getsHit() {
+        this.animation = "getting-hitted"
+        await new Promise(resolve => setTimeout(resolve, 500));
+        this.animation = "";
 
+        this.life--
+        if(this.life <= 0){
+            this.value = 0
+        }
+    }
+
+    rollDice() {
+        return this.life >= this.getRandomInt(10);
+    }
+    getRandomInt(max: number) {
+        return Math.floor(Math.random() * max+1);
+    }
     pathToTranslations(path: Array<Point>) {
         const translations = []
         const origin = path[0]
