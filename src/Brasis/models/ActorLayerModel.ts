@@ -113,7 +113,7 @@ export default class ActorLayerModel extends BaseLayerModel{
     }
 
     rollDice(discount: number) {
-        return true//this.life + discount >= this.getRandomInt(10);
+        return this.life + discount >= this.getRandomInt(10);
     }
     getRandomInt(max: number) {
         return Math.floor(Math.random() * max+1);
