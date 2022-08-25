@@ -65,7 +65,7 @@ export default class BoardController{
             case "move":
                 await this.moveActor(cur_point, prev_point)
                 this.dismissActionSquares()
-                const enemies_close = this.mapper.getReachableEnemiesFrom(cur_point.x, cur_point.y, 2)
+                const enemies_close = this.mapper.getReachableEnemiesFrom(cur_point.x, cur_point.y, 1)
                 if(enemies_close.length > 0){
                     //actor.disabled = false
                     for (let i = 0; i < enemies_close.length; i++) {
