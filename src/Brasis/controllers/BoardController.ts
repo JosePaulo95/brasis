@@ -19,7 +19,7 @@ export default class BoardController{
         this.interactions = [
             new InteractionModel("actor>bg", this.audioCancel),
             new InteractionModel("actor", this.dismissActionSquares),
-            new InteractionModel("bg", this.dismissActionSquares),
+            new InteractionModel("*>bg", this.dismissActionSquares),
             new InteractionModel("*>actor", this.selectActor),
             new InteractionModel("actor>action-square", this.doAction),
             new InteractionModel("actor>action-square", this.checkEndOfTurn),
@@ -57,9 +57,10 @@ export default class BoardController{
         return "bg"
     }
 
-    async doAction(cur_point: Point, prev_point?: Point) {
+    async doAction(cur_point: Point, prev_point: Point) {
         const action = this.model.action_square_board.at(cur_point)
-        
+        const actor = this.model.actors_board.at(prev_point)
+
         switch (action.getType()) {
             case "move":
                 await this.moveActor(cur_point, prev_point)
