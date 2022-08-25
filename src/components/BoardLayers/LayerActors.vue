@@ -42,6 +42,7 @@
     animation-iteration-count: infinite;
   }
   .weapon {
+    display: none;
     margin-left: 1rem;
     margin-bottom: 1rem;
     z-index: 5;

@@ -53,8 +53,9 @@ export default class ActorLayerModel extends BaseLayerModel{
         // const translation = this.attackingToTranslations(attacker, attacked)
 
         this.direction = this.getsDirection(attacker_pos, attacked_pos);
-        // this.animation = "attacking"
+        this.animation = "attacking"
         
+        await new Promise(resolve => setTimeout(resolve, 1000));
         // await anime ({
         //     targets: `#cell-${x}-${y} .weapon`,
         //     keyframes: [translation],
@@ -62,7 +63,7 @@ export default class ActorLayerModel extends BaseLayerModel{
         //     duration: 500
         // }).finished;
         
-        // this.animation = "";
+        this.animation = "";
     }
 
     animReset(origin: Point) {
