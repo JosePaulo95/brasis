@@ -64,14 +64,23 @@ export default class BoardController{
         switch (action.getType()) {
             case "move":
                 await this.moveActor(cur_point, prev_point)
+                this.dismissActionSquares()
+                const enemies_close = this.mapper.getReachableEnemiesFrom(cur_point.x, cur_point.y, 2)
+                if(enemies_close.length > 0){
+                    //actor.disabled = false
+                    for (let i = 0; i < enemies_close.length; i++) {
+                        this.model.action_square_board.at(enemies_close[i]).value = 4
+                    }
+                }
                 break;
             case "attack":
                 await this.attack(cur_point, prev_point)
+                this.dismissActionSquares()
                 break;
             default:
                 break;
         }
-        this.dismissActionSquares()
+        
     }
 
     async attack(cur_point: Point, prev_point?: Point) {

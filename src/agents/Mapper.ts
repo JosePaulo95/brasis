@@ -47,13 +47,13 @@ export class Mapper {
             .map(path => path.endpoint)
     }
 
-    getReachableEnemiesFrom (x: number, y: number): Point[] {
+    getReachableEnemiesFrom (x: number, y: number, d=3): Point[] {
         const origin = new Point(x,y)
         this.paths_table[x][y] = this.pathsFrom(this.board_model, x, y)
         let reachable_enemies:Point[] = []
 
         const reachable_walking = this.paths_table[x][y]
-            .filter(path => path.path.length<=3 && path.path.length>1)
+            .filter(path => path.path.length<=d && path.path.length>1)
             .map(path => path.endpoint)
         
         // const reachable_at_limit = this.paths_table[x][y]

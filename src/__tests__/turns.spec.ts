@@ -52,6 +52,7 @@ describe('turn management', () => {
         expect(boardModel.getCurrentTeam()).toBe("teamA")
         await boardController.select(1,1)
         await boardController.select(0,1)
+        await boardController.select(0,0)//attacks
 
         expect(boardModel.getRound()).toBe(1)
         expect(boardModel.getCurrentTeam()).toBe("teamB")
